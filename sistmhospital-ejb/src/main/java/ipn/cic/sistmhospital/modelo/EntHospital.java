@@ -92,6 +92,13 @@ public class EntHospital implements Serializable {
     private List<EntPaciente> entPacienteList;
 
     public EntHospital() {
+        nombre ="";
+        ubicacionGeo = "";
+        telEmergencias = "";
+        dirCalle="";
+        colonia="";
+        municipio="";
+        estado="";
     }
 
     public EntHospital(Integer idHospital) {
