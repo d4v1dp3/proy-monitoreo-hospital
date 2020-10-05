@@ -6,30 +6,87 @@
  */
 package ipn.cic.web.sistmhospital.bean.admon;
 
+import ipn.cic.sistmhospital.exception.HospitalException;
 import ipn.cic.sistmhospital.modelo.EntHospital;
+import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.util.Constantes;
+import ipn.cic.web.sistmhospital.util.Mensaje;
+import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
 
 /**
  *
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 @Named(value="gestionHospitalMB")
+@ViewScoped
 public class GestionHospitalMB implements Serializable{
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(GestionHospitalMB.class.getName());
     
+    @EJB
+    private HospitalSBLocal hospitalSB;
+    
+    @EJB
+    private UtilWebSBLocal utilWebSB;
+    
+    private Boolean existeHosp;
+    
     private String nomSistema;
     private EntHospital hospEnt;
+    private Float lat;
+    private Float lon;
+    
+    
+    
     
     @PostConstruct
     public void iniciaMB(){
+        hospEnt = new EntHospital();
+        lat = lon = 0.0f;
         nomSistema = Constantes.getInstance().getString("NOMBRE_SISTEMA");
+        try {
+            existeHosp = hospitalSB.existeHospital();
+        } catch (HospitalException ex) {
+            logger.log(Level.SEVERE,"Error en MB al guardar hospital : {0}",ex.getMessage());
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "No es posible consultar datos de hospital", 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmGuardaHosp:msgs", msg);
+        }
     }
     
+    public void guardaHospiral(){
+        FacesMessage msg = null;
+        String ug = lat.toString()+","+lon.toString();
+        hospEnt.setUbicacionGeo(ug);
+        try {
+            hospEnt = hospitalSB.guardaHospital(hospEnt);
+        } catch (HospitalException ex) {
+            logger.log(Level.SEVERE,"Error en MB al guardar hospital : {0}",ex.getMessage());
+            msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error al guardar",
+                                                "Error al intentar guardar datos de hospital intente más tarde", 
+                                                FacesMessage.SEVERITY_ERROR);
+        }
+       
+        if(msg==null){
+            msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Éxito",
+                                                "Los datos de hospital se guardaron con éxito", 
+                                                FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frmGuardaHosp:msgs", msg);       
+    }
     
     /**
      * @return the nomSistema
@@ -58,6 +115,48 @@ public class GestionHospitalMB implements Serializable{
      */
     public void setHospEnt(EntHospital hospEnt) {
         this.hospEnt = hospEnt;
+    }
+
+    /**
+     * @return the lat
+     */
+    public Float getLat() {
+        return lat;
+    }
+
+    /**
+     * @param lat the lat to set
+     */
+    public void setLat(Float lat) {
+        this.lat = lat;
+    }
+
+    /**
+     * @return the lon
+     */
+    public Float getLon() {
+        return lon;
+    }
+
+    /**
+     * @param lon the lon to set
+     */
+    public void setLon(Float lon) {
+        this.lon = lon;
+    }
+    
+    /**
+     * @return the existeHosp
+     */
+    public Boolean getExisteHosp() {
+        return existeHosp;
+    }
+
+    /**
+     * @param existeHosp the existeHosp to set
+     */
+    public void setExisteHosp(Boolean existeHosp) {
+        this.existeHosp = existeHosp;
     }
     
 }

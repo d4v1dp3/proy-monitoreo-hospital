@@ -26,7 +26,7 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
-            <h:form>
+            <h:form id="frmGuardaHosp" rendered="#{!gestionHospitalMB.existeHosp}" >
                 <p:growl id="msgs" showDetail="true" />
                 <div>
 
@@ -39,7 +39,7 @@ Todos los derechos reservados
                             </p>
                         </div>
                         <div class="p-col" style="align-content: center;">
-                            <p:panel header="Datos de Hospital">
+                            <p:panel id="hpDatos" header="Datos de Hospital">
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column><p:outputLabel for="nomHosp" value="Nombre hospital:" /> </p:column>
@@ -72,8 +72,18 @@ Todos los derechos reservados
                                         <p:column><p:inputText id="hMun" value="#{gestionHospitalMB.hospEnt.municipio}" required="true" /></p:column>
                                         <p:column><p:inputText id="hEst" value="#{gestionHospitalMB.hospEnt.estado}" required="true" /></p:column>
                                     </p:row>
-
-
+                                    <p:row>
+                                        <p:column><p:message for="hMun" /></p:column>
+                                        <p:column><p:message for="hEst" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align: center" class="ui-widget-header">Contacto</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="hTel" value="Tel Emergencia:" /></p:column>
+                                        <p:column><p:inputText id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column><p:message for="hTel" /></p:column>
+                                    </p:row>
                                 </p:panelGrid>
                                 <p:panelGrid >
                                     <f:facet name="header">
@@ -83,21 +93,36 @@ Todos los derechos reservados
                                     </f:facet>
                                     <p:row>
                                         <p:column><p:outputLabel for="lat" value="Latitud:" /></p:column>
-                                        <p:column><p:inputText id="lat" /></p:column>
+                                        <p:column><p:inputText id="lat" value="#{gestionHospitalMB.lat}" /></p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="lng" value="Longitud:" /></p:column>
-                                        <p:column><p:inputText id="lng" /></p:column>
+                                        <p:column><p:inputText id="lng" value="#{gestionHospitalMB.lon}" /></p:column>
                                     </p:row>
                                 </p:panelGrid>
                                 <p:gmap id="geoGmap" widgetVar="geoMap" center="41.381542, 2.122893" zoom="8" 
                                         type="ROADMAP" style="width:50%;height:200px" />
                             </p:panel>
                         </div>
+                        <div class="p-grid p-justify-end" >
+                            <div class="p-col-1">
+                                <p:commandButton value="Guardar" id="guardaHosp" action="#{gestionHospitalMB.guardaHospiral()}" 
+                                                 update="msgs hpDatos" icon="pi pi-save" />
+                            </div>
+                            <div class="p-col-2">
+                            </div>
+                        </div>
                     </div>
-
                 </p:panel>
             </h:form>
+            
+            <h:form id="frmExisteHosp" rendered="#{gestionHospitalMB.existeHosp}">
+                <p:growl id="msgs" showDetail="true" />
+                <p:panel header="AVISO">
+                    <h:outputText value="Los datos de hospital ya han sido capturados en breve los podrá modificar " />
+                </p:panel>
+            </h:form>
+            
         </ui:define>    
     </ui:composition>
 </html>
