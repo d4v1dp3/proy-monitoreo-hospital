@@ -7,8 +7,11 @@
 package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.HospitalException;
+import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntHospital;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -27,7 +30,9 @@ public class HospitalSB extends BaseSB implements HospitalSBLocal {
         Query qry = em.createQuery("SELECT count(h) FROM EntHospital h");
         Long res = (Long)qry.getSingleResult();
         logger.log(Level.INFO,"Entero resultado = {0}",res);
-        return res!=0;       
+        
+        return res!=0;     
+        
     }
 
     @Override
@@ -40,7 +45,21 @@ public class HospitalSB extends BaseSB implements HospitalSBLocal {
         }
     }
 
+    @Override
+   public EntHospital getPrimerHospital() throws NoExisteHospitalException {//*       
+        Query qry = em.createQuery("SELECT h FROM EntHospital h ORDER BY h.idHospital");
+        List<EntHospital> res = qry.getResultList();
+        
+        if(res.size()==0){
+            throw new NoExisteHospitalException("No existen hospitales!");
+        }
+        return res.get(0);
+    }
+
+    @Override
+    public EntHospital updateHospital(EntHospital eh) throws UpdateEntityException {//*
+        return (EntHospital)this.updateEntity(eh);   
+    }
    
-    
     
 }

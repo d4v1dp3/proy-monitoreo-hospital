@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EntHospital.findByColonia", query = "SELECT e FROM EntHospital e WHERE e.colonia = :colonia"),
     @NamedQuery(name = "EntHospital.findByMunicipio", query = "SELECT e FROM EntHospital e WHERE e.municipio = :municipio"),
     @NamedQuery(name = "EntHospital.findByEstado", query = "SELECT e FROM EntHospital e WHERE e.estado = :estado")})
+
 public class EntHospital implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -100,6 +101,7 @@ public class EntHospital implements Serializable {
         municipio="";
         estado="";
     }
+    
 
     public EntHospital(Integer idHospital) {
         this.idHospital = idHospital;
@@ -114,6 +116,7 @@ public class EntHospital implements Serializable {
     public Integer getIdHospital() {
         return idHospital;
     }
+    
 
     public void setIdHospital(Integer idHospital) {
         this.idHospital = idHospital;

@@ -7,6 +7,8 @@
 package ipn.cic.web.sistmhospital.bean.admon;
 
 import ipn.cic.sistmhospital.exception.HospitalException;
+import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.util.Constantes;
@@ -29,6 +31,7 @@ import javax.inject.Named;
 @Named(value="gestionHospitalMB")
 @ViewScoped
 public class GestionHospitalMB implements Serializable{
+    
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(GestionHospitalMB.class.getName());
     
@@ -50,16 +53,21 @@ public class GestionHospitalMB implements Serializable{
     
     @PostConstruct
     public void iniciaMB(){
+        
         hospEnt = new EntHospital();
         lat = lon = 0.0f;
         nomSistema = Constantes.getInstance().getString("NOMBRE_SISTEMA");
         try {
             existeHosp = hospitalSB.existeHospital();
+            if(existeHosp){
+                logger.log(Level.INFO,"Cargando datos primer hospital..."); //*  
+                cargarPrimerHospital();  
+            }            
         } catch (HospitalException ex) {
             logger.log(Level.SEVERE,"Error en MB al guardar hospital : {0}",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
-                                                "No es posible consultar datos de hospital", 
+                                                "No es posible consultar datos de hospital.", 
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmGuardaHosp:msgs", msg);
         }
@@ -71,11 +79,12 @@ public class GestionHospitalMB implements Serializable{
         hospEnt.setUbicacionGeo(ug);
         try {
             hospEnt = hospitalSB.guardaHospital(hospEnt);
+            logger.log(Level.INFO,"Datos de hospital guardados.");
         } catch (HospitalException ex) {
             logger.log(Level.SEVERE,"Error en MB al guardar hospital : {0}",ex.getMessage());
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error al guardar",
-                                                "Error al intentar guardar datos de hospital intente más tarde", 
+                                                "Error al intentar guardar datos de hospital intentelo más tarde.", 
                                                 FacesMessage.SEVERITY_ERROR);
         }
        
@@ -86,6 +95,43 @@ public class GestionHospitalMB implements Serializable{
                                                 FacesMessage.SEVERITY_INFO);
         }
         utilWebSB.addMsg("frmGuardaHosp:msgs", msg);       
+    }
+    
+    public void cargarPrimerHospital(){
+        try{
+            hospEnt = hospitalSB.getPrimerHospital();
+            logger.log(Level.INFO,"\tDatos primer hospital recuperados.");        
+        }catch(NoExisteHospitalException ex){            
+            logger.log(Level.SEVERE,"Error al recuperar hospital : {0}",ex.getMessage());           
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("No existen datos del hospital",
+                                                "No hay datos del hospital: capture informacion.", 
+                                                FacesMessage.SEVERITY_WARN);
+            utilWebSB.addMsg("frmGuardaHosp:msgs", msg);
+        }
+    }
+    
+    public void updateHospital(){        
+        FacesMessage msg = null;
+        String ug = lat.toString()+","+lon.toString();
+        hospEnt.setUbicacionGeo(ug);
+        try {
+            hospEnt = hospitalSB.updateHospital(hospEnt);            
+        } catch (UpdateEntityException ex) {
+            logger.log(Level.SEVERE,"Error en MB al actualizar hospital : {0}",ex.getMessage());
+            msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error al actualiar!",
+                                                "Error al intentar actualizar datos de hospital intentelo más tarde.", 
+                                                FacesMessage.SEVERITY_ERROR);
+        }
+       
+        if(msg==null){
+            msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Operacion Exitosa!",
+                                                "Los datos de hospital se actualizaron correctamente.", 
+                                                FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frmExisteHosp:msgsEH", msg);    
     }
     
     /**
