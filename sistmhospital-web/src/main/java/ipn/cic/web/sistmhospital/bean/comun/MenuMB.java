@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -36,6 +37,7 @@ import org.primefaces.model.menu.MenuModel;
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 @Named(value="menuMB")
+@SessionScoped
 public class MenuMB implements Serializable{
     private static final Logger logger = Logger.getLogger(MenuMB.class.getName());
     private static final long serialVersionUID = 1L;
