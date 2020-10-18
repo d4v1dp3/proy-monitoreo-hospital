@@ -18,14 +18,7 @@ Todos los derechos reservados
         <link rel="shortcut icon" type="image/png" href="/sistmhospital-web/resources/images/icon/favicon-32x32.png" />
         <link href="/sistmhospital-web/resources/css/loginStyle.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous"/>
-        
-        
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        
-        
-        
+
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -36,104 +29,89 @@ Todos los derechos reservados
     </head>
     <body>
         
-        
-        <div class="mainCont">          
-           
-            
-            <div class="header" style="background:#FFF;">
-                <div class="barraTitulo">
-                <!--div class="row"-->
-                    <div class="item imgcontainer">
-                        <img class="img-responsive" height="60" src="/sistmhospital-web/resources/images/logoSRE.png">
-                    </div>
-                    <div class="item">
-                        <div class="tituloNomLogin">
-                            Sistema de Monitoreo del Estado de Salud de Pacientes COVID-19 en Hospitales
-                        </div>
-                    </div> 
-                    <div class="item">
-                    </div>
+      
+    <div class="contenedorprincipal">
+
+        <div class="header">
+            <div class="barraTitulo">
+                <div class="imgcontainer">
+                    <img class="img-responsive" height="60" src="/sistmhospital-web/resources/images/logoSRE.png">
                 </div>
-                <!--/div-->
+                <div class="titulocontainer">
+                    <div>Sistema de Monitoreo del Estado de Salud de Pacientes COVID-19 en Hospitales</div>
+                </div>
+
             </div>
+        </div>
 
 
+        <div class="contenido">
 
-            <div class="contenido"> 
-                <!--h1 class="title">Ingresar</h1--> 
+            <div class="login">
                 <div class="wrapper fadeInDown">
-                <div id="formContent">
-
-
-                    <div class="fadeIn first">
-                        <!--<div class="imgcontainer fadeIn first">--> 
+                    <div id="formContent">
+                        <div class="fadeIn first">
+                            <!--<div class="imgcontainer fadeIn first">-->
                             <img src="/sistmhospital-web/resources/images/img_avatar2.png" alt="Avatar" class="avatar">
-                    </div>
-
-                    <form name="loginForm" method="post" accept-charset="utf-8" action="j_security_check">
-
-                        <div>
-                            <input type="text" required name="j_username" placeholder="Nombre de usuario" class="fadeIn second"/>
-                            <input type="password" placeholder="Clave de acceso" id="lpass" required name="j_password" class="fadeIn third"/>
                         </div>
-                        <div>
-                            <button type="submit" class="fadeIn fourth">Entrar</button>
-                        </div>
-                    </form>
+                        <form name="loginForm" method="post" accept-charset="utf-8" action="j_security_check">
+                            <div>
+                                <input type="text" required name="j_username" placeholder="Nombre de usuario" class="fadeIn second" />
+                                <input type="password" placeholder="Clave de acceso" id="lpass" required name="j_password" class="fadeIn third" />
+                            </div>
+                            <div>
+                                <button type="submit" class="fadeIn fourth">Entrar</button>
+                            </div>
+                        </form>
 
-                </div>
-                </div>
-            </div>
-
-
-            <div class="footer">
-                <div class="row">
-                    <div class="col col-lg foot_ley">
-                        <p style="text-align:center; font-size: 12px">
-                            <b>Centro de Investigaci&oacute;n en Computaci&oacute;n</b> 
-                            <br/>INSTITUTO POLIT&Eacute;CNICO NACIONAL
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col col-lg-3 foot_ley"> 
-                        <img class="img-responsive" src="/sistmhospital-web/resources/images/logoSRE.png" width="170">
-                    </div>
-                    <div class="col col-lg-7 foot_ley">
-                        <p id="poli">
-                            D.R. Instituto Polit&eacute;cnico Nacional (IPN), Av. Juan de Dios B&aacute;tiz, Esq. Miguel Oth&oacute;n de Mendiz&aacute;bal,
-                            Col. Nueva Industrial Vallejo, Alcald&iacute;a Gustavo A. Madero, C.P. 07738, Ciudad de M&eacute;xico; M&eacute;xico .
-                        </p>
-                        <p id="derechos">
-                            Esta p&aacute;gina es una obra intelectual protegida por la Ley Federal del Derecho de Autor,
-                            puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile,
-                            se cite la fuente completa y su dirección electr&oacute;nica; su uso para otros fines, requiere autorizaci&oacute;n previa
-                            y por escrito de la Direcci&oacute;n General del Instituto.
-                        </p>
-                        <p style="text-align:center;">
-                            <span>
-                                <a href="http://www.cic.ipn.mx/">Desarrollado por CIC-IPN</a>
-                                <br/>Laboratorio de Rob&oacute;tica y Mecartr&oacute;nica
-                            </span>
-
-                        </p>
-                    </div>
-                    <div class="col col-lg-2 foot_ley"> 
-                        <div>
-                            <img class="img-responsive" src="/sistmhospital-web/resources/images/cicLogo.jpg" width="70" height="50">
-                        </div>
-                        <div>
-                            <img class="img-responsive" src="/sistmhospital-web/resources/images/logo-ipn.png" 
-                             height="100">
-                        </div>                        
                     </div>
                 </div>
 
             </div>
         </div>
-            
- 
+
+
+        <div class="footer">
+            <div class="superior">
+                <div>
+                    <p style="text-align:center; font-size: 12px">
+                        <b>Centro de Investigaci&oacute;n en Computaci&oacute;n</b>
+                        <br/>INSTITUTO POLIT&Eacute;CNICO NACIONAL
+                    </p>
+                </div>
+            </div>
+
+            <div class="inferior">
+                <div class="izquierda">
+                    <img class="img-responsive" src="/sistmhospital-web/resources/images/logoSRE.png" width="170">
+                </div>
+                <div class="centrado">
+                    <p id="poli">
+                        D.R. Instituto Polit&eacute;cnico Nacional (IPN), Av. Juan de Dios B&aacute;tiz, Esq. Miguel Oth&oacute;n de Mendiz&aacute;bal, Col. Nueva Industrial Vallejo, Alcald&iacute;a Gustavo A. Madero, C.P. 07738, Ciudad de M&eacute;xico; M&eacute;xico .
+                    </p>
+                    <p id="derechos">
+                        Esta p&aacute;gina es una obra intelectual protegida por la Ley Federal del Derecho de Autor, puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electr&oacute;nica; su uso para otros
+                        fines, requiere autorizaci&oacute;n previa y por escrito de la Direcci&oacute;n General del Instituto.
+                    </p>
+                    <p style="text-align:center;">
+                        <span>
+                            <a href="http://www.cic.ipn.mx/">Desarrollado por CIC-IPN</a>
+                            <br/>Laboratorio de Rob&oacute;tica y Mecartr&oacute;nica
+                        </span>
+
+                    </p>
+                </div>
+                <div class="derecha">
+                    <div>
+                        <img class="img-responsive" src="/sistmhospital-web/resources/images/cicLogo.jpg" width="70" height="50">
+                    </div>
+                    <div>
+                        <img class="img-responsive" src="/sistmhospital-web/resources/images/logo-ipn.png" height="100">
+                    </div>
+                </div>
+            </div>
+
+        </div>
           
     </body>
 </html>
