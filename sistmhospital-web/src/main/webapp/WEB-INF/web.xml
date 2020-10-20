@@ -86,13 +86,31 @@ Todos los derechos reservados
             <role-name>PACIENTE</role-name>
         </auth-constraint>
         <user-data-constraint>
-            <description/>
+            <description>Sin encriptacion</description>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    
+    <security-constraint>
+        <display-name>URL Administrador</display-name>
+        <web-resource-collection>
+            <web-resource-name>PaginasAdministrador</web-resource-name>
+            <description>Protege las paginas para rol Administrador</description>
+            <url-pattern>/faces/facelets/admon/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Roles con acceso a Paginas Administrador</description>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>Sin encriptacion</description>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
     <session-config>
         <session-timeout>
-            30
+            15
         </session-timeout>
     </session-config>
     <welcome-file-list>

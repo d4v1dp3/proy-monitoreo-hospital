@@ -67,4 +67,17 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             throw new UsuarioException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public List<EntUsuario> getUsuarios() throws UsuarioException {
+        try{
+            query = em.createQuery("SELECT usr From EntUsuario usr LEFT JOIN FETCH  usr.idPersona p "
+                    + "ORDER BY p.primerApellido, p.segundoApellido, p.nombre");
+            return query.getResultList();
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener la lista de usuarios : {0}",e.getMessage());
+            throw new UsuarioException("No esposible obtener la lista de usuarios",e);
+        }
+                    
+    }
 }

@@ -38,4 +38,11 @@ public interface UsuarioSBLocal {
      * @throws UsuarioException
      */
     public List<EntRol> getRoles(String idUsuario) throws UsuarioException;
+    
+    /**
+     * Obtiene todos los usuarios de la aplicación
+     * @return Lista de entidades usuarios.
+     * @throws UsuarioException
+     */
+    public List<EntUsuario> getUsuarios()throws UsuarioException;
 }
