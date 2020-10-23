@@ -5,8 +5,6 @@
  * Todos los derechos reservados
  */
 package ipn.cic.web.sistmhospital.bean.vo;
-import ipn.cic.sistmhospital.modelo.EntCareta;
-import ipn.cic.sistmhospital.modelo.EntMedidasPK;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,8 +13,9 @@ import java.util.Date;
  * @author J.PEREZ
  */
 public class MedidasVO implements Serializable{
-    
+
     //protected EntMedidasPK entMedidasPK;
+    private Long idPaciente;
     private Date fechaMedicion;
     private float saturacionOxigeno;
     private float temperatura;
@@ -29,7 +28,10 @@ public class MedidasVO implements Serializable{
     
     public MedidasVO(){}
         
-    public MedidasVO(Date fechaMedicion, float saturacionOxigeno, float temperatura, short frecCardiaca, short frecRespiratoria, boolean alerta, int preArtSistolica, int preArtDiastolica) {
+    public MedidasVO(Long idPaciente, Date fechaMedicion, float saturacionOxigeno, float temperatura, 
+                     short frecCardiaca, short frecRespiratoria, boolean alerta, 
+                     int preArtSistolica, int preArtDiastolica) {
+        this.idPaciente = idPaciente;
         this.fechaMedicion = fechaMedicion;
         this.saturacionOxigeno = saturacionOxigeno;
         this.temperatura = temperatura;
@@ -103,6 +105,20 @@ public class MedidasVO implements Serializable{
 
     public void setPreArtDiastolica(int preArtDiastolica) {
         this.preArtDiastolica = preArtDiastolica;
+    }
+    
+    /**
+     * @return the idPaciente
+     */
+    public Long getIdPaciente() {
+        return idPaciente;
+    }
+
+    /**
+     * @param idPaciente the idPaciente to set
+     */
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
 }

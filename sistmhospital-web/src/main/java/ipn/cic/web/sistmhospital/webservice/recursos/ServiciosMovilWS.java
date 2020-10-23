@@ -18,6 +18,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import com.google.gson.Gson;
+import java.util.Calendar;
+
 
 /**
  *
@@ -27,22 +30,12 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
-@Path("recurso")
-public class RecursoJSON {
-    
-    @GET
-    public JsonObject getUsuario(){        
-        //Recuperado de: https://www.programcreek.com/java-api-examples/?class=javax.ws.rs.core.MediaType&method=APPLICATION_JSON
-        
-        JsonObject result = Json.createObjectBuilder()
-        .add("Mensaje", "JSON.")
-        .build();
-        return result;
-    }    
+@Path("serviciosMovil")
+public class ServiciosMovilWS {
     
     @POST
     public JsonObject recibeMedidas(JsonObject datos){
-       
+       /*
         long idPaciente = Long.parseLong(datos.getString("idpaciente"));
         long idCareta = Long.parseLong(datos.getString("idcareta"));
         String fecha = datos.getString("fechamedicion");
@@ -60,12 +53,16 @@ public class RecursoJSON {
         boolean alerta = Boolean.parseBoolean(datos.getString("alerta"));
         int preArtSistolica = Integer.parseInt(datos.getString("preartsistolica"));
         int preArtDiastolic = Integer.parseInt(datos.getString("preartdiastolica"));      
-
+*/
+        Gson gson= new Gson();
+        MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
+        med.setFechaMedicion(Calendar.getInstance().getTime());
+        //MedidasVO medidas = new MedidasVO(fechaMedicion, saturacionOxigeno, temperatura,frecCardiaca,frecRespiratoria,alerta,preArtSistolica, preArtDiastolic );
         
-        MedidasVO medidas = new MedidasVO(fechaMedicion, saturacionOxigeno, temperatura,frecCardiaca,frecRespiratoria,alerta,preArtSistolica, preArtDiastolic );
         
         
-        JsonObject respuesta = Json.createObjectBuilder()
+        
+       /* JsonObject respuesta = Json.createObjectBuilder()
         .add("IDPaciente", idPaciente)
         .add("IDCareta", idCareta)   
         .add("Fecha", fecha)
@@ -76,20 +73,31 @@ public class RecursoJSON {
         .add("Alerta", alerta)  
         .add("preArtSistolica", preArtSistolica)  
         .add("preArtDiastolic", preArtDiastolic) 
+        .build();*/
+        
+        JsonObject respuesta = Json.createObjectBuilder()
+        .add("IDPaciente", med.getIdPaciente())
+        .add("Fecha", med.getFechaMedicion().toString())
+        .add("Oxigeno", med.getSaturacionOxigeno())   
+        .add("temperatura", med.getTemperatura())  
+        .add("FCardiaca", med.getFrecCardiaca())  
+        .add("FRespiratoria", med.getFrecRespiratoria())  
+        .add("Alerta", med.isAlerta())  
+        .add("preArtSistolica", med.getPreArtSistolica())  
+        .add("preArtDiastolic", med.getPreArtDiastolica()) 
         .build();
         
         /*Estructura JSON Recibida
         {
-            "idpaciente": "20178",
-            "idcareta": "00234",
-            "fechamedicion": "21/10/2020",
-            "saturacionoxigeno": "98.0",
-            "temperatura": "26.0",
-            "freccardiaca": "62", 
-            "frecrespiratoria": "19",
-            "alerta": "0", 
-            "preartsistolica":  "110",
-            "preartdiastolica": "78"
+            "idPaciente": 20178,
+            "fechaMedicion": "21/10/2020",
+            "saturacionOxigeno": 98.0,
+            "temperatura": 26.0,
+            "frecCardiaca": 62, 
+            "frecRespiratoria": 19,
+            "alerta": 0, 
+            "preArtSistolica":  110,
+            "preArtDiastolica": 78
         }*/
         
         /*
