@@ -15,7 +15,6 @@ import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -41,10 +40,11 @@ public class RecursoJSON {
         return result;
     }    
     
-    @PUT
+    @POST
     public JsonObject recibeMedidas(JsonObject datos){
        
-        
+        long idPaciente = Long.parseLong(datos.getString("idpaciente"));
+        long idCareta = Long.parseLong(datos.getString("idcareta"));
         String fecha = datos.getString("fechamedicion");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaMedicion = null;
@@ -63,9 +63,11 @@ public class RecursoJSON {
 
         
         MedidasVO medidas = new MedidasVO(fechaMedicion, saturacionOxigeno, temperatura,frecCardiaca,frecRespiratoria,alerta,preArtSistolica, preArtDiastolic );
-
-        /*
+        
+        
         JsonObject respuesta = Json.createObjectBuilder()
+        .add("IDPaciente", idPaciente)
+        .add("IDCareta", idCareta)   
         .add("Fecha", fecha)
         .add("Oxigeno", saturacionOxigeno)   
         .add("temperatura", temperatura)  
@@ -74,11 +76,13 @@ public class RecursoJSON {
         .add("Alerta", alerta)  
         .add("preArtSistolica", preArtSistolica)  
         .add("preArtDiastolic", preArtDiastolic) 
-        .build();*/
-         /*Estructura JSON Recibida
+        .build();
+        
+        /*Estructura JSON Recibida
         {
+            "idpaciente": "20178",
+            "idcareta": "00234",
             "fechamedicion": "21/10/2020",
-            "horamedicion": "16:00",
             "saturacionoxigeno": "98.0",
             "temperatura": "26.0",
             "freccardiaca": "62", 
@@ -86,14 +90,13 @@ public class RecursoJSON {
             "alerta": "0", 
             "preartsistolica":  "110",
             "preartdiastolica": "78"
-        }        
-        */
+        }*/
         
-        
+        /*
         JsonObject respuesta = Json.createObjectBuilder()
         .add("Mensaje", "Datos recibidos correctamente!")
         .add("Oxigeno", saturacionOxigeno)
-        .build();
+        .build();*/
         return respuesta;
     }
     
