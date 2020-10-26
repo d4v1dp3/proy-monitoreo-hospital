@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import ipn.cic.sistmhospital.exception.MedidasException;
+import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.web.sistmhospital.delegate.MedidasBDLocal;
 import java.util.Calendar;
 import javax.ejb.EJB;
@@ -39,7 +40,7 @@ public class ServiciosMovilWS {
     private MedidasBDLocal medidasDB;
     
     @POST
-    public JsonObject recibeMedidas(JsonObject datos) throws MedidasException{
+    public JsonObject recibeMedidas(JsonObject datos) throws MedidasException, NoExistePacienteException{
         /*Estructura JSON Recibida
         {
             "idPaciente": 20178,
@@ -57,8 +58,20 @@ public class ServiciosMovilWS {
         med.setFechaMedicion(Calendar.getInstance().getTime());
 
         JsonObject respuesta;
-        respuesta = medidasDB.guardarMedidas(med);
         
+        try{
+            respuesta = medidasDB.guardarMedidas(med);
+        }catch(NoExistePacienteException ex){
+            respuesta = Json.createObjectBuilder()
+            .add("Respuesta", "1")
+            .add("Error", "No existe paciente.")
+            .build();
+        }catch(MedidasException ex){
+            respuesta = Json.createObjectBuilder()
+            .add("Respuesta", "3")
+            .add("Error", "Intentelo mas tarde.")
+            .build();
+        }        
         return respuesta;
     }
     

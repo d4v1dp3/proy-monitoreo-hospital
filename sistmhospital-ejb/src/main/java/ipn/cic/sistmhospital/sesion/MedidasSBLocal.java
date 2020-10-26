@@ -8,11 +8,14 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.MedidasException;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
+import javax.ejb.Local;
 
 /**
  *
  * @author J.PEREZ
  */
+
+@Local
 public interface MedidasSBLocal {
     EntMedidas guardaMedidas(EntMedidas med) throws MedidasException;
 }

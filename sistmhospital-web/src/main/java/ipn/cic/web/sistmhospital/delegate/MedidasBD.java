@@ -42,21 +42,10 @@ public class MedidasBD implements MedidasBDLocal {
     private PacienteSBLocal pacienteSB;
     
     @EJB
-    private CaretaSBLocal caretaSB;
-    
-    @EJB
     private MedidasSBLocal medidasSB;
-    
 
-
-    /// implementar el metodo para persistir las medidas.
-    // usar los sb de paciente , careta  para recuperar la entidad paciente, l
-    //la entidad careta, crear una entidad Medida asociar las entidades paciente y careta a medidad
-    //persistir la medida.
-    // devolver un json con el código éxito.
     
-    @Override
-    public EntPaciente cargarPaciente(long idPaciente){
+    private EntPaciente cargarPaciente(long idPaciente) throws NoExistePacienteException{
         try{
             EntPaciente paciente = pacienteSB.getPaciente(idPaciente);
             logger.log(Level.INFO, "\tPaciente {0} recuperado.", idPaciente);  
@@ -66,14 +55,16 @@ public class MedidasBD implements MedidasBDLocal {
             return null;
         }
     }
-
     
     @Override
-    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException{ 
+    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException, NoExistePacienteException{ 
+        
         EntPaciente paciente;
         EntMedidas medidas = new EntMedidas();
         JsonObject respuesta; 
+        
         try {   
+            
             paciente = cargarPaciente(med.getIdPaciente());
             
             medidas.setEntPaciente(paciente);
@@ -91,20 +82,26 @@ public class MedidasBD implements MedidasBDLocal {
             logger.log(Level.INFO,"Medidas guardadas.");
             
             respuesta = Json.createObjectBuilder()
-            .add("Mensaje", "Exito al guardar medidas recibidas.")
+            .add("Respuesta", "0")
+            .add("Exito", "Medidas almacenadas correctamente.")
             .build();
-        } catch (MedidasException ex) {
-            logger.log(Level.SEVERE,"Error en MB al guardar medidas : {0}",ex.getMessage());
+        } catch (NoExistePacienteException  ex) {
+            logger.log(Level.SEVERE,"Error, paciente no econtrado : {0}",ex.getMessage());
+
             respuesta = Json.createObjectBuilder()
-            .add("Error", "No se guardaron las medidas.")
+            .add("Respuesta", "1")
+            .add("Error", "No existe paciente.")
+            .build();
+        }catch (MedidasException  ex) {
+            logger.log(Level.SEVERE,"Error al guardar las medidas : {0}",ex.getMessage());
+
+            respuesta = Json.createObjectBuilder()
+            .add("Respuesta", "3")
+            .add("Error", "Itente mas tarde.")
             .build();
         }
         return respuesta;
     }
-    
-    
-    
-
-    
+        
 
 }

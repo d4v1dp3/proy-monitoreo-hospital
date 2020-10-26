@@ -7,6 +7,7 @@
 package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.MedidasException;
+import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
@@ -22,8 +23,6 @@ import javax.json.JsonObject;
 public interface MedidasBDLocal {
  
     //definir un metodo que reciba el VO y lo persista lanzar una excepcion si no se puede hacer
-    EntPaciente cargarPaciente(long idPaciente);
-    JsonObject guardarMedidas(MedidasVO med) throws MedidasException;
-    EntCareta cargarCareta(long idCareta);
+    JsonObject guardarMedidas(MedidasVO med) throws MedidasException, NoExistePacienteException;
     
 }
