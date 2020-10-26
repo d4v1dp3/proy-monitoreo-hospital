@@ -32,7 +32,7 @@ import javax.ejb.EJB;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
-@Path("serviciosMovil")
+@Path("persistemedicion")
 public class ServiciosMovilWS {
     
     @EJB

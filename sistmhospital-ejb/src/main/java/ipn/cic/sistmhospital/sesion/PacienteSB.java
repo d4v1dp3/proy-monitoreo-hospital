@@ -37,11 +37,12 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
     @Override
     public EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException {        
         Query qry = em.createQuery("SELECT e FROM EntPaciente e WHERE e.idPaciente = :idPaciente");
-        List<EntPaciente> res = qry.getResultList();//DUDA
+        EntPaciente res = (EntPaciente)qry.getSingleResult();//DUDA
         
-        if(res.size()==0){
+        if(res == null){
             throw new NoExistePacienteException("No se encontro el paciente.");
         }
-        return res.get(0);
+        res.getIdCareta();
+        return res;
     }
 }

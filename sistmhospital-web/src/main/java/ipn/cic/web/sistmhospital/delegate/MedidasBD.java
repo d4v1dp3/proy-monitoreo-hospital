@@ -47,9 +47,7 @@ public class MedidasBD implements MedidasBDLocal {
     @EJB
     private MedidasSBLocal medidasSB;
     
-    EntPaciente paciente;
-    EntCareta careta;
-    EntMedidas medidas;
+
 
     /// implementar el metodo para persistir las medidas.
     // usar los sb de paciente , careta  para recuperar la entidad paciente, l
@@ -60,7 +58,7 @@ public class MedidasBD implements MedidasBDLocal {
     @Override
     public EntPaciente cargarPaciente(long idPaciente){
         try{
-            paciente = pacienteSB.getPaciente(idPaciente);
+            EntPaciente paciente = pacienteSB.getPaciente(idPaciente);
             logger.log(Level.INFO, "\tPaciente {0} recuperado.", idPaciente);  
             return paciente;
         }catch(NoExistePacienteException ex){            
@@ -68,25 +66,27 @@ public class MedidasBD implements MedidasBDLocal {
             return null;
         }
     }
-    
-    public EntCareta cargarCareta(long idCareta){
-        try{
-            careta = caretaSB.getCareta(idCareta);
-            logger.log(Level.INFO, "\tCareta {0} recuperada.", idCareta);  
-            return careta;
-        }catch(NoExisteCaretaException ex){            
-            logger.log(Level.SEVERE,"Error al recuperar datos de careta: {0}",ex.getMessage());
-            return null;
-        }
-    }
 
     
     @Override
-    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException{        
+    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException{ 
+        EntPaciente paciente;
+        EntMedidas medidas = new EntMedidas();
         JsonObject respuesta; 
-        try {            
-            medidas.setEntPaciente(cargarPaciente(med.getIdPaciente()));
-            //medidas.setEntCareta(cargarCareta(med.getIdCareta()));            
+        try {   
+            paciente = cargarPaciente(med.getIdPaciente());
+            
+            medidas.setEntPaciente(paciente);
+            medidas.setEntCareta(paciente.getIdCareta());  
+            medidas.setFechaMedicion(med.getFechaMedicion());
+            medidas.setSaturacionOxigeno(med.getSaturacionOxigeno());
+            medidas.setTemperatura(med.getTemperatura());
+            medidas.setFrecCardiaca(med.getFrecCardiaca());
+            medidas.setFrecRespiratoria(med.getFrecRespiratoria());
+            medidas.setAlerta(med.getAlerta());
+            medidas.setPreArtSistolica(med.getPreArtSistolica());
+            medidas.setPreArtDiastolica(med.getPreArtDiastolica());
+                      
             medidas = medidasSB.guardaMedidas(medidas);
             logger.log(Level.INFO,"Medidas guardadas.");
             

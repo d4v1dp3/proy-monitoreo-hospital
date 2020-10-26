@@ -83,7 +83,7 @@ public class MedidasVO implements Serializable{
         this.frecRespiratoria = frecRespiratoria;
     }
 
-    public boolean isAlerta() {
+    public boolean getAlerta() {
         return alerta;
     }
 
