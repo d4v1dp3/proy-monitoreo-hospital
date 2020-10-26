@@ -73,7 +73,7 @@ public class GestionHospitalMB implements Serializable{
         }
     }
     
-    public void guardaHospiral(){
+    public void guardaHospital(){
         FacesMessage msg = null;
         String ug = lat.toString()+","+lon.toString();
         hospEnt.setUbicacionGeo(ug);

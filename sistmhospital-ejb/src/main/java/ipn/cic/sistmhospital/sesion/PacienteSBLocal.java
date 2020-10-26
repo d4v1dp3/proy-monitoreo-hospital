@@ -6,6 +6,9 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.NoExistePacienteException;
+import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +17,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface PacienteSBLocal {
+    
+    EntPaciente guardaPaciente(EntPaciente paciente) throws PacienteException;
+    EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException;
     
 }

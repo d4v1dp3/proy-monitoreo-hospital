@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
  * @author J.PEREZ
  */
 
-@ApplicationPath("servicioweb")
+@ApplicationPath("serviciosweb")
 public class ConfiguracionJAXRS extends Application{
     
     //Comentario    

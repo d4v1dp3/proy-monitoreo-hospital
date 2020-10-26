@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EntMedidas.findByAlerta", query = "SELECT e FROM EntMedidas e WHERE e.alerta = :alerta"),
     @NamedQuery(name = "EntMedidas.findByPreArtSistolica", query = "SELECT e FROM EntMedidas e WHERE e.preArtSistolica = :preArtSistolica"),
     @NamedQuery(name = "EntMedidas.findByPreArtDiastolica", query = "SELECT e FROM EntMedidas e WHERE e.preArtDiastolica = :preArtDiastolica")})
+
 public class EntMedidas implements Serializable {
 
     private static final long serialVersionUID = 1L;
