@@ -82,28 +82,28 @@ public class MedidasBD implements MedidasBDLocal {
 
             respuesta = Json.createObjectBuilder()
                     .add("Respuesta", "0")
-                    .add("Exito", "Medidas almacenadas correctamente.")
+                    .add("Descripción", "Medidas almacenadas correctamente.")
                     .build();
         } catch (NoExistePacienteException ex) {
             logger.log(Level.SEVERE, "Error, paciente no econtrado : {0}", ex.getMessage());
 
             respuesta = Json.createObjectBuilder()
                     .add("Respuesta", "1")
-                    .add("Error", "No existe paciente.")
+                    .add("Descripción", "No existe paciente.")
                     .build();
         } catch (MedidasException ex) {
             logger.log(Level.SEVERE, "Error al guardar las medidas : {0}", ex.getMessage());
 
             respuesta = Json.createObjectBuilder()
                     .add("Respuesta", "3")
-                    .add("Error", "Itente mas tarde.")
+                    .add("Descripción", "Itente mas tarde.")
                     .build();
         }catch(Exception ex){
             logger.log(Level.SEVERE, "Error inesperado del sistema : {0}", ex.getMessage());
 
             respuesta = Json.createObjectBuilder()
                     .add("Respuesta", "4")
-                    .add("Error", "Error inesperado del sistema : "+ex.getMessage())
+                    .add("Descripción", "Error inesperado del sistema : "+ex.getMessage())
                     .build();
         }
         return respuesta;
