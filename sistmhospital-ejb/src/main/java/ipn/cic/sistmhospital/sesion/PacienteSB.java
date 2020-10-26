@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -38,12 +39,13 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
     public EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException {          
         Query qry = em.createQuery("SELECT e FROM EntPaciente e WHERE e.idPaciente = :idPaciente");
         qry.setParameter("idPaciente", idPaciente);
-        EntPaciente res = (EntPaciente)qry.getSingleResult();//DUDA
-        
-        if(res == null){
+        try{
+            EntPaciente res = (EntPaciente)qry.getSingleResult();
+            res.getIdCareta();
+            return res;
+        }catch(NoResultException ex){
+            logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
             throw new NoExistePacienteException("No se encontro el paciente.");
         }
-        res.getIdCareta();
-        return res;
     }
 }

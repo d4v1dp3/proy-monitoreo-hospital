@@ -12,6 +12,7 @@ import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
+import ipn.cic.sistmhospital.modelo.EntMedidasPK;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
 import ipn.cic.sistmhospital.sesion.CaretaSBLocal;
@@ -36,39 +37,37 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 @PermitAll
 @SecurityDomain("other")
 public class MedidasBD implements MedidasBDLocal {
+
     private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getName());
-    
+
     @EJB
     private PacienteSBLocal pacienteSB;
-    
+
     @EJB
     private MedidasSBLocal medidasSB;
 
-    
-    private EntPaciente cargarPaciente(long idPaciente) throws NoExistePacienteException{
-        try{
-            EntPaciente paciente = pacienteSB.getPaciente(idPaciente);
-            logger.log(Level.INFO, "\tPaciente {0} recuperado.", idPaciente);  
-            return paciente;
-        }catch(NoExistePacienteException ex){            
-            logger.log(Level.SEVERE,"Error al recuperar datos del paciente: {0}",ex.getMessage());
-            return null;
-        }
+    private EntPaciente cargarPaciente(long idPaciente) throws NoExistePacienteException {
+        EntPaciente paciente = pacienteSB.getPaciente(idPaciente);
+        logger.log(Level.INFO, "\tPaciente {0} recuperado.", idPaciente);
+        return paciente;
     }
-    
+
     @Override
-    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException, NoExistePacienteException{ 
-        
+    public JsonObject guardarMedidas(MedidasVO med) throws MedidasException, NoExistePacienteException {
+
         EntPaciente paciente;
         EntMedidas medidas = new EntMedidas();
-        JsonObject respuesta; 
-        
-        try {   
-            
+        JsonObject respuesta;
+
+        try {
+
             paciente = cargarPaciente(med.getIdPaciente());
-            
+            EntMedidasPK pkMed = new EntMedidasPK();
+            pkMed.setIdPaciente(paciente.getIdPaciente());
+            pkMed.setIdCareta(paciente.getIdCareta().getIdCareta());
+            medidas.setEntMedidasPK(pkMed);
             medidas.setEntPaciente(paciente);
-            medidas.setEntCareta(paciente.getIdCareta());  
+            medidas.setEntCareta(paciente.getIdCareta());
             medidas.setFechaMedicion(med.getFechaMedicion());
             medidas.setSaturacionOxigeno(med.getSaturacionOxigeno());
             medidas.setTemperatura(med.getTemperatura());
@@ -77,31 +76,37 @@ public class MedidasBD implements MedidasBDLocal {
             medidas.setAlerta(med.getAlerta());
             medidas.setPreArtSistolica(med.getPreArtSistolica());
             medidas.setPreArtDiastolica(med.getPreArtDiastolica());
-                      
+
             medidas = medidasSB.guardaMedidas(medidas);
-            logger.log(Level.INFO,"Medidas guardadas.");
-            
-            respuesta = Json.createObjectBuilder()
-            .add("Respuesta", "0")
-            .add("Exito", "Medidas almacenadas correctamente.")
-            .build();
-        } catch (NoExistePacienteException  ex) {
-            logger.log(Level.SEVERE,"Error, paciente no econtrado : {0}",ex.getMessage());
+            logger.log(Level.INFO, "Medidas guardadas.");
 
             respuesta = Json.createObjectBuilder()
-            .add("Respuesta", "1")
-            .add("Error", "No existe paciente.")
-            .build();
-        }catch (MedidasException  ex) {
-            logger.log(Level.SEVERE,"Error al guardar las medidas : {0}",ex.getMessage());
+                    .add("Respuesta", "0")
+                    .add("Exito", "Medidas almacenadas correctamente.")
+                    .build();
+        } catch (NoExistePacienteException ex) {
+            logger.log(Level.SEVERE, "Error, paciente no econtrado : {0}", ex.getMessage());
 
             respuesta = Json.createObjectBuilder()
-            .add("Respuesta", "3")
-            .add("Error", "Itente mas tarde.")
-            .build();
+                    .add("Respuesta", "1")
+                    .add("Error", "No existe paciente.")
+                    .build();
+        } catch (MedidasException ex) {
+            logger.log(Level.SEVERE, "Error al guardar las medidas : {0}", ex.getMessage());
+
+            respuesta = Json.createObjectBuilder()
+                    .add("Respuesta", "3")
+                    .add("Error", "Itente mas tarde.")
+                    .build();
+        }catch(Exception ex){
+            logger.log(Level.SEVERE, "Error inesperado del sistema : {0}", ex.getMessage());
+
+            respuesta = Json.createObjectBuilder()
+                    .add("Respuesta", "4")
+                    .add("Error", "Error inesperado del sistema : "+ex.getMessage())
+                    .build();
         }
         return respuesta;
     }
-        
 
 }
