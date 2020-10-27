@@ -19,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import ipn.cic.sistmhospital.exception.MedidasException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.web.sistmhospital.delegate.MedidasBDLocal;
@@ -53,13 +54,13 @@ public class ServiciosMovilWS {
             "preArtDiastolica": 78
         }*/
 
-        Gson gson= new Gson();
-        MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
-        med.setFechaMedicion(Calendar.getInstance().getTime());
-
         JsonObject respuesta;
         
         try{
+            Gson gson= new Gson();
+            MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
+            med.setFechaMedicion(Calendar.getInstance().getTime());
+            
             respuesta = medidasDB.guardarMedidas(med);
         }catch(NoExistePacienteException ex){
             respuesta = Json.createObjectBuilder()
@@ -71,7 +72,13 @@ public class ServiciosMovilWS {
             .add("Respuesta", "3")
             .add("Error", "Intentelo mas tarde.")
             .build();
-        }        
+        }catch(JsonSyntaxException ex){
+            respuesta = Json.createObjectBuilder()
+            .add("Respuesta", "5")
+            .add("Error", "Documento JSON mal formado. : "+ex.getMessage())
+            .build();
+        }
+
         return respuesta;
     }
     
