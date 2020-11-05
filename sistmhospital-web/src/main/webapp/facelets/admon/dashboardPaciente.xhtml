@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">  
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        
+        <ui:define name="nombrePagina">
+            Dashboard Paciente
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>        
+        
+        <ui:define name="contenido">
+            
+            
+            <p:panelGrid style="margin-top:20px">
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="4">Estado Actual del Paciente</p:column>
+                    </p:row>
+                </f:facet>
+                <!--<p:row>
+                    <p:column colspan="1"><h3>Datos</h3></p:column>
+                    <p:column colspan="3"><h3>Metricas</h3></p:column>
+                </p:row>-->
+
+                <p:row>
+                    <p:column rowspan="2">
+                        <center>
+                        <!--<h3 style="margin-top:0">Datos del Paciente</h3>-->
+                        <p:graphicImage value="/sistmhospital-web/resources/images/img_avatar2.png" 
+                                                width="180px" height="200px"/>
+                        </center>
+                        <p:panelGrid columns="2">   
+                            <h:outputText value="Nombre:" />
+                            <h:outputText value="Kobe Bryant"  style="font-weight: bold;"/>
+
+                            <h:outputText value="Direccion:" />
+                            <h:outputText value="Los Angeles Lakers" />
+
+                            <h:outputText value="Estado:" />
+                            <h:outputText value="Estable" />
+
+                            <h:outputText value="Camilla:" />
+                            <h:outputText value="24" />
+                       
+                            <h:outputText value="Hospital:" />
+                            <h:outputText value="Hospital General"  style="font-weight: bold;"/>
+
+                            <h:outputText value="Ubicacion:" />
+                            <h:outputText value="Ciudad de Mexico" />
+                        </p:panelGrid>
+                    </p:column>
+                    <p:column>
+                        <p:panel id="oxigeno" header="Saturacio de Oxigeno">
+                            <p:donutChart model="#{GraficaOxigeno.donutModel}" style="width: 100px; height: 100px;"/>
+                        </p:panel>
+                    </p:column>
+                    <p:column>
+                        <p:panel id="temperatura" header="Temperatura">
+                            <p:donutChart model="#{GraficaTemperatura.donutModel}" style="width: 100px; height: 100px;"/>
+                        </p:panel>
+                    </p:column>
+                    <p:column>
+                        <p:panel id="fCardiaca" header="Frecuencia Cardiaca">
+                            <p:donutChart model="#{GraficaFCardiaca.donutModel}" style="width:100px;height:100px" />
+                        </p:panel>  
+                    </p:column>
+                </p:row>
+                
+                <p:row>                    
+                    <p:column>
+                        <p:panel id="fRespiratoria" header="Frecuencia Respiratoria">    
+                            <p:donutChart model="#{GraficaFRespiratoria.donutModel}" style="width:100px;height:100px" />
+                        </p:panel>
+                    </p:column>
+                    <p:column>
+                        <p:panel id="fArtDistolica" header="Presion Arterial Sistolica">
+                            <p:donutChart model="#{GraficaPASistolica.donutModel}" style="width:100px;height:100px" />
+                        </p:panel>
+                    </p:column>
+                    <p:column>
+                         <p:panel id="fArtSistolica" header="Presion Arterial Distolica">
+                            <p:donutChart model="#{GraficaPADistolica.donutModel}" style="width:100px;height:100px" />
+                        </p:panel>
+                    </p:column>
+                </p:row>
+                
+                <p:row>
+                    <p:column  colspan="4" style="text-align: left" styleClass="ui-widget-header">
+                            Historial Saturacion de Oxigeno y Temperatura
+                    </p:column>
+                </p:row>                
+                <p:row>
+                    <p:column  colspan="4">
+                        <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
+                            <p:chart type="line" model="#{HistoricoOxigenoyTemperatura.model}" style="height:250px;" />
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                
+                
+                <p:row>
+                    <p:column  colspan="4" style="text-align: left" styleClass="ui-widget-header">
+                            Historial Frecuencia Cardiaca y Respiratoria
+                    </p:column>
+                </p:row>                
+                <p:row>
+                    <p:column  colspan="4">
+                        <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
+                            <p:chart type="line" model="#{HistoricoFrecCardResp.model}" style="height:250px;" />
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                
+                <p:row>
+                    <p:column  colspan="4" style="text-align: left" styleClass="ui-widget-header">
+                            Historial Presion Arterial
+                    </p:column>
+                </p:row>                
+                <p:row>
+                    <p:column  colspan="4">
+                        <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
+                            <p:chart type="line" model="#{HistoricoPresionSistDist.model}" style="height:250px;"/>
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                
+                
+
+                <!--<f:facet name="footer"></f:facet>-->
+                
+            </p:panelGrid>
+            
+            
+            
+            
+            
+        
+        
+        </ui:define>
+
+  </ui:composition>
+</html>
+
+
