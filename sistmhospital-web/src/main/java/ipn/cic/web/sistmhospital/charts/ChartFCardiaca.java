@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import org.primefaces.model.chart.LegendPlacement;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -22,44 +24,26 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name="GraficaFCardiaca")
 public class ChartFCardiaca implements Serializable{
-    private DonutChartModel donutModel;
-
-    @PostConstruct
-    public void init() {
-        createDonutModel();
-    }
-
-    private void createDonutModel() {
-       donutModel = new DonutChartModel();
-        ChartData data = new ChartData();
+     private PieChartModel model;
+    
+    public ChartFCardiaca() {
+        model = new PieChartModel();
+        model.set("Normal [60 - 100]", 100);
+        model.set("Bradicardia [Menos de 60]", 0);
+        model.set("Taquiardia [Mas de 100]", 0);
         
-        DonutChartDataSet dataSet = new DonutChartDataSet();
-        List<Number> values = new ArrayList<>();
-        //values.add(300);
-        values.add(69);
-        values.add(31);
-        dataSet.setData(values);
+        model.setTitle("68 LPM");
+        model.setLegendPosition("s");
+        model.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgb(0, 255, 0)");//Verde Lima
-        bgColors.add("rgb(255, 255, 255)");//Blanco
-        dataSet.setBackgroundColor(bgColors);
+        model.setShadow(false);
+        model.setSeriesColors("60d319,ffc900,ff5500");
+        model.setFill(true);
+        model.setShowDataLabels(false);
+        model.setDiameter(50);
         
-        data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        labels.add("Normal");
-        //labels.add("White");
-        data.setLabels(labels);
-        
-        donutModel.setData(data);
+        model.setExtender("customExtender");
     }
     
-    public DonutChartModel getDonutModel() {
-        return donutModel;
-    }
-
-    public void setDonutModel(DonutChartModel donutModel) {
-        this.donutModel = donutModel;
-    }
-    
+    public PieChartModel getModel() {return model;}
 }

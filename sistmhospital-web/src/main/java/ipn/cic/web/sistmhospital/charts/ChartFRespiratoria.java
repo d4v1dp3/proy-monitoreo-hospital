@@ -6,14 +6,10 @@
  */
 package ipn.cic.web.sistmhospital.charts;
 
-import org.primefaces.model.charts.ChartData;
-import org.primefaces.model.charts.donut.DonutChartDataSet;
-import org.primefaces.model.charts.donut.DonutChartModel;
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
+import org.primefaces.model.chart.LegendPlacement;
+import org.primefaces.model.chart.PieChartModel;
 /**
  *
  * @author J.PEREZ
@@ -22,43 +18,27 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name="GraficaFRespiratoria")
 public class ChartFRespiratoria implements Serializable{
     
-    private DonutChartModel donutModel;
-
-    @PostConstruct
-    public void init() {
-        createDonutModel();
-    }
-
-    private void createDonutModel() {
-       donutModel = new DonutChartModel();
-        ChartData data = new ChartData();
+    private PieChartModel model;
+    
+    public ChartFRespiratoria() {
+        model = new PieChartModel();
+        model.set("Normal [12 - 20]", 100);
+        model.set("Bradipnea [Menos de 12]", 0);
+        model.set("Taquipnea [Mas de 20]", 0);
         
-        DonutChartDataSet dataSet = new DonutChartDataSet();
-        List<Number> values = new ArrayList<>();
-        values.add(26);
-        values.add(50);
-        dataSet.setData(values);
         
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgb(0, 255, 235)");//Azul
-        bgColors.add("rgb(255, 255, 255)");//Blanco
-        dataSet.setBackgroundColor(bgColors);
+        model.setTitle("14 RPM");
+        model.setLegendPosition("s");
+        model.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         
-        data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        labels.add("Normal");
-        //labels.add("White");
-        data.setLabels(labels);
+        model.setShadow(false);
+        model.setSeriesColors("60d319,ffc900,ff5500");
+        model.setFill(true);
+        model.setShowDataLabels(false);
+        model.setDiameter(50);
         
-        donutModel.setData(data);
+        model.setExtender("customExtender");
     }
     
-    public DonutChartModel getDonutModel() {
-        return donutModel;
-    }
-
-    public void setDonutModel(DonutChartModel donutModel) {
-        this.donutModel = donutModel;
-    }
-    
+    public PieChartModel getModel() {return model;}
 }

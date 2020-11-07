@@ -5,56 +5,39 @@
  * Todos los derechos reservados
  */
 package ipn.cic.web.sistmhospital.charts;
-
-import org.primefaces.event.ItemSelectEvent;
-import org.primefaces.model.charts.ChartData;
-import org.primefaces.model.charts.axes.cartesian.CartesianScales;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
-import org.primefaces.model.charts.axes.radial.RadialScales;
-import org.primefaces.model.charts.axes.radial.linear.RadialLinearAngleLines;
-import org.primefaces.model.charts.axes.radial.linear.RadialLinearPointLabels;
-import org.primefaces.model.charts.axes.radial.linear.RadialLinearTicks;
-import org.primefaces.model.charts.bar.BarChartDataSet;
-import org.primefaces.model.charts.bar.BarChartModel;
-import org.primefaces.model.charts.bar.BarChartOptions;
-import org.primefaces.model.charts.bubble.BubbleChartDataSet;
-import org.primefaces.model.charts.bubble.BubbleChartModel;
-import org.primefaces.model.charts.data.BubblePoint;
-import org.primefaces.model.charts.data.NumericPoint;
-import org.primefaces.model.charts.donut.DonutChartDataSet;
-import org.primefaces.model.charts.donut.DonutChartModel;
-import org.primefaces.model.charts.hbar.HorizontalBarChartDataSet;
-import org.primefaces.model.charts.hbar.HorizontalBarChartModel;
-import org.primefaces.model.charts.line.LineChartDataSet;
-import org.primefaces.model.charts.line.LineChartModel;
-import org.primefaces.model.charts.line.LineChartOptions;
-import org.primefaces.model.charts.optionconfig.elements.Elements;
-import org.primefaces.model.charts.optionconfig.elements.ElementsLine;
-import org.primefaces.model.charts.optionconfig.legend.Legend;
-import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
-//import org.primefaces.model.charts.optionconfig.animation.Animation;
-import org.primefaces.model.charts.optionconfig.title.Title;
-import org.primefaces.model.charts.optionconfig.tooltip.Tooltip;
-import org.primefaces.model.charts.pie.PieChartDataSet;
-import org.primefaces.model.charts.pie.PieChartModel;
-import org.primefaces.model.charts.polar.PolarAreaChartDataSet;
-import org.primefaces.model.charts.polar.PolarAreaChartModel;
-import org.primefaces.model.charts.radar.RadarChartDataSet;
-import org.primefaces.model.charts.radar.RadarChartModel;
-import org.primefaces.model.charts.radar.RadarChartOptions;
-import org.primefaces.model.charts.scatter.ScatterChartModel;
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.faces.bean.ManagedBean;
+
+import org.primefaces.event.ItemSelectEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.BarChartSeries;
+import org.primefaces.model.chart.BubbleChartModel;
+import org.primefaces.model.chart.BubbleChartSeries;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.DonutChartModel;
+import org.primefaces.model.chart.HorizontalBarChartModel;
+import org.primefaces.model.chart.LegendPlacement;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.LinearAxis;
+import org.primefaces.model.chart.MeterGaugeChartModel;
+import org.primefaces.model.chart.OhlcChartModel;
+import org.primefaces.model.chart.OhlcChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -62,49 +45,28 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean(name="GraficaOxigeno")
 public class ChartSOxigeno implements Serializable{
+    private PieChartModel model;
     
-    private DonutChartModel donutModel;
-
-    @PostConstruct
-    public void init() {
-        createDonutModel();
-    }
-
-    private void createDonutModel() {
-       donutModel = new DonutChartModel();
-        ChartData data = new ChartData();
+    public ChartSOxigeno() {
+        model = new PieChartModel();
+        model.set("Normal [95% - 100%]", 100);
+        model.set("Hipoxia Leve [91% - 94%]", 0);
+        model.set("Hipoxia Moderada [86% - 90%]", 0);
+        model.set("Hipoxia Grave [Menos de 85%]", 0);
+        //model.set("", 2);
+        model.setTitle("98%");
+        model.setLegendPosition("s");
+        model.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+        model.setShadow(false);
+        model.setSeriesColors("60d319,fcf330,fcac30,ff5500");
+        model.setFill(true);
+        model.setShowDataLabels(false);
+        model.setDiameter(50);
+        //model.setSliceMargin(10);
         
-        DonutChartDataSet dataSet = new DonutChartDataSet();
-        List<Number> values = new ArrayList<>();
-        //values.add(300);
-        values.add(92);
-        values.add(2);
-        dataSet.setData(values);
-        
-        List<String> bgColors = new ArrayList<>();
-        //bgColors.add("rgb(255, 99, 132)");
-        bgColors.add("rgb(54, 162, 235)");
-        bgColors.add("rgb(255, 255, 255)");
-        dataSet.setBackgroundColor(bgColors);
-        
-        data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        //labels.add("Red");
-        labels.add("Normal");
-        //labels.add("Yellow");
-        data.setLabels(labels);
-        
-        
-        donutModel.setData(data);
-        donutModel.getExtender();
+        model.setExtender("customExtender");
     }
     
-    public DonutChartModel getDonutModel() {
-        return donutModel;
-    }
+    public PieChartModel getModel() {return model;}
 
-    public void setDonutModel(DonutChartModel donutModel) {
-        this.donutModel = donutModel;
-    }
-    
 }
