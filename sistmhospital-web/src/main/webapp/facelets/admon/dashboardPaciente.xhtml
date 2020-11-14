@@ -21,54 +21,61 @@
             <p:panelGrid style="margin-top:20px">
                 <f:facet name="header">
                     <p:row>
-                        <p:column colspan="3">ESTADO DEL PACIENTE A LA ULTIMA TOMA DE SIGNOS Y SINTOMAS</p:column>
+                        <p:column colspan="3" style="text-align: left;font-weight: bold;">ESTADO DEL PACIENTE A LA ULTIMA TOMA DE SIGNOS Y SINTOMAS</p:column>
                         <p:column>
                             <h:outputText value="Fecha: 07/11/2020    "  style="font-weight: bold;"/>
                             <h:outputText value="Hora: 13:00"  style="font-weight: bold;"/>
                         </p:column>
                     </p:row>
                 </f:facet>
-                <!--<p:row>
-                    <p:column colspan="1"><h3>Datos</h3></p:column>
-                    <p:column colspan="3"><h3>Metricas</h3></p:column>
-                </p:row>-->
 
                 <p:row>
                     <p:column rowspan="2">
-                        <center>
-                        <!--<h3 style="margin-top:0">Datos del Paciente</h3>-->
-                        <p:graphicImage value="/sistmhospital-web/resources/images/img_avatar2.png" 
-                                                width="200px" height="180px"/>
-                        </center>
-                        <p:panelGrid columns="2">   
-                            <h:outputText value="Nombre:" />
-                            <h:outputText value="404"  style="font-weight: bold;"/>
+                        <p:panel id="datosPaciente" header="Datos del Paciente">
+                            <p:panelGrid columns="2">   
+                                <h:outputText value="Nombre:" />
+                                <h:outputText value="Elliot Alderson"  style="font-weight: bold;"/>
 
-                            <h:outputText value="Direccion:" />
-                            <h:outputText value="Direccion" />
+                                <h:outputText value="CURP: " />
+                                <h:outputText value="EADJ873411HHGRDL45 " />
+                                
+                                <h:outputText value="Direccion: " />
+                                <h:outputText value="Ciudad de Mexico."/>
+                                
+                                <h:outputText value="NSS: " />
+                                <h:outputText value="099388495" />
 
-                            <h:outputText value="Estado:" />
-                            <h:outputText value="Estado" />
-                            
-                            <h:outputText value="Dato" />
-                            <h:outputText value="Dato" />
-                            
-                            <h:outputText value="Dato" />
-                            <h:outputText value="Estable" />
+                                <h:outputText value="Estado:" />
+                                <h:outputText value="Estable" />
 
-                            <h:outputText value="Camilla:" />
-                            <h:outputText value="Dato" />
+                            </p:panelGrid>
+                        </p:panel>
+                        
+                         <p:panel id="datosHospital" header="Datos del Hospital">
+                             
+                            <p:panelGrid columns="2">   
+                                <h:outputText value="Nombre:" />
+                                <h:outputText value="Hospital Juarez N.1"  style="font-weight: bold;"/>
 
-                            <h:outputText value="Hospital:" />
-                            <h:outputText value="Hospital"/>
-
-                            <h:outputText value="Ubicacion:" />
-                            <h:outputText value="Ubicacion" />
-                        </p:panelGrid>
+                                <h:outputText value="Direccion:  " />
+                                <h:outputText value="Ciudad de Mexico" />
+                                
+                                <h:outputText value="Calle: " />
+                                <h:outputText value="Circuito Interior 21."/>
+                                
+                                <h:outputText value="Camilla:" />
+                                <h:outputText value="404" />
+                            </p:panelGrid>
+                        </p:panel>
+                        
+                        
                     </p:column>
                     <p:column>
-                        <p:panel id="oxigeno" header="Saturacion de Oxigeno">
-                            <p:chart type="pie" model="#{GraficaOxigeno.model}" style="width: 250px; height: 200px;">
+                        <p:panel id="oxigeno" header="Saturacion de Oxigeno" style="text-align: center;">
+                            <h:outputText value="98"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="%"  style="font-size: 15px"/>
+                            
+                            <p:chart type="pie" model="#{ParametrosSOxigeno.model}" style="width: 200px; height: 100px;">
                                 <h:outputScript>
                                    function customExtender() {
                                        this.cfg.grid = {
@@ -82,32 +89,42 @@
                         </p:panel>
                     </p:column>
                     <p:column>
-                        <p:panel id="temperatura" header="Temperatura">
-                            <p:chart type="pie" model="#{GraficaTemperatura.model}" style="width: 250px; height: 200px;"/>
+                        <p:panel id="temperatura" header="Temperatura" style="text-align: center;">
+                            <h:outputText value="36.4"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="°C"  style="font-size: 15px"/>
+                            <p:chart type="pie" model="#{ParametrosTemperatura.model}" style="width: 200px; height: 100px;"/>
                         </p:panel>
                     </p:column>
                     <p:column>
-                        <p:panel id="fCardiaca" header="Frecuencia Cardiaca">
-                            <p:chart type="pie" model="#{GraficaFCardiaca.model}" style="width: 250px; height: 200px" />
+                        <p:panel id="fCardiaca" header="Frecuencia Cardiaca" style="text-align: center;">
+                            <h:outputText value="68"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="LPM"  style="font-size: 15px"/>
+                            <p:chart type="pie" model="#{ParametrosFCardiaca.model}" style="width: 200px; height: 100px" />
                         </p:panel>  
                     </p:column>
                 </p:row>
 
                 <p:row>                    
                     <p:column>
-                        <p:panel id="fRespiratoria" header="Frecuencia Respiratoria">    
-                            <p:chart type="pie" model="#{GraficaFRespiratoria.model}" style="width: 250px; height: 200px" />
+                        <p:panel id="fRespiratoria" header="Frecuencia Respiratoria" style="text-align: center;">  
+                            <h:outputText value="14"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="RMP"  style="font-size: 15px"/>
+                            <p:chart type="pie" model="#{ParametrosFRespiratoria.model}" style="width: 200px; height: 100px" />
                         </p:panel>
                     </p:column>
                     <p:column>
-                        <p:panel id="fArtDistolica" header="Presion Arterial Sistolica">
-                            <p:chart type="pie" model="#{GraficaPASistolica.model}" style="width: 250px; height: 200px" />
+                        <p:panel id="fArtDistolica" header="Presion Arterial" style="text-align: center;">
+                            <h:outputText value="100"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="/"  style="font-size: 50px"/>
+                            <h:outputText value="80"  style="font-weight: bold; font-size: 50px"/>
+                            <h:outputText value="mmHg"  style="font-size: 15px"/>
+                            
+                            <p:chart type="pie" model="#{ParametrosPArterial.model}" style="width: 250px; height: 100px" />
+                        
                         </p:panel>
                     </p:column>
                     <p:column>
-                         <p:panel id="fArtSistolica" header="Presion Arterial Distolica">
-                             <p:chart type="pie" model="#{GraficaPADistolica.model}" style="width: 250px; height: 200px" />
-                        </p:panel>
+                        
                     </p:column>
                 </p:row>
 

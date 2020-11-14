@@ -15,26 +15,21 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="GraficaPADistolica")
-public class ChartPADistolica implements Serializable{
+@ManagedBean(name="ParametrosPArterial")
+public class ChartPArterial implements Serializable{
     private PieChartModel model;
     
-    public ChartPADistolica() {
+    public ChartPArterial() {
         model = new PieChartModel();
-        model.set("Normal [70 - 90]", 100);
-        model.set("Hipotension [Menos de 60 mmHg]", 0);
-        model.set("Hipertension [Mas de 90 mmHg]", 0);
+        model.set("Normal [110/70 - 140/90] mmHg", 0);
+        model.set("Hipotension [Menos de 100/60 mmHg]", 0);
+        model.set("Hipertension [Mas de 140/90 mmHg]", 0);
         
-        
-        model.setTitle("80 mmHg");
-        model.setLegendPosition("s");
+        model.setLegendPosition("se");
         model.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         
         model.setShadow(false);
         model.setSeriesColors("60d319,ffc900,ff5500");
-        model.setFill(true);
-        model.setShowDataLabels(false);
-        model.setDiameter(50);
         
         model.setExtender("customExtender");
     }

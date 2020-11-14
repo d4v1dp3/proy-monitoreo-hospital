@@ -15,27 +15,22 @@ import org.primefaces.model.chart.PieChartModel;
  * @author J.PEREZ
  */
 
-@ManagedBean(name="GraficaFRespiratoria")
+@ManagedBean(name="ParametrosFRespiratoria")
 public class ChartFRespiratoria implements Serializable{
     
     private PieChartModel model;
     
     public ChartFRespiratoria() {
         model = new PieChartModel();
-        model.set("Normal [12 - 20]", 100);
+        model.set("Normal [12 - 20]", 0);
         model.set("Bradipnea [Menos de 12]", 0);
         model.set("Taquipnea [Mas de 20]", 0);
         
-        
-        model.setTitle("14 RPM");
-        model.setLegendPosition("s");
+        model.setLegendPosition("se");
         model.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         
         model.setShadow(false);
         model.setSeriesColors("60d319,ffc900,ff5500");
-        model.setFill(true);
-        model.setShowDataLabels(false);
-        model.setDiameter(50);
         
         model.setExtender("customExtender");
     }
