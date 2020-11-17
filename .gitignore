@@ -1,3 +1,4 @@
 /sistmhospital-ejb/target/
 /sistmhospital-web/target/
 /sistmhospital-ear/target/
+/${env.JBOSS_HOME}/
