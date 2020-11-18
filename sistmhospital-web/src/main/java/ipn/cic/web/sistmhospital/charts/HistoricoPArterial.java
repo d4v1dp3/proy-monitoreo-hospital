@@ -7,7 +7,9 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -18,15 +20,16 @@ import org.primefaces.model.chart.LineChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="HistoricoPresionArterial")
+
+@Named(value="historicoPresionArterial")
+@ViewScoped
 public class HistoricoPArterial implements Serializable{
+
     
-    private LineChartModel model;
+    private LineChartModel model = new LineChartModel();
       
-    
-    public HistoricoPArterial() {
-        model = new LineChartModel();
-        
+    @PostConstruct   
+    public void HistoricoPArterial() {
         ChartSeries sistolica = new ChartSeries();
         sistolica.setLabel("Presion Arterial Sistolica");
         sistolica.set("00:00", 110);
@@ -96,6 +99,11 @@ public class HistoricoPArterial implements Serializable{
     
     public LineChartModel getModel() {
         return model;
+    }
+    
+    
+    public void setModel(LineChartModel model) {
+        this.model = model;
     }
     
 }

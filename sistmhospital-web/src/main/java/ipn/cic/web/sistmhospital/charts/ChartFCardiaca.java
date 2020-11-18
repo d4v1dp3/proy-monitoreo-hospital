@@ -7,7 +7,9 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 
@@ -16,12 +18,15 @@ import org.primefaces.model.chart.PieChartModel;
  * @author J.PEREZ
  */
 
-@ManagedBean(name="ParametrosFCardiaca")
+@Named(value="parametrosFCardiaca")
+@ViewScoped
 public class ChartFCardiaca implements Serializable{
-     private PieChartModel model;
+
     
-    public ChartFCardiaca() {
-        model = new PieChartModel();
+    private PieChartModel model = new PieChartModel();
+    
+    @PostConstruct    
+    public void ChartFCardiaca() {
         model.set("Normal [60 - 100]", 0);
         model.set("Bradicardia [Menos de 60]", 0);
         model.set("Taquiardia [Mas de 100]", 0);
@@ -35,5 +40,11 @@ public class ChartFCardiaca implements Serializable{
         model.setExtender("customExtender");
     }
     
-    public PieChartModel getModel() {return model;}
+    public PieChartModel getModel() {
+        return model;
+    }
+    
+    public void setModel(PieChartModel model) {
+        this.model = model;
+    }
 }

@@ -7,7 +7,9 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -18,13 +20,15 @@ import org.primefaces.model.chart.LineChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="HistoricoFRespiratoria")
+
+@Named(value="historicoFRespiratoria")
+@ViewScoped
 public class HistoricoFRespiratoria implements Serializable{
+
+    private LineChartModel model = new LineChartModel();
     
-    private LineChartModel model;
-    
-    public HistoricoFRespiratoria() {
-        model = new LineChartModel();
+    @PostConstruct   
+    public void HistoricoFRespiratoria() {
         ChartSeries p1 = new ChartSeries();
         p1.setLabel("Normal [12 - 20]");
         p1.set("00:00", 15);
@@ -75,6 +79,13 @@ public class HistoricoFRespiratoria implements Serializable{
         yAxis.setMax(120);
     }
     
-    public LineChartModel getModel() {return model;}
+    public LineChartModel getModel() {
+        return model;
+    }
+    
+    public void setModel(LineChartModel model) {
+        this.model = model;
+    }
+    
     
 }

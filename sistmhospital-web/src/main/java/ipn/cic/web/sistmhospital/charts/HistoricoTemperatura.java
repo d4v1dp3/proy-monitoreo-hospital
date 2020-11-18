@@ -7,7 +7,9 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -17,14 +19,17 @@ import org.primefaces.model.chart.ChartSeries;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="HistoricoTemperatura")
+
+@Named(value="historicoTemperatura")
+@ViewScoped
 public class HistoricoTemperatura implements Serializable{
+
+    private BarChartModel model = new BarChartModel();
     
-    private BarChartModel model;
+    public HistoricoTemperatura(){}
     
-    public HistoricoTemperatura() {
-        model = new BarChartModel();
-                
+    @PostConstruct   
+    public void HistoricoTemperatura() {
         ChartSeries saturacion1 = new ChartSeries();
         saturacion1.setLabel("Normal [36.2° - 37.2°]");
         saturacion1.set("00:00", 36.2);
@@ -84,7 +89,15 @@ public class HistoricoTemperatura implements Serializable{
         yAxis.setMax(50);
     }
     
-    public BarChartModel getModel() { return model; }
+    public BarChartModel getModel() { 
+        return model; 
+    }
+    
+    
+    public void setModel(BarChartModel model) {
+        this.model = model;
+    }
+    
     
     
     

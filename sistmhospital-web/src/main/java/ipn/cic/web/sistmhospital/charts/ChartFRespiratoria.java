@@ -7,7 +7,8 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 /**
@@ -15,13 +16,12 @@ import org.primefaces.model.chart.PieChartModel;
  * @author J.PEREZ
  */
 
-@ManagedBean(name="ParametrosFRespiratoria")
+@Named(value="parametrosFRespiratoria")
+@ViewScoped
 public class ChartFRespiratoria implements Serializable{
-    
-    private PieChartModel model;
+    private PieChartModel model = new PieChartModel();
     
     public ChartFRespiratoria() {
-        model = new PieChartModel();
         model.set("Normal [12 - 20]", 0);
         model.set("Bradipnea [Menos de 12]", 0);
         model.set("Taquipnea [Mas de 20]", 0);
