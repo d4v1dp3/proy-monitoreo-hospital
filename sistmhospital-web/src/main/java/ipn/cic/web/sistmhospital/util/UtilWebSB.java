@@ -167,7 +167,7 @@ public class UtilWebSB implements UtilWebSBLocal {
         if (principal == null) {
             return null;
         } else {
-            return principal.getName().toUpperCase();
+            return principal.getName();
         }
     }
 
