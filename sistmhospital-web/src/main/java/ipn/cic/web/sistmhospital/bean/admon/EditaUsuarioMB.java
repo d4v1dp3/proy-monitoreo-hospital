@@ -20,6 +20,7 @@ import org.primefaces.PrimeFaces;
  * 
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
+
 @Named(value="editaUsuarioMB")
 @ViewScoped
 public class EditaUsuarioMB implements Serializable{

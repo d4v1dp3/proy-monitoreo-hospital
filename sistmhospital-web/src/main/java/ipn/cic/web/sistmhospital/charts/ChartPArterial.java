@@ -7,7 +7,8 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 
@@ -15,12 +16,13 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="ParametrosPArterial")
+
+@Named(value="parametrosPArterial")
+@ViewScoped
 public class ChartPArterial implements Serializable{
-    private PieChartModel model;
+    private PieChartModel model = new PieChartModel();
     
     public ChartPArterial() {
-        model = new PieChartModel();
         model.set("Normal [110/70 - 140/90] mmHg", 0);
         model.set("Hipotension [Menos de 100/60 mmHg]", 0);
         model.set("Hipertension [Mas de 140/90 mmHg]", 0);

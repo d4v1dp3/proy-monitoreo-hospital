@@ -7,7 +7,9 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -17,13 +19,18 @@ import org.primefaces.model.chart.ChartSeries;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="HistoricoSOxigeno")
+
+@Named(value="historicoSOxigeno")
+@ViewScoped
 public class HistoricoSOxigeno implements Serializable{
-    private BarChartModel model;
+
+   
+    private BarChartModel model = new BarChartModel();
     
-    public HistoricoSOxigeno() {
-        model = new BarChartModel();
-        
+    public HistoricoSOxigeno(){}
+    
+    @PostConstruct   
+    public void HistoricoSOxigeno() {
         ChartSeries saturacion1 = new ChartSeries();
         saturacion1.setLabel("Normal [95% - 100%]");
         saturacion1.set("00:00", 85);
@@ -83,5 +90,11 @@ public class HistoricoSOxigeno implements Serializable{
         yAxis.setMax(120);
     }
     
-    public BarChartModel getModel() { return model; }
+    public BarChartModel getModel() { 
+        return model; 
+    }
+    
+     public void setModel(BarChartModel model) {
+        this.model = model;
+    }
 }

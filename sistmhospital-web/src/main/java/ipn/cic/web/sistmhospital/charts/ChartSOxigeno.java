@@ -8,6 +8,8 @@ package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 
@@ -15,12 +17,13 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="ParametrosSOxigeno")
+
+@Named(value="parametrosSOxigeno")
+@ViewScoped
 public class ChartSOxigeno implements Serializable{
-    private PieChartModel model;
+    private PieChartModel model = new PieChartModel();
     
     public ChartSOxigeno() {
-        model = new PieChartModel();
         model.set("Normal [95% - 100%]", 0);
         model.set("Hipoxia Leve [91% - 94%]", 0);
         model.set("Hipoxia Moderada [86% - 90%]", 0);

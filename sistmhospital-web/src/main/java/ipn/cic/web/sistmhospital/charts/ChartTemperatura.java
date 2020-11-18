@@ -7,7 +7,8 @@
 package ipn.cic.web.sistmhospital.charts;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.PieChartModel;
 
@@ -15,15 +16,13 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author J.PEREZ
  */
-@ManagedBean(name="ParametrosTemperatura")
+
+@Named(value="parametrosTemperatura")
+@ViewScoped
 public class ChartTemperatura implements Serializable{
-    
-    
-    private PieChartModel model;
+    private PieChartModel model = new PieChartModel();
     
     public ChartTemperatura() {
-        model = new PieChartModel();
-        
         model.set("Normal [36.2° - 37.2°]", 0);
         model.set("Hipotermia [Menos de 35°]", 0);
         model.set("Fiebre [Mas de 37.5°]", 0);

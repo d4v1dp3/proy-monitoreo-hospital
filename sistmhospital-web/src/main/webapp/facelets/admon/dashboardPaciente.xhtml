@@ -75,11 +75,11 @@
                             <h:outputText value="98"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="%"  style="font-size: 15px"/>
                             
-                            <p:chart type="pie" model="#{ParametrosSOxigeno.model}" style="width: 200px; height: 100px;">
+                            <p:chart type="pie" model="#{parametrosSOxigeno.model}" style="width: 200px; height: 100px;">
                                 <h:outputScript>
                                    function customExtender() {
                                        this.cfg.grid = {
-                                           background: '#FFF', //Set background to white
+                                           background: '#FFF',
                                            borderWidth: 0,
                                            shadow: 0
                                        };
@@ -92,14 +92,14 @@
                         <p:panel id="temperatura" header="Temperatura" style="text-align: center;">
                             <h:outputText value="36.4"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="°C"  style="font-size: 15px"/>
-                            <p:chart type="pie" model="#{ParametrosTemperatura.model}" style="width: 200px; height: 100px;"/>
+                            <p:chart type="pie" model="#{parametrosTemperatura.model}" style="width: 200px; height: 100px;"/>
                         </p:panel>
                     </p:column>
                     <p:column>
                         <p:panel id="fCardiaca" header="Frecuencia Cardiaca" style="text-align: center;">
                             <h:outputText value="68"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="LPM"  style="font-size: 15px"/>
-                            <p:chart type="pie" model="#{ParametrosFCardiaca.model}" style="width: 200px; height: 100px" />
+                            <p:chart type="pie" model="#{parametrosFCardiaca.model}" style="width: 200px; height: 100px" />
                         </p:panel>  
                     </p:column>
                 </p:row>
@@ -109,7 +109,7 @@
                         <p:panel id="fRespiratoria" header="Frecuencia Respiratoria" style="text-align: center;">  
                             <h:outputText value="14"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="RMP"  style="font-size: 15px"/>
-                            <p:chart type="pie" model="#{ParametrosFRespiratoria.model}" style="width: 200px; height: 100px" />
+                            <p:chart type="pie" model="#{parametrosFRespiratoria.model}" style="width: 200px; height: 100px" />
                         </p:panel>
                     </p:column>
                     <p:column>
@@ -119,7 +119,7 @@
                             <h:outputText value="80"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="mmHg"  style="font-size: 15px"/>
                             
-                            <p:chart type="pie" model="#{ParametrosPArterial.model}" style="width: 250px; height: 100px" />
+                            <p:chart type="pie" model="#{parametrosPArterial.model}" style="width: 250px; height: 100px" />
                         
                         </p:panel>
                     </p:column>
@@ -136,8 +136,8 @@
                 <p:row>
                     <p:column  colspan="4">
                         <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
-                            <p:chart type="bar" model="#{HistoricoSOxigeno.model}" style="height:250px;" />
-                            <p:chart type="bar" model="#{HistoricoTemperatura.model}" style="height:250px;" />
+                            <p:chart type="bar" model="#{historicoSOxigeno.model}" style="height:250px;" />
+                            <p:chart type="bar" model="#{historicoTemperatura.model}" style="height:250px;" />
                         </p:panelGrid>
                     </p:column>
                 </p:row>
@@ -151,8 +151,8 @@
                 <p:row>
                     <p:column  colspan="4">
                         <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
-                            <p:chart type="line" model="#{HistoricoFCardiaca.model}" style="height:250px;" />
-                            <p:chart type="line" model="#{HistoricoFRespiratoria.model}" style="height:250px;" />
+                            <p:chart type="line" model="#{historicoFCardiaca.model}" style="height:250px;" />
+                            <p:chart type="line" model="#{historicoFRespiratoria.model}" style="height:250px;" />
                         </p:panelGrid>
                     </p:column>
                 </p:row>
@@ -165,22 +165,12 @@
                 <p:row>
                     <p:column  colspan="4">
                         <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
-                            <p:chart type="line" model="#{HistoricoPresionArterial.model}" style="height:250px;"/>
+                            <p:chart type="line" model="#{historicoPresionArterial.model}" style="height:250px;"/>
                         </p:panelGrid>
                     </p:column>
                 </p:row>
 
-
-
-                <!--<f:facet name="footer"></f:facet>-->
-
             </p:panelGrid>
-
-
-
-
-
-
 
         </ui:define>
   </ui:composition>
