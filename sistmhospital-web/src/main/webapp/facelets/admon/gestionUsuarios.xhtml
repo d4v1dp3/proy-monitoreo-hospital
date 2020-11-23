@@ -30,9 +30,14 @@ Todos los derechos reservados
                 <p:growl id="msgsGU" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                
+
                 <div>
-                    
+                    <p:panel>
+                        <p:commandButton icon="fas fa-user-edit" value="Alta Médico" title="Alta" actionListener="#{gestionUsuariosMB.altaMedico()}">
+                            <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
+                        </p:commandButton>
+
+                    </p:panel>    
                 </div>
                 <p:panel id="pnGUsuarios" header="Gestión de Usuarios" footer="" style="margin-bottom:20px">
                     <p:dataTable var="usuario" value="#{gestionUsuariosMB.usuariosComp}" rows="10"
@@ -55,7 +60,7 @@ Todos los derechos reservados
                         <p:column headerText="Nombre" filterBy="#{usuario.idPersona.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{usuario.idPersona.nombre}" />
                         </p:column>
-                        
+
                         <p:column headerText="Activo" style="text-aling:center" >
                             <h:outputText value="" styleClass="ui-icon #{usuario.activo ? 'far fa-thumbs-up' : 'far fa-thumbs-down'}"/>
                         </p:column>

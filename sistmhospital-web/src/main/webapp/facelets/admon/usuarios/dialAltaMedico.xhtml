@@ -15,8 +15,8 @@
     <h:body>
         <i id="customheader" class="fas fa-user-edit" style="display:none"></i>
 
-        <h:form>
-            <p:growl id="msgEdUs" showDetail="true" />
+        <h:form id="frmAltaMedico">
+            <p:growl id="msgAltaMed" showDetail="true" />
             
             <p:panelGrid>
                 <p:row>
@@ -28,7 +28,7 @@
                     <p:column><p:outputLabel for="apMat" value="Apellido Materno:" /> </p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="nomPers" value="#{usuarioEditar.idPersona.nombre}" required="true" /></p:column>
+                    <p:column><p:inputText id="nomPers" value="" required="true" /></p:column>
                     <p:column><p:inputText id="apPat" value="Loading..." required="true" /></p:column>
                     <p:column><p:inputText id="apMat" value="Loading..." required="true" /></p:column>
                 </p:row>
@@ -73,8 +73,13 @@
 
 
 
-            <p:commandButton value="Dar Alta como Medico" action="#{editaUsuarioMB.cerrarDialogo}" />
+            
         </h:form>
+        
+        <h:form id="closeAltMedico">
+            <p:commandButton value="CERRAR" action="#{gestionMedicoMB.cerrarDialogo}" />
+        </h:form>
+        
     </h:body>
 
 </html>

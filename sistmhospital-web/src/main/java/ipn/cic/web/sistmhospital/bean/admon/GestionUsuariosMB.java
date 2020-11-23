@@ -68,8 +68,8 @@ public class GestionUsuariosMB implements Serializable {
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
         //PrimeFaces.current().ajax().update("frGestUsuarios:msgsGU");
     }
-
-    public void editarUsuario() {
+    
+    public void altaMedico(){
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 640);
@@ -79,6 +79,22 @@ public class GestionUsuariosMB implements Serializable {
         options.put("headerElement", "customheader");
 
         PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaMedico", options, null);
+    }
+    
+    public void retornoAltaMedico(){
+        
+    }
+    
+    public void editarUsuario() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 640);
+        options.put("height", 340);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+
+        PrimeFaces.current().dialog().openDynamic("usuarios/dialEditaUsuario", options, null);
     }
 
     public void retornoEditaUsuario(SelectEvent event) {
