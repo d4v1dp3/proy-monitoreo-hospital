@@ -6,10 +6,6 @@
  */
 package ipn.cic.web.sistmhospital.bean.vo;
 
-import ipn.cic.sistmhospital.modelo.EntGenero;
-import ipn.cic.sistmhospital.modelo.EntMedico;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
-import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,21 +13,18 @@ import java.util.List;
  *
  * @author J.PEREZ
  */
-public class DatosDePersonaVO implements Serializable{
+public class PersonaVO implements Serializable{
 
     private Integer idPersona;
     private String nombre;
     private String primerApellido;
     private String segundoApellido;
     private String curp;
-    //private List<EntMedico> entMedicoList;
-    private EntGenero idGenero;
-    //private List<EntUsuario> entUsuarioList;
-    //private List<EntPaciente> entPacienteList;
+    private Integer idGenero;
     
-    public DatosDePersonaVO(){}
+    public PersonaVO(){}
     
-    public DatosDePersonaVO(Integer idPersona, String nombre, String primerApellido, String segundoApellido, String curp, EntGenero idGenero) {
+    public PersonaVO(Integer idPersona, String nombre, String primerApellido, String segundoApellido, String curp, Integer idGenero) {
         this.idPersona = idPersona;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
@@ -88,11 +81,11 @@ public class DatosDePersonaVO implements Serializable{
 //        this.entMedicoList = entMedicoList;
 //    }
 
-    public EntGenero getIdGenero() {
+    public Integer getIdGenero() {
         return idGenero;
     }
 
-    public void setIdGenero(EntGenero idGenero) {
+    public void setIdGenero(Integer idGenero) {
         this.idGenero = idGenero;
     }
 
