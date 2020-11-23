@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Titulo.</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <i id="customheader" class="fas fa-user-edit" style="display:none"></i>
+
+        <h:form>
+            <p:growl id="msgEdUs" showDetail="true" />
+            
+            <p:panelGrid>
+                <p:row>
+                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel for="nomPers" value="Nombre:" /> </p:column>
+                    <p:column><p:outputLabel for="apPat" value="Apellido Paterno:" /> </p:column>
+                    <p:column><p:outputLabel for="apMat" value="Apellido Materno:" /> </p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:inputText id="nomPers" value="#{usuarioEditar.idPersona.nombre}" required="true" /></p:column>
+                    <p:column><p:inputText id="apPat" value="Loading..." required="true" /></p:column>
+                    <p:column><p:inputText id="apMat" value="Loading..." required="true" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:message for="nomPers" /></p:column>
+                    <p:column><p:message for="apPat" /></p:column>
+                    <p:column><p:message for="apMat" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Medico</p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel for="hCedula" value="Cedula Profesional:" /></p:column>
+                    <p:column><p:outputLabel for="hEmail" value="Correo Electronico:" /></p:column>
+                    <p:column><p:outputLabel for="hCelular" value="Telefono Celular:" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:inputText id="hCedula" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="hEmail" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="hCelular" value="" required="true" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:message for="hCedula" /></p:column>
+                    <p:column><p:message for="hEmail" /></p:column>
+                    <p:column><p:message for="hCelular" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Hospital Asociado</p:column>
+                </p:row>                
+                <p:row>
+                    <p:column><p:outputLabel for="hIdhospital" value="ID Hospital:" /></p:column>
+                    <p:column><p:inputText id="hIdhospital" value="" required="true" /></p:column>
+                    <p:column><p:message for="hIdhospital" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:message for="hIdhospital" /></p:column>
+                    <p:column><p:message for="hIdhospital" /></p:column>
+                    <p:column><p:message for="hIdhospital" /></p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+
+
+            <p:commandButton value="Dar Alta como Medico" action="#{editaUsuarioMB.cerrarDialogo}" />
+        </h:form>
+    </h:body>
+
+</html>

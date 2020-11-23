@@ -78,7 +78,7 @@ public class GestionUsuariosMB implements Serializable {
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
 
-        PrimeFaces.current().dialog().openDynamic("usuarios/dialEditaUsuario", options, null);
+        PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaMedico", options, null);
     }
 
     public void retornoEditaUsuario(SelectEvent event) {
