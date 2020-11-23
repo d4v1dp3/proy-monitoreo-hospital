@@ -17,25 +17,59 @@
 
         <h:form id="frmAltaMedico">
             <p:growl id="msgAltaMed" showDetail="true" />
-            
+
             <p:panelGrid>
                 <p:row>
                     <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:outputLabel for="nomPers" value="Nombre:" /> </p:column>
                     <p:column><p:outputLabel for="apPat" value="Apellido Paterno:" /> </p:column>
                     <p:column><p:outputLabel for="apMat" value="Apellido Materno:" /> </p:column>
+                    <p:column><p:outputLabel for="nomPers" value="Nombre(s):" /> </p:column>
                 </p:row>
                 <p:row>
+                    <p:column><p:inputText id="apPat" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="apMat" value="" required="true" /></p:column>
                     <p:column><p:inputText id="nomPers" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="apPat" value="Loading..." required="true" /></p:column>
-                    <p:column><p:inputText id="apMat" value="Loading..." required="true" /></p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:message for="nomPers" /></p:column>
                     <p:column><p:message for="apPat" /></p:column>
                     <p:column><p:message for="apMat" /></p:column>
+                    <p:column><p:message for="nomPers" /></p:column>
+
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel for="curp" value="CURP:" /> </p:column>
+                    <p:column><p:outputLabel for="idGen" value="Genero:" /> </p:column>
+                    <p:column><p:message for="idGen" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:inputText id="curp" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="idGen" value="" required="true" /></p:column>
+                    <p:column><p:message for="idGen" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:message for="curp" /></p:column>
+                    <p:column><p:message for="idGen" /></p:column>
+                    <p:column><p:message for="idGen" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesion</p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel for="idUsr" value="Usuario:" /> </p:column>
+                    <p:column><p:outputLabel for="contra" value="Contraseña:" /> </p:column>
+                    <p:column><p:message for="contra" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:inputText id="idUsr" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="contra" value="" required="true" /></p:column>
+                    <p:column><p:message for="contra" /></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:message for="idUsr" /></p:column>
+                    <p:column><p:message for="contra" /></p:column>
+                    <p:column><p:message for="contra" /></p:column>
                 </p:row>
                 <p:row>
                     <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Medico</p:column>
@@ -55,31 +89,20 @@
                     <p:column><p:message for="hEmail" /></p:column>
                     <p:column><p:message for="hCelular" /></p:column>
                 </p:row>
-                <p:row>
-                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Hospital Asociado</p:column>
-                </p:row>                
-                <p:row>
-                    <p:column><p:outputLabel for="hIdhospital" value="ID Hospital:" /></p:column>
-                    <p:column><p:inputText id="hIdhospital" value="" required="true" /></p:column>
-                    <p:column><p:message for="hIdhospital" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="hIdhospital" /></p:column>
-                    <p:column><p:message for="hIdhospital" /></p:column>
-                    <p:column><p:message for="hIdhospital" /></p:column>
-                </p:row>
+
+
 
             </p:panelGrid>
 
 
 
-            
+
         </h:form>
-        
+
         <h:form id="closeAltMedico">
             <p:commandButton value="CERRAR" action="#{gestionMedicoMB.cerrarDialogo}" />
         </h:form>
-        
+
     </h:body>
 
 </html>
