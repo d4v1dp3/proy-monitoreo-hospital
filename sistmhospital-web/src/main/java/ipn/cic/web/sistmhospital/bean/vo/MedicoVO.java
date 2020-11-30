@@ -20,10 +20,19 @@ public class MedicoVO implements Serializable{
     private String cedulaProf;
     private String email;
     private String celular;
-        
-    public MedicoVO(String cedulaProf, String celular) {
+
+    public MedicoVO() {
+        cedulaProf = "";
+        celular = "";
+        email = "";
+    }
+
+    
+    
+    public MedicoVO(String cedulaProf, String celular, String email) {
         this.cedulaProf = cedulaProf;
         this.celular = celular;
+        this.email = email;
     }
 
     public String getCedulaProf() {

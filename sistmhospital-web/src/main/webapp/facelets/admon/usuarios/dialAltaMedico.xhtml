@@ -28,9 +28,9 @@
                     <p:column><p:outputLabel for="nomPers" value="Nombre(s):" /> </p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="apPat" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="apMat" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="nomPers" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="apPat" value="#{gestionMedicoMB.datPersona.primerApellido}" required="true" /></p:column>
+                    <p:column><p:inputText id="apMat" value="#{gestionMedicoMB.datPersona.segundoApellido}" required="true" /></p:column>
+                    <p:column><p:inputText id="nomPers" value="#{gestionMedicoMB.datPersona.nombre}" required="true" /></p:column>
                 </p:row>
                 <p:row>
                     <p:column><p:message for="apPat" /></p:column>
@@ -44,8 +44,8 @@
                     <p:column><p:message for="idGen" /></p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="curp" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="idGen" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" /></p:column>
+                    <p:column><p:inputText id="idGen" value="#{gestionMedicoMB.datPersona.idGenero}" required="true" /></p:column>
                     <p:column><p:message for="idGen" /></p:column>
                 </p:row>
                 <p:row>
@@ -62,13 +62,12 @@
                     <p:column><p:message for="contra" /></p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="idUsr" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="contra" value="" required="true" /></p:column>
-                    <p:column><p:message for="contra" /></p:column>
+                    <p:column><p:inputText id="idUsr" value="#{gestionMedicoMB.datUsuario.idUsuario}" required="true" /></p:column>
+                    <p:column><p:inputText id="contra" value="#{gestionMedicoMB.datUsuario.contrasenia}" required="true" /></p:column>
+                    <p:selectBooleanCheckbox value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/>
                 </p:row>
                 <p:row>
                     <p:column><p:message for="idUsr" /></p:column>
-                    <p:column><p:message for="contra" /></p:column>
                     <p:column><p:message for="contra" /></p:column>
                 </p:row>
                 <p:row>
@@ -80,9 +79,9 @@
                     <p:column><p:outputLabel for="hCelular" value="Telefono Celular:" /></p:column>
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="hCedula" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="hEmail" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="hCelular" value="" required="true" /></p:column>
+                    <p:column><p:inputText id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" /></p:column>
+                    <p:column><p:inputText id="hEmail" value="#{gestionMedicoMB.datMedico.email}" required="true" /></p:column>
+                    <p:column><p:inputText id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" /></p:column>
                 </p:row>
                 <p:row>
                     <p:column><p:message for="hCedula" /></p:column>
@@ -90,6 +89,12 @@
                     <p:column><p:message for="hCelular" /></p:column>
                 </p:row>
 
+                <p:row>
+                    <p:column>
+                        <p:commandButton value="Guardar" action="#{gestionMedicoMB.cerrarDialogo}"
+                                         icon="fas fa-save"/>                    
+                    </p:column>
+                </p:row>
 
 
             </p:panelGrid>
@@ -100,7 +105,7 @@
         </h:form>
 
         <h:form id="closeAltMedico">
-            <p:commandButton value="CERRAR" action="#{gestionMedicoMB.cerrarDialogo}" />
+            <p:commandButton value="Cerrar" action="#{gestionMedicoMB.cerrarDialogo}" />
         </h:form>
 
     </h:body>
