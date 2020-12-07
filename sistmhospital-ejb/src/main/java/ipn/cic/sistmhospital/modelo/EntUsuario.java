@@ -7,6 +7,7 @@
 package ipn.cic.sistmhospital.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -60,10 +61,12 @@ public class EntUsuario implements Serializable {
     private EntPersona idPersona;
 
     public EntUsuario() {
+        entRolList = new ArrayList<>();
     }
 
     public EntUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
+        entRolList = new ArrayList<>();
     }
 
     public String getIdUsuario() {

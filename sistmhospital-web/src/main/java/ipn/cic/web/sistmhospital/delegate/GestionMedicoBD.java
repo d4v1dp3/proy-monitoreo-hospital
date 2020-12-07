@@ -9,16 +9,20 @@ package ipn.cic.web.sistmhospital.delegate;
 import ipn.cic.sistmhospital.exception.GeneroException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
+import ipn.cic.sistmhospital.exception.RolException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
 import ipn.cic.sistmhospital.sesion.GeneroSBLocal;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.PersonaSBLocal;
+import ipn.cic.sistmhospital.sesion.RolSBLocal;
 import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
+import ipn.cic.sistmhospital.util.Constantes;
 import ipn.cic.web.sistmhospital.bean.vo.MedicoVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
@@ -50,6 +54,8 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
     private MedicoSBLocal medicoSB;
     @EJB
     private GeneroSBLocal generoSB;
+    @EJB
+    private RolSBLocal  rolSB;
     @EJB
     private HospitalSBLocal hospitalSB;
 
@@ -83,10 +89,14 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         entUsuario.setContrasenia(usuario.getContrasenia());
         entUsuario.setIdPersona(entPersona);
         entUsuario.setActivo(usuario.getActivo());
+        Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
+        
         
         try {
+            EntRol rolMedico = rolSB.getRolId(medRol);
+            entUsuario.getEntRolList().add(rolMedico);
             entUsuario = usuarioSB.saveUsuario(entUsuario);
-        } catch (SaveEntityException ex) {
+        } catch (SaveEntityException | RolException ex) {
             logger.log(Level.SEVERE,"Error al persistir usuario : {0}",ex.getMessage());
             throw new MedicoException("Error ", ex);
         }
