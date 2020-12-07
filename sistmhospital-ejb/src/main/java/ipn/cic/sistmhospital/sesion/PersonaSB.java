@@ -6,6 +6,8 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import javax.ejb.Stateless;
 
 /**
@@ -14,6 +16,12 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class PersonaSB extends BaseSB implements PersonaSBLocal {
+
+    @Override
+    public EntPersona savePersona(EntPersona persona) throws SaveEntityException {
+        persona = (EntPersona) this.saveEntity(persona);
+        return persona;
+    }
     
     
 }

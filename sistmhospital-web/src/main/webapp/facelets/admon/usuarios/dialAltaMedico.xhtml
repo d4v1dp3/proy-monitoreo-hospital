@@ -91,8 +91,8 @@
 
                 <p:row>
                     <p:column>
-                        <p:commandButton value="Guardar" action="#{gestionMedicoMB.cerrarDialogo}"
-                                         icon="fas fa-save"/>                    
+                        <p:commandButton value="Guardar" actionListener="#{gestionMedicoMB.guardarMedico()}"
+                                         icon="fas fa-save" update="@all"/>                    
                     </p:column>
                 </p:row>
 

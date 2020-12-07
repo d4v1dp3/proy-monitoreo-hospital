@@ -6,6 +6,8 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +16,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface PersonaSBLocal {
-    
+    EntPersona savePersona(EntPersona persona)throws SaveEntityException;
 }

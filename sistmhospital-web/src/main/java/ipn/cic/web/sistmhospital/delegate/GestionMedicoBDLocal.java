@@ -8,6 +8,9 @@ package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.web.sistmhospital.bean.vo.MedicoVO;
+import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
+import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
 import javax.ejb.Local;
 
 /**
@@ -16,5 +19,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface GestionMedicoBDLocal {
-    public EntMedico guardarMedicoNuevo() throws MedicoException;
+    public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona, 
+                                        UsuarioVO usuario) throws MedicoException;
 }

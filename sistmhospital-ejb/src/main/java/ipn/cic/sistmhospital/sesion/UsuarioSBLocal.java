@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
@@ -19,6 +20,18 @@ import javax.ejb.Local;
  */
 @Local
 public interface UsuarioSBLocal {
+    
+    /**
+     * Persiste la entidad usuario en base de datos, retorna la entidad usuario 
+     * persistida
+     * 
+     * @param usuario entindad a salvar.
+     * @return EntUsuario entidad salvada.
+     * @throws ipn.cic.sistmhospital.exception.SaveEntityException Exceptción lanzada en caso de error.
+     * 
+     */
+    EntUsuario saveUsuario(EntUsuario usuario) throws SaveEntityException; 
+    
     /**
      * Obtiene al usuario que tiene el nombre de usuario especificado como
      * parametro (debe ser unico)

@@ -7,6 +7,7 @@
 package ipn.cic.sistmhospital.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -74,6 +75,8 @@ public class EntMedico implements Serializable {
     private List<EntPacienteMedico> entPacienteMedicoList;
 
     public EntMedico() {
+        entHospitalList = new ArrayList<>();
+        entPacienteMedicoList = new ArrayList<>();
     }
 
     public EntMedico(Integer idMedico) {

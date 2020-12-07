@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
@@ -79,5 +80,11 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             throw new UsuarioException("No esposible obtener la lista de usuarios",e);
         }
                     
+    }
+
+    @Override
+    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException {
+        eu = (EntUsuario) this.saveEntity(eu);
+        return eu;
     }
 }

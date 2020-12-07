@@ -69,7 +69,7 @@ public class GestionHospitalMB implements Serializable{
                                      .getMensajeAdaptado("Error",
                                                 "No es posible consultar datos de hospital.", 
                                                 FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmGuardaHosp:msgs", msg);
+            utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
         }
     }
     
