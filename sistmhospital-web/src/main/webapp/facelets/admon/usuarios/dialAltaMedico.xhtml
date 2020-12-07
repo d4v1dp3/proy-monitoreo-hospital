@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -40,18 +41,24 @@
                 </p:row>
                 <p:row>
                     <p:column><p:outputLabel for="curp" value="CURP:" /> </p:column>
-                    <p:column><p:outputLabel for="idGen" value="Genero:" /> </p:column>
-                    <p:column><p:message for="idGen" /></p:column>
+                    <p:column><p:outputLabel for="genMenu" value="Genero:" /> </p:column>
+                 
                 </p:row>
                 <p:row>
-                    <p:column><p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" /></p:column>
-                    <p:column><p:inputText id="idGen" value="#{gestionMedicoMB.datPersona.idGenero}" required="true" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
+                    <p:column>
+                        <p:inputText id="curp" value="#{gestionMedicoMB.datPersona.curp}" required="true" /></p:column>
+                    <p:column>
+                        <p:selectOneMenu id="genMenu" value="#{gestionMedicoMB.datPersona.idGenero}" dynamic="true">
+                            <f:selectItems value="#{gestionMedicoMB.catGenero}" var="genero" 
+                                           itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+
                 </p:row>
                 <p:row>
                     <p:column><p:message for="curp" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
+                    <p:column><p:message for="genMenu" /></p:column>
+          
                 </p:row>
                 <p:row>
                     <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesion</p:column>
@@ -64,7 +71,7 @@
                 <p:row>
                     <p:column><p:inputText id="idUsr" value="#{gestionMedicoMB.datUsuario.idUsuario}" required="true" /></p:column>
                     <p:column><p:inputText id="contra" value="#{gestionMedicoMB.datUsuario.contrasenia}" required="true" /></p:column>
-                    <p:selectBooleanCheckbox value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/>
+                    <p:column><p:selectBooleanCheckbox value="#{gestionMedicoMB.datUsuario.activo}" itemLabel="Activo"/></p:column>
                 </p:row>
                 <p:row>
                     <p:column><p:message for="idUsr" /></p:column>

@@ -6,8 +6,11 @@
  */
 package ipn.cic.web.sistmhospital.bean.admon;
 
+import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.MedicoException;
+import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.MedicoVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
@@ -15,6 +18,7 @@ import ipn.cic.web.sistmhospital.delegate.GestionMedicoBDLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -38,11 +42,14 @@ public class GestionMedicoMB implements Serializable{
     private MedicoVO datMedico;
     private PersonaVO datPersona;
     private EntMedico medGuardado;
+    private List<EntGenero> catGenero;
     
     @EJB
     GestionMedicoBDLocal gstMed;
     @EJB
     UtilWebSBLocal utilWebSB;
+    @EJB
+    CatalogoSBLocal catalogoSB;
     
     @PostConstruct
     public void iniciaVO(){
@@ -50,6 +57,16 @@ public class GestionMedicoMB implements Serializable{
         datMedico = new MedicoVO();
         datPersona = new PersonaVO();
         medGuardado = null;
+        try {
+            setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
+        } catch (CatalogoException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "No es posible recuperar catálogo de género :"+ex.getMessage(), 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
+            return;
+        }
     }
     
     public void guardarMedico(){
@@ -146,5 +163,19 @@ public class GestionMedicoMB implements Serializable{
      */
     public void setMedGuardado(EntMedico medGuardado) {
         this.medGuardado = medGuardado;
+    }
+
+    /**
+     * @return the catGenero
+     */
+    public List<EntGenero> getCatGenero() {
+        return catGenero;
+    }
+
+    /**
+     * @param catGenero the catGenero to set
+     */
+    public void setCatGenero(List<EntGenero> catGenero) {
+        this.catGenero = catGenero;
     }
 }

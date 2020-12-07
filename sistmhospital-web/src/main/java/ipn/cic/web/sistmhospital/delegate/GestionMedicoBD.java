@@ -55,9 +55,8 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public EntMedico guardarMedicoNuevo(MedicoVO medico,
-            PersonaVO persona,
-            UsuarioVO usuario) throws MedicoException {
+    public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona,
+                                        UsuarioVO usuario) throws MedicoException {
         // Aquí hay que preparar los datos para almacenar la información
         // primero los datos de persona para persistirlos
         EntPersona entPersona = new EntPersona();
@@ -83,7 +82,7 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         entUsuario.setIdUsuario(usuario.getIdUsuario());
         entUsuario.setContrasenia(usuario.getContrasenia());
         entUsuario.setIdPersona(entPersona);
-        entUsuario.setActivo(Boolean.TRUE);
+        entUsuario.setActivo(usuario.getActivo());
         
         try {
             entUsuario = usuarioSB.saveUsuario(entUsuario);
