@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -52,7 +53,11 @@ public class EntUsuario implements Serializable {
     private String contrasenia;
     @Column(name = "ACTIVO")
     private Boolean activo;
-    @ManyToMany(mappedBy = "entUsuarioList", fetch = FetchType.LAZY)
+    @JoinTable(name = "MH_USUARIO_ROL", joinColumns = {
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")},
+         inverseJoinColumns = {
+        @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<EntRol> entRolList;
     @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
     private List<EntBitacora> entBitacoraList;
@@ -143,5 +148,5 @@ public class EntUsuario implements Serializable {
     public String toString() {
         return "ipn.cic.sistmhospital.modelo.EntUsuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }
