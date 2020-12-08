@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Titulo.</title>
+        <title>Alta Paciente</title>
         <style type="text/css">
             .ui-widget {
                 font-size: 90%;
@@ -30,123 +30,165 @@
 
             <p:panelGrid>
                 <p:row>
-                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:outputLabel for="apPat" value="Apellido Paterno:" /> </p:column>
-                    <p:column><p:outputLabel for="apMat" value="Apellido Materno:" /> </p:column>
-                    <p:column><p:outputLabel for="nomPers" value="Nombre(s):" /> </p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="apPat" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="apMat" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="nomPers" value="" required="true" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="apPat" /></p:column>
-                    <p:column><p:message for="apMat" /></p:column>
-                    <p:column><p:message for="nomPers" /></p:column>
-
-                </p:row>
-                <p:row>
-                    <p:column><p:outputLabel for="curp" value="CURP:" /> </p:column>
-                    <p:column><p:outputLabel for="idGen" value="Genero:" /> </p:column>
-                    <p:column><p:message for="idGen" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="curp" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="idGen" value="" required="true" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="curp" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
-                    <p:column><p:message for="idGen" /></p:column>
-                </p:row>
-                
-                <p:row>
-                    <p:column><p:outputLabel for="dirCalle" value="Calle:" /> </p:column>
-                    <p:column><p:outputLabel for="numExt" value="Num. Exterior:" /> </p:column>
-                    <p:column><p:outputLabel for="numInt" value="Num. Interior:" /> </p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="dirCalle" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="numExt" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="numInt" value="" required="true" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="dirCalle" /></p:column>
-                    <p:column><p:message for="numExt" /></p:column>
-                    <p:column><p:message for="numInt" /></p:column>
-                </p:row>
-                 <p:row>
-                    <p:column><p:outputLabel for="telFijo" value="Telefono fijo:" /> </p:column>
-                    <p:column><p:outputLabel for="telCel" value="Telefono Celular:" /> </p:column>
-                    <p:column><p:message for="telCel" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="telFijo" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="telCel" value="" required="true" /></p:column>
-                    <p:column><p:message for="telCel" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="telFijo" /></p:column>
-                    <p:column><p:message for="telCel" /></p:column>
-                    <p:column><p:message for="telCel" /></p:column>
-                </p:row>
-                
-                
-                <p:row>
-                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Paciente</p:column>
-                </p:row>
-                
-                <p:row>
-                    <p:column><p:outputLabel for="idHosp" value="Hospital:" /> </p:column>
-                    <p:column><p:outputLabel for="idCareta" value="Careta:" /> </p:column>
-                    <p:column><p:outputLabel for="estadoPas" value="Estado del Paciente:" /> </p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="idHosp" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="idCareta" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="estadoPas" value="" required="true" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="idHosp" /></p:column>
-                    <p:column><p:message for="idCareta" /></p:column>
-                    <p:column><p:message for="estadoPas" /></p:column>
-                </p:row>                
-                
-                <p:row>
-                    <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesion</p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:outputLabel for="idUsr" value="Usuario:" /> </p:column>
-                    <p:column><p:outputLabel for="contra" value="Contraseña:" /> </p:column>
-                    <p:column><p:message for="contra" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:inputText id="idUsr" value="" required="true" /></p:column>
-                    <p:column><p:inputText id="contra" value="" required="true" /></p:column>
-                    <p:column><p:message for="contra" /></p:column>
-                </p:row>
-                <p:row>
-                    <p:column><p:message for="idUsr" /></p:column>
-                    <p:column><p:message for="contra" /></p:column>
-                    <p:column><p:message for="contra" /></p:column>
-                </p:row>
-                
-                
-                <p:row>
-                    <p:column><p:commandButton value="CERRAR" action="#{gestionPacienteMB.cerrarDialogo}" /></p:column>
                     <p:column>
-                        <p:commandButton id="save" value="Guardar" action="#{gestionPacienteMB.cerrarDialogo}"
-                                         icon="fas fa-save"/>                    
+
+
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN PACIENTE" class="titulo"></p:outputLabel>
+                            </h2>
+                        </center>
+                        <p>Llene los siguientes campos para registrar un Paciente en el sistema. </p>
+
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos Generales</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="apPat" value="Apellido Paterno:" /> </td>
+                                            <td><p:outputLabel for="apMat" value="Apellido Materno:" /> </td>
+                                            <td><p:outputLabel for="nomPers" value="Nombre(s):" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="apPat" value="" required="true" /></td>
+                                            <td><p:inputText id="apMat" value="" required="true" /></td>
+                                            <td><p:inputText id="nomPers" value="" required="true" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="apPat" /></td>
+                                            <td><p:message for="apMat" /></td>
+                                            <td><p:message for="nomPers" /></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel for="curp" value="CURP:" /> </td>
+                                            <td><p:outputLabel for="idGen" value="Genero:" /> </td>
+                                            <td><p:message for="idGen" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="curp" value="" required="true" /></td>
+                                            <td><p:inputText id="idGen" value="" required="true" /></td>
+                                            <td><p:message for="idGen" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="curp" /></td>
+                                            <td><p:message for="idGen" /></td>
+                                            <td><p:message for="idGen" /></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><p:outputLabel for="dirCalle" value="Calle:" /> </td>
+                                            <td><p:outputLabel for="numExt" value="Num. Exterior:" /> </td>
+                                            <td><p:outputLabel for="numInt" value="Num. Interior:" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="dirCalle" value="" required="true" /></td>
+                                            <td><p:inputText id="numExt" value="" required="true" /></td>
+                                            <td><p:inputText id="numInt" value="" required="true" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="dirCalle" /></td>
+                                            <td><p:message for="numExt" /></td>
+                                            <td><p:message for="numInt" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel for="telFijo" value="Telefono fijo:" /> </td>
+                                            <td><p:outputLabel for="telCel" value="Telefono Celular:" /> </td>
+                                            <td><p:message for="telCel" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="telFijo" value="" required="true" /></td>
+                                            <td><p:inputText id="telCel" value="" required="true" /></td>
+                                            <td><p:message for="telCel" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="telFijo" /></td>
+                                            <td><p:message for="telCel" /></td>
+                                            <td><p:message for="telCel" /></td>
+                                        </tr>
+                                    </table>
+
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos del Paciente</p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="idHosp" value="Hospital:" /> </td>
+                                            <td><p:outputLabel for="idCareta" value="Careta:" /> </td>
+                                            <td><p:outputLabel for="estadoPas" value="Estado del Paciente:" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idHosp" value="" required="true" /></td>
+                                            <td><p:inputText id="idCareta" value="" required="true" /></td>
+                                            <td><p:inputText id="estadoPas" value="" required="true" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="idHosp" /></td>
+                                            <td><p:message for="idCareta" /></td>
+                                            <td><p:message for="estadoPas" /></td>
+                                        </tr>   
+                                        <tr>
+                                            <td><p:outputLabel for="idMed" value="Médico:" /> </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idMed" value="" required="true" /></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesion</p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="3">
+                                    <table width="100%" border="0">
+                                        <tr>
+                                            <td><p:outputLabel for="idUsr" value="Usuario:" /> </td>
+                                            <td><p:outputLabel for="contra" value="Contraseña:" /> </td>
+                                            <td><p:message for="contra" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:inputText id="idUsr" value="" required="true" /></td>
+                                            <td><p:inputText id="contra" value="" required="true" /></td>
+                                            <td><p:message for="contra" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:message for="idUsr" /></td>
+                                            <td><p:message for="contra" /></td>
+                                            <td><p:message for="contra" /></td>
+                                        </tr>
+
+
+                                    </table>
+
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <p:commandButton value="Cerrar" action="#{gestionPacienteMB.cerrarDialogo}" />
+                                    <p:commandButton id="save" value="Guardar" action="#{gestionPacienteMB.cerrarDialogo}"
+                                                     icon="fas fa-save"/>
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
                     </p:column>
-                    <p:column></p:column>
                 </p:row>
-
             </p:panelGrid>
-
 
 
 
