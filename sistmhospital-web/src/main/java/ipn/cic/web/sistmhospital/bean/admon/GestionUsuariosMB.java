@@ -126,7 +126,7 @@ public class GestionUsuariosMB implements Serializable {
                             "Diálogo cerrado sin aplicar cambios",
                             FacesMessage.SEVERITY_INFO);
         }
-
+        cargaUsuarios();
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
     }
 
