@@ -72,8 +72,8 @@ public class GestionUsuariosMB implements Serializable {
     public void altaMedico(){
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 640);
-        options.put("height", 340);
+        options.put("width", 750);
+        options.put("height", 640);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
@@ -89,8 +89,8 @@ public class GestionUsuariosMB implements Serializable {
     public void altaPaciente(){
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 640);
-        options.put("height", 340);
+        options.put("width", 700);
+        options.put("height", 640);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
