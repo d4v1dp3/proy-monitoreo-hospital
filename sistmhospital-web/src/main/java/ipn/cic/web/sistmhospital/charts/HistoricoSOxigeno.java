@@ -47,16 +47,16 @@ public class HistoricoSOxigeno implements Serializable{
         saturacion1.set("11:00", 92);
         saturacion1.set("12:00", 94);
         saturacion1.set("13:00", 94);
-        saturacion1.set("14:00", 0);
-        saturacion1.set("15:00", 0);
-        saturacion1.set("16:00", 0);
-        saturacion1.set("17:00", 0);
-        saturacion1.set("18:00", 0);
-        saturacion1.set("19:00", 0);
-        saturacion1.set("20:00", 0);
-        saturacion1.set("21:00", 0);
-        saturacion1.set("22:00", 0);
-        saturacion1.set("23:00", 0);   
+//        saturacion1.set("14:00", 0);
+//        saturacion1.set("15:00", 0);
+//        saturacion1.set("16:00", 0);
+//        saturacion1.set("17:00", 0);
+//        saturacion1.set("18:00", 0);
+//        saturacion1.set("19:00", 0);
+//        saturacion1.set("20:00", 0);
+//        saturacion1.set("21:00", 0);
+//        saturacion1.set("22:00", 0);
+//        saturacion1.set("23:00", 0);   
 
         ChartSeries saturacion2 = new ChartSeries();
         saturacion2.setLabel("Hipoxia Leve [91% - 94%]");

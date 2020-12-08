@@ -9,6 +9,16 @@
             .ui-widget {
                 font-size: 90%;
             }
+            .ui-widget-header{
+                background-color: #e7e8e9 !important;
+                border-color: #cacaca !important;
+                font-weight: bold !important;
+                color: black !important;
+                text-align: left !important;
+            }
+            .titulo{
+                font-weight: bold !important;
+            }
         </style>
     </h:head>
 
@@ -125,6 +135,15 @@
                     <p:column><p:message for="contra" /></p:column>
                 </p:row>
                 
+                
+                <p:row>
+                    <p:column><p:commandButton value="CERRAR" action="#{gestionPacienteMB.cerrarDialogo}" /></p:column>
+                    <p:column>
+                        <p:commandButton id="save" value="Guardar" action="#{gestionPacienteMB.cerrarDialogo}"
+                                         icon="fas fa-save"/>                    
+                    </p:column>
+                    <p:column></p:column>
+                </p:row>
 
             </p:panelGrid>
 
@@ -132,11 +151,6 @@
 
 
         </h:form>
-
-        <h:form id="closeAltPaciente">
-            <p:commandButton value="CERRAR" action="#{gestionPacienteMB.cerrarDialogo}" />
-        </h:form>
-
     </h:body>
 
 </html>
