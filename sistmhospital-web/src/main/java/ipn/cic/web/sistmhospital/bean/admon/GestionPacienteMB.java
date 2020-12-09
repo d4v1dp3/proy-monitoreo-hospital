@@ -8,6 +8,7 @@ package ipn.cic.web.sistmhospital.bean.admon;
 
 import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
 import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
@@ -19,6 +20,7 @@ import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,11 +38,14 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class GestionPacienteMB implements Serializable{
     private static final Logger logger = Logger.getLogger(GestionPacienteMB.class.getName());
+    
     private PersonaVO datPersona;
     private UsuarioVO datUsuario;
     private PacienteVO datPaciente;    
     private EntPaciente pacGuardado;
+    
     private List<EntGenero> catGenero;
+    private List<EntEstadopaciente> catEstado;
     
     @EJB
     GestionPacienteBDLocal gstPac;
@@ -56,7 +61,7 @@ public class GestionPacienteMB implements Serializable{
         datPaciente = new PacienteVO();
         datPersona = new PersonaVO();
         pacGuardado = null;
-        
+       
         try {
             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
         } catch (CatalogoException ex) {
@@ -65,12 +70,24 @@ public class GestionPacienteMB implements Serializable{
                                                 "No es posible recuperar catálogo de género :"+ex.getMessage(), 
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
-            return;
         }
+        
+        try {
+            setCatEstado((List<EntEstadopaciente>) catalogoSB.getCatalogo("EntEstadopaciente"));
+        } catch (CatalogoException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "No es posible recuperar catálogo de estadoPaciente :"+ex.getMessage(), 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+        }
+        logger.log(Level.INFO,"Categorias en Form AltaPaciente[Fin]");
+        return;
     }
     
     public void guardarPaciente(){
-        try{
+        logger.log(Level.INFO,"Entrando a Guardar Paciente[1]");
+        try{            
             pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, datUsuario);
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
@@ -110,9 +127,15 @@ public class GestionPacienteMB implements Serializable{
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
     
-    /**
-     * @param datUsuario the datUsuario to set
-     */
+    
+    public List<EntEstadopaciente> getCatEstado() {
+        return catEstado;
+    }
+
+    public void setCatEstado(List<EntEstadopaciente> catEstado) {
+        this.catEstado = catEstado;
+    }
+    
     public void setDatUsuario(UsuarioVO datUsuario) {
         this.datUsuario = datUsuario;
     }

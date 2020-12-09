@@ -38,6 +38,7 @@ import org.jboss.ejb3.annotation.SecurityDomain;
  *
  * @author J.PEREZ
  */
+
 @Stateless
 @PermitAll
 @SecurityDomain("other")
@@ -63,6 +64,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
     public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, UsuarioVO usuario) throws PacienteException {
         
         EntPersona entPersona = new EntPersona();
+        
         entPersona.setNombre(persona.getNombre().toUpperCase());
         entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
         entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
@@ -80,7 +82,6 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             logger.log(Level.SEVERE,"Error al persistir EntPersona : {0}",ex.getMessage());
             throw new PacienteException("Imposible salvar Persona para Paciente ", ex);
         }
-        
         
          // Creando la Entidad USUARIO
         EntUsuario entUsuario = new EntUsuario();
@@ -100,6 +101,8 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
         }
         
         EntPaciente entPac = new EntPaciente();
+        
+        logger.log(Level.INFO,"Creando Entidad Paciente[1]");
         entPac.setIdPersona(entPersona);
         entPac.setDirCalle(paciente.getDirCalle());
         entPac.setDirNumero(paciente.getDirNumero());
@@ -109,8 +112,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
         //entPac.setIdCareta(paciente.getIdCareta());
         //entPac.setIdEstadopaciente(paciente.getIdEstadopaciente());
         
-         try {
-            
+        try {            
             entPac.setIdHospital(hospitalSB.getPrimerHospital());
         } catch (NoExisteHospitalException ex) {
             logger.log(Level.SEVERE,"Error al ObtenerDatos de hospital : {0}",ex.getMessage());

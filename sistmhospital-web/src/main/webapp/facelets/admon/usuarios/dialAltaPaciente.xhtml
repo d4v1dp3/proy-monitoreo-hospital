@@ -102,7 +102,7 @@
                                         <tr>
                                             <td><p:outputLabel for="telFijo" value="Teléfono fijo:" /> </td>
                                             <td><p:outputLabel for="telCel" value="Teléfono Celular:" /> </td>
-                                            <td><p:message for="telCel" /></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td><p:inputText id="telFijo" value="#{gestionPacienteMB.datPaciente.telFijo}" required="true" /></td>
@@ -128,17 +128,22 @@
                                         <tr>
                                             <td><p:outputLabel for="idHosp" value="Hospital:" /> </td>
                                             <td><p:outputLabel for="idCareta" value="Careta:" /> </td>
-                                            <td><p:outputLabel for="estadoPas" value="Estado del Paciente:" /> </td>
+                                            <td><p:outputLabel for="estMenu" value="Estado del Paciente:" /> </td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true" /></td>
-                                            <td><p:inputText id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true" /></td>
-                                            <td><p:inputText id="estadoPas" value="#{gestionPacienteMB.datPaciente.idEstadopaciente}" required="true" /></td>
+                                            <td><p:inputText id="idHosp" value="" required="true" /></td>
+                                            <td><p:inputText id="idCareta" value="" required="true" /></td>
+                                            <td>
+                                                <p:selectOneMenu id="estMenu" value="#{gestionPacienteMB.datPaciente.idEstadopaciente}" dynamic="true">
+                                                    <f:selectItems value="#{gestionPacienteMB.catEstado}" var="estado" 
+                                                                   itemLabel="#{estado.descripcion}" itemValue="#{estado.idEstadopaciente}"/>
+                                                </p:selectOneMenu>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="idHosp" /></td>
                                             <td><p:message for="idCareta" /></td>
-                                            <td><p:message for="estadoPas" /></td>
+                                            <td><p:message for="estMenu" /></td>
                                         </tr>   
                                         <tr>
                                             <td><p:outputLabel for="idMed" value="Médico:" /> </td>
@@ -168,12 +173,12 @@
                                         <tr>
                                             <td><p:inputText id="idUsr" value="" required="true" /></td>
                                             <td><p:inputText id="contra" value="" required="true" /></td>
-                                            <td><p:message for="contra" /></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="idUsr" /></td>
                                             <td><p:message for="contra" /></td>
-                                            <td><p:message for="contra" /></td>
+                                            <td></td>
                                         </tr>
 
 
@@ -185,7 +190,7 @@
                                 <p:column colspan="3">
                                     <p:commandButton value="Cerrar" actionListener="#{gestionPacienteMB.cerrarDialogo}" />
                                     <p:commandButton value="Guardar" actionListener="#{gestionPacienteMB.guardarPaciente()}"
-                                                     icon="fas fa-save"/>
+                                                     icon="fas fa-save" update="@all"/>
                                 </p:column>
                             </p:row>
 

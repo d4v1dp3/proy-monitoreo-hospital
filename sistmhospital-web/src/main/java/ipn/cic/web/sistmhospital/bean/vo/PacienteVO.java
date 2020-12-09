@@ -23,38 +23,29 @@ import java.util.List;
  */
 public class PacienteVO implements Serializable{
     
-    private EntPersona idPersona;
-    private Long idPaciente;
+    //private Integer idPersona;
+    private Integer idPaciente;
     private String dirCalle;
     private Integer dirNumero;
     private String dirInterior;
     private String telFijo;
     private String telCel;
-    private List<EntSintomas> entSintomasList;
-    private List<EntMedidas> entMedidasList;
-    private EntAntecedentes entAntecedentes;
-    private EntCareta idCareta;
-    private EntEstadopaciente idEstadopaciente;
-    private EntHospital idHospital;    
-    private List<EntPacienteMedico> entPacienteMedicoList;
+//    private List<EntSintomas> entSintomasList;
+//    private List<EntMedidas> entMedidasList;
+//    private EntAntecedentes entAntecedentes;
+    private Integer idCareta;
+    private Integer idEstadopaciente;
+    private Integer idHospital;    
+//    private List<EntPacienteMedico> entPacienteMedicoList;
     
     
     public PacienteVO(){}
     
-
-    public EntPersona getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(EntPersona idPersona) {
-        this.idPersona = idPersona;
-    }
-
-    public Long getIdPaciente() {
+    public Integer getIdPaciente() {
         return idPaciente;
     }
 
-    public void setIdPaciente(Long idPaciente) {
+    public void setIdPaciente(Integer idPaciente) {
         this.idPaciente = idPaciente;
     }
 
@@ -98,66 +89,60 @@ public class PacienteVO implements Serializable{
         this.telCel = telCel;
     }
 
-    public List<EntSintomas> getEntSintomasList() {
-        return entSintomasList;
-    }
+//    public List<EntSintomas> getEntSintomasList() {
+//        return entSintomasList;
+//    }
+//
+//    public void setEntSintomasList(List<EntSintomas> entSintomasList) {
+//        this.entSintomasList = entSintomasList;
+//    }
+//
+//    public List<EntMedidas> getEntMedidasList() {
+//        return entMedidasList;
+//    }
+//
+//    public void setEntMedidasList(List<EntMedidas> entMedidasList) {
+//        this.entMedidasList = entMedidasList;
+//    }
+//
+//    public EntAntecedentes getEntAntecedentes() {
+//        return entAntecedentes;
+//    }
+//
+//    public void setEntAntecedentes(EntAntecedentes entAntecedentes) {
+//        this.entAntecedentes = entAntecedentes;
+//    }
 
-    public void setEntSintomasList(List<EntSintomas> entSintomasList) {
-        this.entSintomasList = entSintomasList;
-    }
-
-    public List<EntMedidas> getEntMedidasList() {
-        return entMedidasList;
-    }
-
-    public void setEntMedidasList(List<EntMedidas> entMedidasList) {
-        this.entMedidasList = entMedidasList;
-    }
-
-    public EntAntecedentes getEntAntecedentes() {
-        return entAntecedentes;
-    }
-
-    public void setEntAntecedentes(EntAntecedentes entAntecedentes) {
-        this.entAntecedentes = entAntecedentes;
-    }
-
-    public EntCareta getIdCareta() {
+    public Integer getIdCareta() {
         return idCareta;
     }
 
-    public void setIdCareta(EntCareta idCareta) {
+    public void setIdCareta(Integer idCareta) {
         this.idCareta = idCareta;
     }
 
-    public EntEstadopaciente getIdEstadopaciente() {
+    public Integer getIdEstadopaciente() {
         return idEstadopaciente;
     }
 
-    public void setIdEstadopaciente(EntEstadopaciente idEstadopaciente) {
+    public void setIdEstadopaciente(Integer idEstadopaciente) {
         this.idEstadopaciente = idEstadopaciente;
     }
 
-    public EntHospital getIdHospital() {
+    public Integer getIdHospital() {
         return idHospital;
     }
 
-    public void setIdHospital(EntHospital idHospital) {
+    public void setIdHospital(Integer idHospital) {
         this.idHospital = idHospital;
     }
 
-    public List<EntPacienteMedico> getEntPacienteMedicoList() {
-        return entPacienteMedicoList;
-    }
-
-    public void setEntPacienteMedicoList(List<EntPacienteMedico> entPacienteMedicoList) {
-        this.entPacienteMedicoList = entPacienteMedicoList;
-    }
-
- 
-
-    
-    
-
+//    public List<EntPacienteMedico> getEntPacienteMedicoList() {
+//        return entPacienteMedicoList;
+//    }
+//
+//    public void setEntPacienteMedicoList(List<EntPacienteMedico> entPacienteMedicoList) {
+//        this.entPacienteMedicoList = entPacienteMedicoList;
+//    }
 
 }
