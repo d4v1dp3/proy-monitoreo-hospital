@@ -80,10 +80,8 @@
                 </p:row>
 
                 <p:row>     
-
                     <p:column>
-
-                        <p:panel id="oxigeno" header="Saturación de Oxígeno" style="text-align: center;background-color: #e7e8e9">
+                        <p:panel id="oxigeno" header="Saturación de Oxígeno" style="text-align: center;">
                             <h:outputText value="98"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="%"  style="font-size: 15px"/>
 
@@ -98,10 +96,11 @@
                                     }
                                 </h:outputScript>
                             </p:chart>
+                            
                         </p:panel>
                     </p:column>
                     <p:column>
-                        <p:panel id="temperatura" header="Temperatura" style="text-align: center;">
+                        <p:panel id="temperatura" header="Temperatura" style=".ui-panel-titlebar{background-color: graytext}">
                             <h:outputText value="36.4"  style="font-weight: bold; font-size: 50px"/>
                             <h:outputText value="°C"  style="font-size: 15px"/>
                             <p:chart type="pie" model="#{parametrosTemperatura.model}" style="width: 200px; height: 100px;"/>

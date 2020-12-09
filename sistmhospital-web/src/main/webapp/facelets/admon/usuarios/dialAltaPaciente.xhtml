@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title>Alta Paciente</title>
@@ -54,9 +55,9 @@
                                             <td><p:outputLabel for="nomPers" value="Nombre(s):" /> </td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="apPat" value="" required="true" /></td>
-                                            <td><p:inputText id="apMat" value="" required="true" /></td>
-                                            <td><p:inputText id="nomPers" value="" required="true" /></td>
+                                            <td><p:inputText id="apPat" value="#{gestionPacienteMB.datPersona.primerApellido}" required="true" /></td>
+                                            <td><p:inputText id="apMat" value="#{gestionPacienteMB.datPersona.segundoApellido}" required="true" /></td>
+                                            <td><p:inputText id="nomPers" value="#{gestionPacienteMB.datPersona.nombre}" required="true" /></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="apPat" /></td>
@@ -66,18 +67,21 @@
                                         </tr>
                                         <tr>
                                             <td><p:outputLabel for="curp" value="CURP:" /> </td>
-                                            <td><p:outputLabel for="idGen" value="Genero:" /> </td>
-                                            <td><p:message for="idGen" /></td>
+                                            <td><p:outputLabel for="genMenu" value="Género:" /> </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="curp" value="" required="true" /></td>
-                                            <td><p:inputText id="idGen" value="" required="true" /></td>
-                                            <td><p:message for="idGen" /></td>
+                                            <td><p:inputText id="curp" value="#{gestionPacienteMB.datPersona.curp}" required="true" /></td>
+                                            <td><p:selectOneMenu id="genMenu" value="#{gestionPacienteMB.datPersona.idGenero}" dynamic="true">
+                                                    <f:selectItems value="#{gestionPacienteMB.catGenero}" var="genero" 
+                                                                   itemLabel="#{genero.descripcion}" itemValue="#{genero.idGenero}"/>
+                                                </p:selectOneMenu>  </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="curp" /></td>
-                                            <td><p:message for="idGen" /></td>
-                                            <td><p:message for="idGen" /></td>
+                                            <td><p:message for="genMenu" /></td>
+                                            <td></td>
                                         </tr>
 
                                         <tr>
@@ -86,9 +90,9 @@
                                             <td><p:outputLabel for="numInt" value="Num. Interior:" /> </td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="dirCalle" value="" required="true" /></td>
-                                            <td><p:inputText id="numExt" value="" required="true" /></td>
-                                            <td><p:inputText id="numInt" value="" required="true" /></td>
+                                            <td><p:inputText id="dirCalle" value="#{gestionPacienteMB.datPaciente.dirCalle}" required="true" /></td>
+                                            <td><p:inputText id="numExt" value="#{gestionPacienteMB.datPaciente.dirNumero}" required="true" /></td>
+                                            <td><p:inputText id="numInt" value="#{gestionPacienteMB.datPaciente.dirInterior}" required="true" /></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="dirCalle" /></td>
@@ -96,19 +100,19 @@
                                             <td><p:message for="numInt" /></td>
                                         </tr>
                                         <tr>
-                                            <td><p:outputLabel for="telFijo" value="Telefono fijo:" /> </td>
-                                            <td><p:outputLabel for="telCel" value="Telefono Celular:" /> </td>
+                                            <td><p:outputLabel for="telFijo" value="Teléfono fijo:" /> </td>
+                                            <td><p:outputLabel for="telCel" value="Teléfono Celular:" /> </td>
                                             <td><p:message for="telCel" /></td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="telFijo" value="" required="true" /></td>
-                                            <td><p:inputText id="telCel" value="" required="true" /></td>
-                                            <td><p:message for="telCel" /></td>
+                                            <td><p:inputText id="telFijo" value="#{gestionPacienteMB.datPaciente.telFijo}" required="true" /></td>
+                                            <td><p:inputText id="telCel" value="#{gestionPacienteMB.datPaciente.telCel}" required="true" /></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="telFijo" /></td>
                                             <td><p:message for="telCel" /></td>
-                                            <td><p:message for="telCel" /></td>
+                                            <td></td>
                                         </tr>
                                     </table>
 
@@ -127,9 +131,9 @@
                                             <td><p:outputLabel for="estadoPas" value="Estado del Paciente:" /> </td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="idHosp" value="" required="true" /></td>
-                                            <td><p:inputText id="idCareta" value="" required="true" /></td>
-                                            <td><p:inputText id="estadoPas" value="" required="true" /></td>
+                                            <td><p:inputText id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true" /></td>
+                                            <td><p:inputText id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true" /></td>
+                                            <td><p:inputText id="estadoPas" value="#{gestionPacienteMB.datPaciente.idEstadopaciente}" required="true" /></td>
                                         </tr>
                                         <tr>
                                             <td><p:message for="idHosp" /></td>
@@ -143,14 +147,14 @@
                                         </tr>
                                         <tr>
                                             <td><p:inputText id="idMed" value="" required="true" /></td>
-                                            <td></td>
+                                            <td><p:message for="idMed" /></td>
                                             <td></td>
                                         </tr>
                                     </table>
                                 </p:column>
                             </p:row>
                             <p:row>
-                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesion</p:column>
+                                <p:column colspan="3" style="text-align: center" class="ui-widget-header">Datos de Sesión</p:column>
                             </p:row>
 
                             <p:row>
@@ -179,8 +183,8 @@
                             </p:row>
                             <p:row>
                                 <p:column colspan="3">
-                                    <p:commandButton value="Cerrar" action="#{gestionPacienteMB.cerrarDialogo}" />
-                                    <p:commandButton id="save" value="Guardar" action="#{gestionPacienteMB.cerrarDialogo}"
+                                    <p:commandButton value="Cerrar" actionListener="#{gestionPacienteMB.cerrarDialogo}" />
+                                    <p:commandButton value="Guardar" actionListener="#{gestionPacienteMB.guardarPaciente()}"
                                                      icon="fas fa-save"/>
                                 </p:column>
                             </p:row>

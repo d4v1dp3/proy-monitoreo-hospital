@@ -34,9 +34,11 @@
                 <p:row>
                     <p:column>
 
-                        <center><h2>
+                        <center>
+                            <h2>
                             <p:outputLabel value="FORMULARIO PARA EL ALTA DE UN MÉDICO" class="titulo"></p:outputLabel>
-                            </h2></center>
+                            </h2>
+                        </center>
                         <p>Llene los siguientes campos para registrar un Médico en el sistema. </p>
                         
                         <p:panelGrid>
@@ -165,7 +167,7 @@
 
                             <p:row>
                                 <p:column>
-                                    <p:commandButton value="Cerrar" action="#{gestionMedicoMB.cerrarDialogo()}" />
+                                    <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo}" />
                                     <p:commandButton value="Guardar" actionListener="#{gestionMedicoMB.guardarMedico()}"
                                                      icon="fas fa-save" update="@all"/>                 
                                 </p:column>
