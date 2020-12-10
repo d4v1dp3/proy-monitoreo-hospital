@@ -54,7 +54,6 @@ public class GestionPacienteMB implements Serializable{
     @EJB
     CatalogoSBLocal catalogoSB;
     
-    
     @PostConstruct
     public void iniciaVO(){
         datUsuario = new UsuarioVO();

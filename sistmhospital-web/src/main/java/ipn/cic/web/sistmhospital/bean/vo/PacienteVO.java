@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class PacienteVO implements Serializable{
     
-    //private Integer idPersona;
     private Integer idPaciente;
     private String dirCalle;
     private Integer dirNumero;
@@ -39,7 +38,17 @@ public class PacienteVO implements Serializable{
 //    private List<EntPacienteMedico> entPacienteMedicoList;
     
     
-    public PacienteVO(){}
+    public PacienteVO(){
+        idPaciente = 0;
+        dirCalle = "";
+        dirNumero = 0;
+        dirInterior = "";
+        telFijo = "";
+        telCel = "";
+        idCareta = 0;
+        idEstadopaciente = 0;
+        idHospital = 0;   
+    }
     
     public Integer getIdPaciente() {
         return idPaciente;
@@ -89,30 +98,6 @@ public class PacienteVO implements Serializable{
         this.telCel = telCel;
     }
 
-//    public List<EntSintomas> getEntSintomasList() {
-//        return entSintomasList;
-//    }
-//
-//    public void setEntSintomasList(List<EntSintomas> entSintomasList) {
-//        this.entSintomasList = entSintomasList;
-//    }
-//
-//    public List<EntMedidas> getEntMedidasList() {
-//        return entMedidasList;
-//    }
-//
-//    public void setEntMedidasList(List<EntMedidas> entMedidasList) {
-//        this.entMedidasList = entMedidasList;
-//    }
-//
-//    public EntAntecedentes getEntAntecedentes() {
-//        return entAntecedentes;
-//    }
-//
-//    public void setEntAntecedentes(EntAntecedentes entAntecedentes) {
-//        this.entAntecedentes = entAntecedentes;
-//    }
-
     public Integer getIdCareta() {
         return idCareta;
     }
@@ -133,16 +118,12 @@ public class PacienteVO implements Serializable{
         return idHospital;
     }
 
+    //private Integer idPersona;
     public void setIdHospital(Integer idHospital) {
         this.idHospital = idHospital;
     }
-
-//    public List<EntPacienteMedico> getEntPacienteMedicoList() {
-//        return entPacienteMedicoList;
-//    }
-//
-//    public void setEntPacienteMedicoList(List<EntPacienteMedico> entPacienteMedicoList) {
-//        this.entPacienteMedicoList = entPacienteMedicoList;
-//    }
+    
+    
+   
 
 }
