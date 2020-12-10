@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
@@ -131,10 +131,10 @@
                                             <td><p:outputLabel for="estMenu" value="Estado del Paciente:" /> </td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="idHosp" value="" required="true" /></td>
-                                            <td><p:inputText id="idCareta" value="" required="true" /></td>
+                                            <td><p:inputText id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true" /></td>
+                                            <td><p:inputText id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true" /></td>
                                             <td>
-                                                <p:selectOneMenu id="estMenu" value="" dynamic="true">
+                                                <p:selectOneMenu id="estMenu" value="#{gestionPacienteMB.datPaciente.idEstadopaciente}" dynamic="true">
                                                     <f:selectItems value="#{gestionPacienteMB.catEstado}" var="estado" 
                                                                    itemLabel="#{estado.descripcion}" itemValue="#{estado.idEstadopaciente}"/>
                                                 </p:selectOneMenu>
@@ -151,7 +151,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="idMed" value="" required="true" /></td>
+                                            <td><p:inputText id="idMed" value="#{gestionPacienteMB.datPaciente.idMedico}" required="true" /></td>
                                             <td><p:message for="idMed" /></td>
                                             <td></td>
                                         </tr>
@@ -168,11 +168,14 @@
                                         <tr>
                                             <td><p:outputLabel for="idUsr" value="Usuario:" /> </td>
                                             <td><p:outputLabel for="contra" value="Contraseña:" /> </td>
-                                            <td><p:message for="contra" /></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <td><p:inputText id="idUsr" value="" required="true" /></td>
-                                            <td><p:inputText id="contra" value="" required="true" /></td>
+                                            <td><p:inputText id="idUsr" value="#{gestionPacienteMB.datUsuario.idUsuario}" required="true" /></td>
+                                            <td><p:inputText id="contra" value="#{gestionPacienteMB.datUsuario.contrasenia}" required="true" /></td>
+                                            <td>
+                                                <p:selectBooleanCheckbox id="estado" value="#{gestionPacienteMB.datUsuario.activo}" itemLabel="Activo"/>
+                                            </td>
                                             <td></td>
                                         </tr>
                                         <tr>

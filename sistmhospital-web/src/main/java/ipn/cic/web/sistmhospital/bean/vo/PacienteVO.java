@@ -35,6 +35,7 @@ public class PacienteVO implements Serializable{
     private Integer idCareta;
     private Integer idEstadopaciente;
     private Integer idHospital;    
+    private Short idMedico;
 //    private List<EntPacienteMedico> entPacienteMedicoList;
     
     
@@ -121,6 +122,20 @@ public class PacienteVO implements Serializable{
     //private Integer idPersona;
     public void setIdHospital(Integer idHospital) {
         this.idHospital = idHospital;
+    }
+
+    /**
+     * @return the idMedico
+     */
+    public Short getIdMedico() {
+        return idMedico;
+    }
+
+    /**
+     * @param idMedico the idMedico to set
+     */
+    public void setIdMedico(Short idMedico) {
+        this.idMedico = idMedico;
     }
     
     

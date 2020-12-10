@@ -56,7 +56,7 @@ public class GestionPacienteMB implements Serializable{
     
     @PostConstruct
     public void iniciaVO(){
-        datUsuario = new UsuarioVO();
+        setDatUsuario(new UsuarioVO());
         datPaciente = new PacienteVO();
         datPersona = new PersonaVO();
         pacGuardado = null;
@@ -81,13 +81,12 @@ public class GestionPacienteMB implements Serializable{
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
         }
         logger.log(Level.INFO,"Categorias en Form AltaPaciente[Fin]");
-        return;
     }
     
     public void guardarPaciente(){
         logger.log(Level.INFO,"Entrando a Guardar Paciente[1]");
         try{            
-            pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, datUsuario);
+            pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, getDatUsuario());
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
@@ -139,6 +138,12 @@ public class GestionPacienteMB implements Serializable{
         this.datUsuario = datUsuario;
     }
     
+    /**
+     * @return the datUsuario
+     */
+    public UsuarioVO getDatUsuario() {
+        return datUsuario;
+    }
 
     public PersonaVO getDatPersona() {
         return datPersona;
