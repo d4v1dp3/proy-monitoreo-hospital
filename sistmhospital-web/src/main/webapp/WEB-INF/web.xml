@@ -108,6 +108,23 @@ Todos los derechos reservados
         </user-data-constraint>
     </security-constraint>
     
+    <security-constraint>
+        <display-name>URL Médico</display-name>
+        <web-resource-collection>
+            <web-resource-name>PaginasMedico</web-resource-name>
+            <description>Protege las paginas para rol Médico</description>
+            <url-pattern>/faces/facelets/medico/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Roles con acceso a Páginas Médico</description>
+            <role-name>MEDICO</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>Sin encriptacion</description>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
     <session-config>
         <session-timeout>
             15

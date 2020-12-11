@@ -20,6 +20,7 @@ import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -98,13 +99,14 @@ public class GestionMedicoMB implements Serializable{
     
     
     public void cerrarDialogo(){
+        logger.log(Level.INFO,"Invocando cerrar dialogo.");
         FacesMessage mensaje = Mensaje.getInstance()
                                       .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
                                                    FacesMessage.SEVERITY_INFO);
         cerrarDialogo(mensaje);
     }
     
-    public void cerrarDialogo(FacesMessage mensaje){
+    private void cerrarDialogo(FacesMessage mensaje){
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
     
