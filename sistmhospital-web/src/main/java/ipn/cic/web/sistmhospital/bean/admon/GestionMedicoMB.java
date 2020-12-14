@@ -10,7 +10,9 @@ import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
+import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.MedicoVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
@@ -49,7 +51,7 @@ public class GestionMedicoMB implements Serializable{
     @EJB
     UtilWebSBLocal utilWebSB;
     @EJB
-    CatalogoSBLocal catalogoSB;
+    CatalogoSBLocal catalogoSB;  
     
     @PostConstruct
     public void iniciaVO(){

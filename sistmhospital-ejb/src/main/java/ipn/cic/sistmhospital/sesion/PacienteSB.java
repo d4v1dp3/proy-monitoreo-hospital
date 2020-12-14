@@ -9,6 +9,7 @@ package ipn.cic.sistmhospital.sesion;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,4 +49,23 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
             throw new NoExistePacienteException("No se encontro el paciente.");
         }
     }
+    
+    @Override
+    public List<EntPaciente> getPacientes(EntMedico entMedico) throws PacienteException {
+        try{
+            logger.log(Level.SEVERE, "PacienteSB: Entra a ejecutar consulta.");
+            query = em.createQuery("SELECT e From EntPaciente e WHERE e.entPacienteMedicoList.entMedico = :entMedico")
+            .setParameter("entMedico", entMedico);
+            
+            
+            logger.log(Level.SEVERE, "PacienteSB: consulta ejecutada.");
+            return query.getResultList();
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener la lista de pacientes : {0}",e.getMessage());
+            throw new PacienteException("No esposible obtener la lista de pacientes",e);
+        }
+                    
+    }
+    
+
 }

@@ -18,4 +18,6 @@ import javax.ejb.Local;
 public interface MedicoSBLocal {
     public EntMedico saveMedico(EntMedico med) throws MedicoException;
     
+    public EntMedico getMedico(Integer idMedico) throws MedicoException;
+    
 }
