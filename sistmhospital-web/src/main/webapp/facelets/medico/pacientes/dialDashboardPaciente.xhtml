@@ -7,7 +7,9 @@
 
     <f:view>
         <f:metadata>
-            <f:viewParam name="pacNombre" value="#{parametrosSOxigeno.pacienteNombre}" />
+            <f:viewParam name="pacNombre" value="#{dashboardPacienteMB.pacienteNombre}" />
+            <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
+            <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
         </f:metadata>
         <h:head>
             <title>Signos del Paciente</title>
@@ -32,33 +34,18 @@
 
         </h:head>
 
-        <h:body>
-            <!--<i class="far fa-save"></i>-->
-                
+        <h:body>                
                 <p:growl id="msgAltaMed" showDetail="true" />
                 
                                 <h2>
                                     <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
-                                    <p:outputLabel value="#{parametrosSOxigeno.pacienteNombre}" class="titulo"></p:outputLabel>
+                                        <p:outputLabel value="  "></p:outputLabel>
+                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
+                                        <p:outputLabel value=" "></p:outputLabel>
+                                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
+                                        <p:outputLabel value=" "></p:outputLabel>
+                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
                                 </h2>
-
-<!--                <h3>PACIENTE: </h3>
-                
-                        <p:panel id="datosPaciente" header="Datos del Paciente">
-                                <p:panelGrid columns="2">   
-                                    <h:outputText value="Nombre:" />
-                                    <h:outputText value="FERNANDO LOPEZ SANCHEZ"  style="font-weight: bold;"/>
-
-                                    <h:outputText value="CURP: " />
-                                    <h:outputText value="FLSJ873411HHGRDL45 " />
-
-                                    <h:outputText value="Dirección: " />
-                                    <h:outputText value="Ciudad de Mexico."/>
-
-                                    <h:outputText value="NSS: " />
-                                    <h:outputText value="099388495" />
-                                </p:panelGrid>
-                            </p:panel>-->
 
                 <p:panelGrid style="margin-top:20px">
                     <f:facet name="header">
@@ -80,7 +67,7 @@
                                 <h:outputText value="98"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="%"  style="font-size: 15px"/>
 
-                                <p:chart type="pie" model="#{parametrosSOxigeno.model}" style="width: 200px; height: 100px;">
+                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoOxigeno}" style="width: 200px; height: 100px;">
                                     <h:outputScript>
                                         function customExtender() {
                                         this.cfg.grid = {
@@ -98,7 +85,7 @@
                             <p:panel id="temperatura" header="Temperatura" style=".ui-panel-titlebar{background-color: graytext}">
                                 <h:outputText value="36.4"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="°C"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{parametrosTemperatura.model}" style="width: 200px; height: 100px;"/>
+                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoTemperatura}" style="width: 200px; height: 100px;"/>
                             </p:panel>
 
                         </p:column>
@@ -114,14 +101,14 @@
                             <p:panel id="fRespiratoria" header="Frecuencia Respiratoria" style="text-align: center;">  
                                 <h:outputText value="14"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{parametrosFRespiratoria.model}" style="width: 200px; height: 100px" />
+                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoFR}" style="width: 200px; height: 100px" />
                             </p:panel>
                         </p:column>
                         <p:column>
                             <p:panel id="fCardiaca" header="Frecuencia Cardíaca" style="text-align: center;">
                                 <h:outputText value="68"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="LPM"  style="font-size: 15px"/>
-                                <p:chart type="pie" model="#{parametrosFCardiaca.model}" style="width: 200px; height: 100px" />
+                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoFC}" style="width: 200px; height: 100px" />
                             </p:panel>
                         </p:column>
                         <p:column>
@@ -133,7 +120,7 @@
                                 <h:outputText value="80"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="mmHg"  style="font-size: 15px"/>
 
-                                <p:chart type="pie" model="#{parametrosPArterial.model}" style="width: 250px; height: 100px" />
+                                <p:chart type="pie" model="#{dashboardPacienteMB.graficoPA}" style="width: 250px; height: 100px" />
 
                             </p:panel>
                             
@@ -150,11 +137,11 @@
                     <p:row>
                         <p:column  colspan="3">
                             <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
-                                <p:chart type="bar" model="#{historicoSOxigeno.model}" style="height:250px;" />
-                                <p:chart type="bar" model="#{historicoTemperatura.model}" style="height:250px;" />
-                                <p:chart type="line" model="#{historicoFCardiaca.model}" style="height:250px;" />
-                                <p:chart type="line" model="#{historicoFRespiratoria.model}" style="height:250px;" />
-                                <p:chart type="line" model="#{historicoPresionArterial.model}" style="height:250px;"/>
+                                <p:chart type="bar" model="#{dashboardPacienteMB.historicoSOxigeno}" style="height:250px;" />
+                                <p:chart type="bar" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
+                                <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecCardiaca}" style="height:250px;" />
+                                <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecRespiratoria}" style="height:250px;" />
+                                <p:chart type="line" model="#{dashboardPacienteMB.historicoPreArterial}" style="height:250px;"/>
                             </p:panelGrid>
                         </p:column>
                     </p:row>

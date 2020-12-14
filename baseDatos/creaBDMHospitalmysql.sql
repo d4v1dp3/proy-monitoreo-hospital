@@ -5,6 +5,9 @@
 /*  Creado : 28-Sep-2020 04:15:34 p.m. 				    	    */
 /*  DBMS   : MySql 							    */
 /* ------------------------------------------------------------------------ */
+create database sismhosp;
+
+use sismhosp;
 
 SET FOREIGN_KEY_CHECKS=0
 ; 

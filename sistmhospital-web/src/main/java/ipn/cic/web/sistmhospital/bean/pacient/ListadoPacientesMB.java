@@ -96,12 +96,25 @@ public class ListadoPacientesMB implements Serializable {
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
         
+        //Envio de Parametros
         Map<String, List<String>> parametros = new HashMap<>();
+        
         List<String> valNombre = new ArrayList<>();
         valNombre.add(pacienteMostrar.getIdPersona().getNombre());
         
-        parametros.put("pacNombre", valNombre);
+         List<String> valPrimerAp = new ArrayList<>();
+        valPrimerAp.add(pacienteMostrar.getIdPersona().getPrimerApellido());
+        
+         List<String> valSegundoAp = new ArrayList<>();
+        valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
+        
+        logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
+        logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
 
+        parametros.put("pacNombre", valNombre);
+        parametros.put("pacPrimerAp", valPrimerAp);
+        parametros.put("pacSegundoAp", valSegundoAp);
+        
         PrimeFaces.current().dialog().openDynamic("pacientes/dialDashboardPaciente", options, parametros);
     }
 
