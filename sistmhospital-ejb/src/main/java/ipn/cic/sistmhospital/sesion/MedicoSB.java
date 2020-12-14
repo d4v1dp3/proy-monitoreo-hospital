@@ -9,6 +9,7 @@ package ipn.cic.sistmhospital.sesion;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -35,15 +36,17 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
     
     
     @Override
-    public EntMedico getMedico(Integer idMedico) throws MedicoException {
-        logger.log(Level.SEVERE, "MedicoSB: Entra a recuperar medico.");
+    public EntMedico getMedico(EntPersona entPersona) throws MedicoException {
+        logger.log(Level.INFO, "MedicoSB: Entra a recuperar medico.");
         
-        query = em.createQuery("SELECT e From EntMedico e WHERE e.idMedico = :idMedico")
-                .setParameter("idMedico", idMedico);
-        logger.log(Level.SEVERE, "PacienteSB: consulta ejecutada.");
-        EntMedico res = (EntMedico)query.getSingleResult();
-        
-        logger.log(Level.SEVERE, "MedicoSB: Medico recuperado.");
+        query = em.createQuery("SELECT e From EntMedico e WHERE e.idPersona = :idPersona")
+                .setParameter("idPersona", entPersona);
+//        
+//        logger.log(Level.INFO, "PacienteSB: consulta ejecutada.");
+        EntMedico res = new EntMedico();
+        res = (EntMedico)query.getSingleResult();
+
+        logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
     }
     

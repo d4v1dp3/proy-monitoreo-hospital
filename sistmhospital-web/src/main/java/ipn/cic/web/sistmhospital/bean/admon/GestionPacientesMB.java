@@ -59,12 +59,15 @@ public class GestionPacientesMB implements Serializable {
     public void cargaPacientes() {
         FacesMessage msg=null;
         
-        //Cargar Entidad de Medico        
+        //Recuperar Entidad de Medico        
         try {
             logger.log(Level.INFO,"Entra a cargar medico.");
-            medico = medicoSB.getMedico(1);
-                    
-                    //Recuperar Pacientes
+            EntUsuario usrMedico = utilWebSB.getUsrAutenticado(); 
+            logger.log(Level.INFO, "Usuario encontrado: {0}", usrMedico.getIdPersona());
+
+            medico = medicoSB.getMedico(usrMedico.getIdPersona());
+            logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar medico.");
         }
@@ -75,7 +78,7 @@ public class GestionPacientesMB implements Serializable {
             pacientesComp = pacienteSB.getPacientes(medico);           
             
         } catch (PacienteException ex) {
-            logger.log(Level.SEVERE, "Error en MB intentar recuperar los pacientes del medico: {0}", ex.getMessage());
+            logger.log(Level.SEVERE, "Error en MB al intentar recuperar los pacientes del medico: {0}", ex.getMessage());
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error pacientes:",
                             "Error al intentar recuperar los pacientes del medico, intente más tarde.",
@@ -88,8 +91,8 @@ public class GestionPacientesMB implements Serializable {
                             "Pacientes cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-//        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
-        //PrimeFaces.current().ajax().update("frGestUsuarios:msgsGU");
+//        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+//        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
     }
 
     

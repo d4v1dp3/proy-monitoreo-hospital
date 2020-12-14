@@ -8,6 +8,7 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import javax.ejb.Local;
 
 /**
@@ -18,6 +19,6 @@ import javax.ejb.Local;
 public interface MedicoSBLocal {
     public EntMedico saveMedico(EntMedico med) throws MedicoException;
     
-    public EntMedico getMedico(Integer idMedico) throws MedicoException;
+    public EntMedico getMedico(EntPersona entPersona) throws MedicoException;
     
 }
