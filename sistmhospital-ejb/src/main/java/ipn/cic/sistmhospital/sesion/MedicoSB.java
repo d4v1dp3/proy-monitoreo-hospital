@@ -9,10 +9,14 @@ package ipn.cic.sistmhospital.sesion;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 /**
  * SessionBean para manejo de entidades EntMedico, encargada de la persistencia
@@ -48,6 +52,27 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
 
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
+    }
+
+    @Override
+    public List<EntPaciente> getListaPaciente(EntMedico entMedico) throws MedicoException {
+         Query qry = em.createQuery("SELECT e from EntMedico e LEFT JOIN FETCH e.entPacienteMedicoList "
+                                  + "WHERE e = :entMedico ");
+         qry.setParameter("entMedico", entMedico);
+         entMedico = (EntMedico) qry.getSingleResult();
+         List<EntPaciente> lista = new ArrayList<>();
+         logger.log(Level.INFO,"Tamaño de Lista : {0}",entMedico.getEntPacienteMedicoList().size());
+         for(int i = 0; i < entMedico.getEntPacienteMedicoList().size();i++){
+             EntPaciente paciente = entMedico.getEntPacienteMedicoList().get(i).getEntPaciente();
+             paciente.getIdPaciente();
+             paciente.getIdPersona().getNombre();
+             paciente.getIdCareta().getIdCareta();
+             paciente.getIdEstadopaciente().getDescripcion();
+             logger.log(Level.INFO,"Datos Paciente : {0}",paciente.getIdPersona().getNombre());
+             lista.add(paciente);
+             
+         }
+         return lista;
     }
     
 }

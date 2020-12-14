@@ -36,7 +36,7 @@ Todos los derechos reservados
                     
                     
                     
-                    <p:dataTable var="paciente" value="#{gestionPacientesMB.pacientesComp}" rows="10"
+                    <p:dataTable var="paciente" value="#{listadoPacientesMB.pacientesComp}" rows="10"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
@@ -45,28 +45,30 @@ Todos los derechos reservados
                             <h:outputText value="#{paciente.idPaciente}" />
                         </p:column>
 
-                        <p:column headerText="Id Persona" filterBy="#{paciente.idPersona}" filterMatchMode="contains">
-                            <h:outputText value="#{paciente.idPersona}" />
+                        <p:column headerText="Primer Ap." filterBy="#{paciente.idPersona.primerApellido}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.primerApellido}" />
+                        </p:column>
+                        <p:column headerText="Segundo Ap." filterBy="#{paciente.idPersona.segundoApellido}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.segundoApellido}" />
+                        </p:column>
+                        <p:column headerText="Nombre" filterBy="#{paciente.idPersona.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{paciente.idPersona.nombre}" />
                         </p:column>
 
-                        <p:column headerText="Id Careta" filterBy="#{paciente.idCareta}" filterMatchMode="contains">
-                            <h:outputText value="#{paciente.idCareta}" />
+                        <p:column headerText="Id Careta">
+                            <h:outputText value="#{paciente.idCareta.idCareta}" />
                         </p:column>
 
                         <p:column headerText="Estado">
-                            <h:outputText value="#{paciente.idEstadoPaciente}" />
+                            <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
                         </p:column>
                         
-                        <!--
-
-                        <p:column headerText="Activo" style="text-aling:center" >
-                            <h:outputText value="" styleClass="ui-icon #{usuario.activo ? 'far fa-thumbs-up' : 'far fa-thumbs-down'}"/>
-                        </p:column>-->
+              
 
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionPacientesMB.editarUsuario()}">
-                                <f:setPropertyActionListener value="#{paciente}" target="#{gestionPacientesMB.usuarioEditar}" />
-                                <p:ajax event="dialogReturn" listener="#{gestionPacientesMB.retornoEditaUsuario}" update="@all"/>
+                            <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.mostrarDashboard()}">
+                                <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
+                                <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>
                             </p:commandButton>
                         </p:column>
 

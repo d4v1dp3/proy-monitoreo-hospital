@@ -22,6 +22,7 @@ import org.primefaces.model.chart.PieChartModel;
 @ViewScoped
 public class ChartSOxigeno implements Serializable{
     private PieChartModel model = new PieChartModel();
+    private String pacienteNombre;
     
     public ChartSOxigeno() {
         model.set("Normal [95% - 100%]", 0);
@@ -38,5 +39,19 @@ public class ChartSOxigeno implements Serializable{
     }
     
     public PieChartModel getModel() {return model;}
+
+    /**
+     * @return the pacienteNombre
+     */
+    public String getPacienteNombre() {
+        return pacienteNombre;
+    }
+
+    /**
+     * @param pacienteNombre the pacienteNombre to set
+     */
+    public void setPacienteNombre(String pacienteNombre) {
+        this.pacienteNombre = pacienteNombre;
+    }
 
 }

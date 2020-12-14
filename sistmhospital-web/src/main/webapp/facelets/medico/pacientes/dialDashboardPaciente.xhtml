@@ -6,6 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view>
+        <f:metadata>
+            <f:viewParam name="pacNombre" value="#{parametrosSOxigeno.pacienteNombre}" />
+        </f:metadata>
         <h:head>
             <title>Signos del Paciente</title>
             <style type="text/css">
@@ -36,7 +39,7 @@
                 
                                 <h2>
                                     <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
-                                    <p:outputLabel value="NOMBRE DEL PACIENTE " class="titulo"></p:outputLabel>
+                                    <p:outputLabel value="#{parametrosSOxigeno.pacienteNombre}" class="titulo"></p:outputLabel>
                                 </h2>
 
 <!--                <h3>PACIENTE: </h3>

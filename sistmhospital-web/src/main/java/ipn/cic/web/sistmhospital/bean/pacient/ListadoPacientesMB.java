@@ -4,7 +4,7 @@
  * Laboratorio de Robótica y Mecatrónica
  * Todos los derechos reservados
  */
-package ipn.cic.web.sistmhospital.bean.admon;
+package ipn.cic.web.sistmhospital.bean.pacient;
 
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.PacienteException;
@@ -18,6 +18,7 @@ import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,12 +38,12 @@ import org.primefaces.event.SelectEvent;
  * @author Iliac Huerta Trujillo <ihuertat@ipn.mx>
  */
 
-@Named(value = "gestionPacientesMB")
+@Named(value = "listadoPacientesMB")
 @ViewScoped
-public class GestionPacientesMB implements Serializable {
+public class ListadoPacientesMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(GestionPacientesMB.class.getName());
+    private static final Logger logger = Logger.getLogger(ListadoPacientesMB.class.getName());
 
     @EJB
     private PacienteSBLocal pacienteSB;
@@ -53,7 +54,7 @@ public class GestionPacientesMB implements Serializable {
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
-    private EntUsuario usuarioEditar;
+    private EntPaciente pacienteMostrar;
 
     @PostConstruct
     public void cargaPacientes() {
@@ -67,23 +68,12 @@ public class GestionPacientesMB implements Serializable {
 
             medico = medicoSB.getMedico(usrMedico.getIdPersona());
             logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+            pacientesComp = medicoSB.getListaPaciente(medico);
 
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar medico.");
         }
         
-        //Recuperar Pacientes
-        try {
-            logger.log(Level.INFO,"Entra a cargar pacientes.");
-            pacientesComp = pacienteSB.getPacientes(medico);           
-            
-        } catch (PacienteException ex) {
-            logger.log(Level.SEVERE, "Error en MB al intentar recuperar los pacientes del medico: {0}", ex.getMessage());
-            msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error pacientes:",
-                            "Error al intentar recuperar los pacientes del medico, intente más tarde.",
-                            FacesMessage.SEVERITY_ERROR);
-        }
         
         if(msg==null){
             msg = Mensaje.getInstance()
@@ -96,7 +86,7 @@ public class GestionPacientesMB implements Serializable {
     }
 
     
-    public void editarUsuario() {
+    public void mostrarDashboard() {
         logger.log(Level.INFO,"Abre dashboard de un paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
@@ -105,11 +95,17 @@ public class GestionPacientesMB implements Serializable {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
+        
+        Map<String, List<String>> parametros = new HashMap<>();
+        List<String> valNombre = new ArrayList<>();
+        valNombre.add(pacienteMostrar.getIdPersona().getNombre());
+        
+        parametros.put("pacNombre", valNombre);
 
-        PrimeFaces.current().dialog().openDynamic("pacientes/dialDashboardPaciente", options, null);
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialDashboardPaciente", options, parametros);
     }
 
-    public void retornoEditaUsuario(SelectEvent event) {
+    public void retornoMuestraDashboard(SelectEvent event) {
         FacesMessage msg = null;
 
         if (event.getObject() != null) {
@@ -138,18 +134,19 @@ public class GestionPacientesMB implements Serializable {
         this.pacientesComp = usuariosComp;
     }
 
+    
     /**
-     * @return the usuarioEditar
+     * @return the pacienteMostrar
      */
-    public EntUsuario getUsuarioEditar() {
-        return usuarioEditar;
+    public EntPaciente getPacienteMostrar() {
+        return pacienteMostrar;
     }
 
     /**
-     * @param usuarioEditar the usuarioEditar to set
+     * @param pacienteMostrar the pacienteMostrar to set
      */
-    public void setUsuarioEditar(EntUsuario usuarioEditar) {
-        this.usuarioEditar = usuarioEditar;
+    public void setPacienteMostrar(EntPaciente pacienteMostrar) {
+        this.pacienteMostrar = pacienteMostrar;
     }
 
 }
