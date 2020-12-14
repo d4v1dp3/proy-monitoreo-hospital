@@ -169,45 +169,11 @@ public class GestionPacienteMB implements Serializable{
         this.pacGuardado = pacGuardado;
     }
 
-    public GestionPacienteBDLocal getGstPac() {
-        return gstPac;
-    }
-
-    public void setGstPac(GestionPacienteBDLocal gstPac) {
-        this.gstPac = gstPac;
-    }
-
-
     public List<EntGenero> getCatGenero() {
         return catGenero;
     }
 
     public void setCatGenero(List<EntGenero> catGenero) {
         this.catGenero = catGenero;
-    }
-
-    public GestionPacienteBDLocal getGstMed() {
-        return gstPac;
-    }
-
-    public void setGstMed(GestionPacienteBDLocal gstMed) {
-        this.gstPac = gstPac;
-    }
-
-    public UtilWebSBLocal getUtilWebSB() {
-        return utilWebSB;
-    }
-
-    public void setUtilWebSB(UtilWebSBLocal utilWebSB) {
-        this.utilWebSB = utilWebSB;
-    }
-
-    public CatalogoSBLocal getCatalogoSB() {
-        return catalogoSB;
-    }
-
-    public void setCatalogoSB(CatalogoSBLocal catalogoSB) {
-        this.catalogoSB = catalogoSB;
-    }
-    
+    } 
 }
