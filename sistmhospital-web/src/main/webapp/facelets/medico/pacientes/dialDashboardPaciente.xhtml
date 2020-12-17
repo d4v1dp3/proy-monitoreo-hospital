@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view>
-        <f:metadata>
+        <f:metadata> 
             <f:viewParam name="pacNombre" value="#{dashboardPacienteMB.pacienteNombre}" />
             <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
             <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
+            <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>  
+            <f:viewAction action="#{dashboardPacienteMB.cargaInicial}"/>
         </f:metadata>
         <h:head>
             <title>Signos del Paciente</title>
@@ -64,7 +66,7 @@
                     <p:row>     
                         <p:column>
                             <p:panel id="oxigeno" header="Saturación de Oxígeno" style="text-align: center;">
-                                <h:outputText value="98"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxg}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="%"  style="font-size: 15px"/>
 
                                 <p:chart type="pie" model="#{dashboardPacienteMB.graficoOxigeno}" style="width: 200px; height: 100px;">
@@ -83,7 +85,7 @@
                         </p:column>
                         <p:column>
                             <p:panel id="temperatura" header="Temperatura" style=".ui-panel-titlebar{background-color: graytext}">
-                                <h:outputText value="36.4"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacTemperatura}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="°C"  style="font-size: 15px"/>
                                 <p:chart type="pie" model="#{dashboardPacienteMB.graficoTemperatura}" style="width: 200px; height: 100px;"/>
                             </p:panel>
@@ -99,14 +101,14 @@
                     <p:row>
                         <p:column>
                             <p:panel id="fRespiratoria" header="Frecuencia Respiratoria" style="text-align: center;">  
-                                <h:outputText value="14"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoria}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="RMP"  style="font-size: 15px"/>
                                 <p:chart type="pie" model="#{dashboardPacienteMB.graficoFR}" style="width: 200px; height: 100px" />
                             </p:panel>
                         </p:column>
                         <p:column>
                             <p:panel id="fCardiaca" header="Frecuencia Cardíaca" style="text-align: center;">
-                                <h:outputText value="68"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="LPM"  style="font-size: 15px"/>
                                 <p:chart type="pie" model="#{dashboardPacienteMB.graficoFC}" style="width: 200px; height: 100px" />
                             </p:panel>
@@ -115,9 +117,9 @@
 
                             
                             <p:panel id="fArtDistolica" header="Presión Arterial" style="text-align: center;">
-                                <h:outputText value="100"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacPreArtSistolica}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="/"  style="font-size: 50px"/>
-                                <h:outputText value="80"  style="font-weight: bold; font-size: 50px"/>
+                                <h:outputText value="#{dashboardPacienteMB.pacPreArtDiastolica}"  style="font-weight: bold; font-size: 50px"/>
                                 <h:outputText value="mmHg"  style="font-size: 15px"/>
 
                                 <p:chart type="pie" model="#{dashboardPacienteMB.graficoPA}" style="width: 250px; height: 100px" />

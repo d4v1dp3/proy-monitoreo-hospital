@@ -107,14 +107,18 @@ public class ListadoPacientesMB implements Serializable {
         
          List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
+            
+        List<String> valId = new ArrayList<>();
+        valId.add(pacienteMostrar.getIdPaciente().toString());
         
         logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
         logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
-
+        
         parametros.put("pacNombre", valNombre);
         parametros.put("pacPrimerAp", valPrimerAp);
         parametros.put("pacSegundoAp", valSegundoAp);
-        
+        parametros.put("pacId", valId);
+                
         PrimeFaces.current().dialog().openDynamic("pacientes/dialDashboardPaciente", options, parametros);
     }
 

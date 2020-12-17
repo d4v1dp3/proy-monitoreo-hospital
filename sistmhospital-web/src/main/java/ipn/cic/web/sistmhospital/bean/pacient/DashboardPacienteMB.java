@@ -6,8 +6,15 @@
  */
 package ipn.cic.web.sistmhospital.bean.pacient;
 
+import ipn.cic.sistmhospital.modelo.EntMedidas;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.sesion.dashboard.DashboardBDLocal;
 import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
@@ -28,12 +35,28 @@ import org.primefaces.model.chart.PieChartModel;
 @ViewScoped
 public class DashboardPacienteMB implements Serializable{
     
+    private static final long serialVersionUID = 1L;
+    private static final Logger logger = Logger.getLogger(DashboardPacienteMB.class.getName());
+    
+    @EJB
+    private DashboardBDLocal dashboardBD;
+
+    private EntPaciente paciente;
+    private List<EntMedidas> medidasComp;
+     
     private String pacienteNombre;
     private String pacientePrimerAp;
     private String pacienteSegundoAp;
+    private String pacienteId;
+    private float pacSaturacionOxg;
+    private float pacTemperatura;
+    private short pacFrecRespiratoria;
+    private short pacFrecCardiaca;
+    private int   pacPreArtSistolica;
+    private int   pacPreArtDiastolica;  
     
     
-     private PieChartModel graficoOxigeno = new PieChartModel();
+    private PieChartModel graficoOxigeno = new PieChartModel();
      private PieChartModel graficoTemperatura = new PieChartModel();
      private PieChartModel graficoFR = new PieChartModel();
      private PieChartModel graficoFC = new PieChartModel();
@@ -46,8 +69,23 @@ public class DashboardPacienteMB implements Serializable{
      private LineChartModel historicoFrecRespiratoria = new LineChartModel();
      private LineChartModel historicoPreArterial = new LineChartModel();
 
+    public void cargaInicial(){
+        paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
+       
+        logger.log(Level.INFO,"idPaciente dashboard: {0}",paciente.getIdPaciente());
+        medidasComp = dashboardBD.getListaMedidas(paciente);
+        logger.log(Level.INFO,"Mediciones recuperadas: {0}",medidasComp.size());
+                        
+        pacSaturacionOxg = medidasComp.get(medidasComp.size()-1).getSaturacionOxigeno();
+        pacTemperatura = medidasComp.get(medidasComp.size()-1).getTemperatura();
+        pacFrecRespiratoria = medidasComp.get(medidasComp.size()-1).getFrecRespiratoria();
+        pacFrecCardiaca = medidasComp.get(medidasComp.size()-1).getFrecCardiaca();
+        pacPreArtSistolica = medidasComp.get(medidasComp.size()-1).getPreArtSistolica();
+        pacPreArtDiastolica = medidasComp.get(medidasComp.size()-1).getPreArtDiastolica();
+    }  
+     
     @PostConstruct
-    public void DashboardPacienteMB() {
+    public void DashboardPacienteMB() {         
         cargaGraficoOxigeno();
         cargaGraficoTemperatura();
         cargaGraficoFRespiratoria();
@@ -60,7 +98,7 @@ public class DashboardPacienteMB implements Serializable{
         cargaHistoricoFRespiratoria();
         cargaHistoricoPArterial();
     }   
-    
+
     
     public void cargaGraficoOxigeno() {
         graficoOxigeno.set("Normal [95% - 100%]", 0);
@@ -451,7 +489,63 @@ public class DashboardPacienteMB implements Serializable{
     public void setPacienteSegundoAp(String pacienteSegundoAp) {
         this.pacienteSegundoAp = pacienteSegundoAp;
     }
+    
+    public String getPacienteId(){
+        return pacienteId;
+    }
+    
+    public void setPacienteId(String pacienteId){
+        this.pacienteId = pacienteId;
+    }
+    
+    public float getPacSaturacionOxg() {
+        return pacSaturacionOxg;
+    }
 
+    public void setPacSaturacionOxg(float pacSaturacionOxg) {
+        this.pacSaturacionOxg = pacSaturacionOxg;
+    }
+
+    public float getPacTemperatura() {
+        return pacTemperatura;
+    }
+
+    public void setPacTemperatura(float pacTemperatura) {
+        this.pacTemperatura = pacTemperatura;
+    }
+
+    public short getPacFrecRespiratoria() {
+        return pacFrecRespiratoria;
+    }
+
+    public void setPacFrecRespiratoria(short pacFrecRespiratoria) {
+        this.pacFrecRespiratoria = pacFrecRespiratoria;
+    }
+
+    public short getPacFrecCardiaca() {
+        return pacFrecCardiaca;
+    }
+
+    public void setPacFrecCardiaca(short pacFrecCardiaca) {
+        this.pacFrecCardiaca = pacFrecCardiaca;
+    }
+
+    public int getPacPreArtSistolica() {
+        return pacPreArtSistolica;
+    }
+
+    public void setPacPreArtSistolica(int pacPreArtSistolica) {
+        this.pacPreArtSistolica = pacPreArtSistolica;
+    }
+
+    public int getPacPreArtDiastolica() {
+        return pacPreArtDiastolica;
+    }
+
+    public void setPacPreArtDiastolica(int pacPreArtDiastolica) {
+        this.pacPreArtDiastolica = pacPreArtDiastolica;
+    }
+    
     public PieChartModel getGraficoOxigeno() {
         return graficoOxigeno;
     }
