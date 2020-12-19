@@ -71,7 +71,7 @@ public class EntMedico implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EntPersona idPersona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entMedico", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entMedico", fetch = FetchType.EAGER)//LAZY
     private List<EntPacienteMedico> entPacienteMedicoList;
 
     public EntMedico() {
