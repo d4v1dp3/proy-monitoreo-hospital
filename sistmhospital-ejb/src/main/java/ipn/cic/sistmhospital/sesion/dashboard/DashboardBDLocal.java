@@ -6,6 +6,8 @@
  */
 package ipn.cic.sistmhospital.sesion.dashboard;
 
+import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
+import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import java.util.List;
@@ -17,6 +19,6 @@ import javax.ejb.Local;
  */
 @Local 
 public interface DashboardBDLocal {
-    EntPaciente getPaciente(Long idPaciente);
-    public List<EntMedidas> getListaMedidas(EntPaciente entPaciente);
+    public EntPaciente getPaciente(Long idPaciente) throws NoExistePacienteDashException;
+    public List<EntMedidas> getListaMedidas(EntPaciente entPaciente) throws NoExisteMedicionesException;
 }

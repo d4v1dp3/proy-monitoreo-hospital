@@ -6,6 +6,8 @@
  */
 package ipn.cic.web.sistmhospital.bean.pacient;
 
+import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
+import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.dashboard.DashboardBDLocal;
@@ -70,18 +72,24 @@ public class DashboardPacienteMB implements Serializable{
      private LineChartModel historicoPreArterial = new LineChartModel();
 
     public void cargaInicial(){
-        paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
-       
-        logger.log(Level.INFO,"idPaciente dashboard: {0}",paciente.getIdPaciente());
-        medidasComp = dashboardBD.getListaMedidas(paciente);
-        logger.log(Level.INFO,"Mediciones recuperadas: {0}",medidasComp.size());
+        try{
+            paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
+            logger.log(Level.INFO,"idPaciente: {0}",paciente.getIdPaciente());
+            medidasComp = dashboardBD.getListaMedidas(paciente);
+            logger.log(Level.INFO,"Mediciones recuperadas: {0}",medidasComp.size());
                         
-        pacSaturacionOxg = medidasComp.get(medidasComp.size()-1).getSaturacionOxigeno();
-        pacTemperatura = medidasComp.get(medidasComp.size()-1).getTemperatura();
-        pacFrecRespiratoria = medidasComp.get(medidasComp.size()-1).getFrecRespiratoria();
-        pacFrecCardiaca = medidasComp.get(medidasComp.size()-1).getFrecCardiaca();
-        pacPreArtSistolica = medidasComp.get(medidasComp.size()-1).getPreArtSistolica();
-        pacPreArtDiastolica = medidasComp.get(medidasComp.size()-1).getPreArtDiastolica();
+            pacSaturacionOxg = medidasComp.get(medidasComp.size()-1).getSaturacionOxigeno();
+            pacTemperatura = medidasComp.get(medidasComp.size()-1).getTemperatura();
+            pacFrecRespiratoria = medidasComp.get(medidasComp.size()-1).getFrecRespiratoria();
+            pacFrecCardiaca = medidasComp.get(medidasComp.size()-1).getFrecCardiaca();
+            pacPreArtSistolica = medidasComp.get(medidasComp.size()-1).getPreArtSistolica();
+            pacPreArtDiastolica = medidasComp.get(medidasComp.size()-1).getPreArtDiastolica();
+            
+        }catch(NoExistePacienteDashException ex1){
+            logger.log(Level.SEVERE,"Error al obtener paciente.");
+        }catch(NoExisteMedicionesException ex2){
+            logger.log(Level.SEVERE,"Error al obtener lista de mediciones.");
+        }
     }  
      
     @PostConstruct
