@@ -41,6 +41,7 @@ INSERT INTO MH_ESTADOPACIENTE (ID_ESTADOPACIENTE, DESCRIPCION) VALUES(2, 'Grave'
 INSERT INTO MH_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (1,'General','fa fa-cog',999);
 INSERT INTO MH_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (2,'Administrador','fas fa-user-ninja',1);
 INSERT INTO MH_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (3,'Médico','fas fa-user-md',2);
+INSERT INTO MH_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (4,'Paciente','fas fa-bed',2);
 
 /*-- Definición de Opciones*/
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (1, 'Salir', 'ui-icon-close', '#{sesionMB.cerrarSesion}');
@@ -49,6 +50,7 @@ Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'G
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
 
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
+Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'fas fa-clipboard', '/faces/facelets/paciente/inicioPaciente.xhtml');
 
 /*--Asociación de Rol con Menu*/
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,1); /*--Todos los roles tienen el menú general*/
@@ -59,6 +61,8 @@ INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,4);
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,5);
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (3,3);
 
+INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (4,4);
+
 
 /*Definición de opciones para cada menú*/
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (1,1,1,null,999);
@@ -67,6 +71,7 @@ INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICIO
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (4,3,4,null,1);
 
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (5,3,5,null,2);
+INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (6,4,6,null,2);
 
 /*--- Definición catálogo de géneros*/
 INSERT INTO MH_GENERO (ID_GENERO,DESCRIPCION) VALUES(1,'FEMENINO');

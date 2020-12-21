@@ -10,6 +10,7 @@ import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntPacienteMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,31 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         
         query = em.createQuery("SELECT e From EntMedico e WHERE e.idPersona = :idPersona")
                 .setParameter("idPersona", entPersona);
-//        
 //        logger.log(Level.INFO, "PacienteSB: consulta ejecutada.");
         EntMedico res = new EntMedico();
         res = (EntMedico)query.getSingleResult();
 
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
+    }
+    
+    @Override
+    public EntMedico getMedicoDePaciente(EntPaciente entPaciente) throws MedicoException {
+        logger.log(Level.INFO, "MedicoSB: Entra a recuperar medico de un paciente.");
+        
+        query = em.createQuery("SELECT e From EntPacienteMedico e WHERE e.entPacienteMedicoPK.idPaciente = :idPaciente")
+                .setParameter("idPaciente", entPaciente.getIdPaciente());
+        EntPacienteMedico res = new EntPacienteMedico();
+        res = (EntPacienteMedico)query.getSingleResult();
+        EntMedico med = res.getEntMedico();
+        logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", med.getCedulaProf());
+        
+        med.getEmail();
+        med.getIdPersona().getNombre();
+        med.getIdPersona().getPrimerApellido();
+        med.getIdPersona().getSegundoApellido();
+        
+        return med;
     }
 
     @Override
