@@ -12,6 +12,11 @@ import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.dashboard.DashboardBDLocal;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,33 +62,64 @@ public class DashboardPacienteMB implements Serializable{
     private int   pacPreArtSistolica;
     private int   pacPreArtDiastolica;  
     
-    
-    private PieChartModel graficoOxigeno = new PieChartModel();
-     private PieChartModel graficoTemperatura = new PieChartModel();
-     private PieChartModel graficoFR = new PieChartModel();
-     private PieChartModel graficoFC = new PieChartModel();
-     private PieChartModel graficoPA = new PieChartModel();
+    private String fechaUltMedicion;
+    private String horaUltMedicion;
+    private String fechaHist;   
      
-     private BarChartModel historicoSOxigeno = new BarChartModel();
+    private PieChartModel graficoOxigeno = new PieChartModel();
+    private PieChartModel graficoTemperatura = new PieChartModel();
+    private PieChartModel graficoFR = new PieChartModel();
+    private PieChartModel graficoFC = new PieChartModel();
+    private PieChartModel graficoPA = new PieChartModel();
+   
+    private BarChartModel historicoSOxigeno = new BarChartModel();
 
-     private BarChartModel historicoTemperatura = new BarChartModel();
-     private LineChartModel historicoFrecCardiaca= new LineChartModel();
-     private LineChartModel historicoFrecRespiratoria = new LineChartModel();
-     private LineChartModel historicoPreArterial = new LineChartModel();
-
+    private BarChartModel historicoTemperatura = new BarChartModel();
+    private LineChartModel historicoFrecCardiaca= new LineChartModel();
+    private LineChartModel historicoFrecRespiratoria = new LineChartModel();
+    private LineChartModel historicoPreArterial = new LineChartModel();
+    
+    private DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private DateTimeFormatter formatoHora =  DateTimeFormatter.ofPattern("HH:mm:ss");
+    
+    private LocalDate fechaCalendario;
+    
     public void cargaInicial(){
         try{
             paciente = dashboardBD.getPaciente(Long.parseLong(pacienteId));
             logger.log(Level.INFO,"idPaciente: {0}",paciente.getIdPaciente());
             medidasComp = dashboardBD.getListaMedidas(paciente);
             logger.log(Level.INFO,"Mediciones recuperadas: {0}",medidasComp.size());
-                        
-            pacSaturacionOxg = medidasComp.get(medidasComp.size()-1).getSaturacionOxigeno();
-            pacTemperatura = medidasComp.get(medidasComp.size()-1).getTemperatura();
-            pacFrecRespiratoria = medidasComp.get(medidasComp.size()-1).getFrecRespiratoria();
-            pacFrecCardiaca = medidasComp.get(medidasComp.size()-1).getFrecCardiaca();
-            pacPreArtSistolica = medidasComp.get(medidasComp.size()-1).getPreArtSistolica();
-            pacPreArtDiastolica = medidasComp.get(medidasComp.size()-1).getPreArtDiastolica();
+              
+            if(medidasComp.isEmpty()){
+                logger.log(Level.SEVERE,"No hay mediciones registradas para el paciente {0}",paciente.getIdPaciente().toString());
+            }else{
+                EntMedidas medida = medidasComp.get(medidasComp.size()-1);
+                
+                pacSaturacionOxg = medida.getSaturacionOxigeno();
+                pacTemperatura = medida.getTemperatura();
+                pacFrecRespiratoria = medida.getFrecRespiratoria();
+                pacFrecCardiaca = medida.getFrecCardiaca();
+                pacPreArtSistolica = medida.getPreArtSistolica();
+                pacPreArtDiastolica =medida.getPreArtDiastolica();
+              
+                LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+
+                fechaUltMedicion=fechaMedicion.format(formatoFecha);
+                horaUltMedicion=fechaMedicion.format(formatoHora);
+                  
+                cargaGraficoOxigeno();
+                cargaGraficoTemperatura();
+                cargaGraficoFRespiratoria();
+                cargaGarficoFCardiaca();
+                cargaGarficoPArterial();  
+
+                cargaHistoricoSOxigeno();
+                cargaHistoricoTemperatura();
+                cargaHistoricoFCardiaca();
+                cargaHistoricoFRespiratoria();
+                cargaHistoricoPArterial();
+            }      
             
         }catch(NoExistePacienteDashException ex1){
             logger.log(Level.SEVERE,"Error al obtener paciente.");
@@ -91,182 +127,203 @@ public class DashboardPacienteMB implements Serializable{
             logger.log(Level.SEVERE,"Error al obtener lista de mediciones.");
         }
     }  
-     
-    @PostConstruct
-    public void DashboardPacienteMB() {         
-        cargaGraficoOxigeno();
-        cargaGraficoTemperatura();
-        cargaGraficoFRespiratoria();
-        cargaGarficoFCardiaca();
-        cargaGarficoPArterial();
-        
+    
+    public void updateDashboard(){
+        fechaHist =fechaCalendario.format(formatoFecha);
         cargaHistoricoSOxigeno();
         cargaHistoricoTemperatura();
         cargaHistoricoFCardiaca();
         cargaHistoricoFRespiratoria();
         cargaHistoricoPArterial();
-    }   
-
-    
-    public void cargaGraficoOxigeno() {
-        graficoOxigeno.set("Normal [95% - 100%]", 0);
-        graficoOxigeno.set("Hipoxia Leve [91% - 94%]", 0);
-        graficoOxigeno.set("Hipoxia Moderada [86% - 90%]", 0);
-        graficoOxigeno.set("Hipoxia Grave [Menos de 85%]", 0);
+    }
         
+    @PostConstruct
+    public void DashboardPacienteMB(){
+    }   
+ 
+    public void cargaGraficoOxigeno() {
+        String color;
+        
+        if(pacSaturacionOxg<86){
+            color="ff5500";
+            graficoOxigeno.set("Hipoxia Grave [Menos de 86%]", 0);
+        }else if(pacSaturacionOxg<91){
+            color="fcac30";
+            graficoOxigeno.set("Hipoxia Moderada [86% - 90%]", 0);
+        }else if(pacSaturacionOxg<95){
+            color="fcf330";
+            graficoOxigeno.set("Hipoxia Leve [91% - 94%]", 0);
+        }else{
+            color="60d319";
+            graficoOxigeno.set("Normal [95% - 100%]", 0);
+        }
         graficoOxigeno.setLegendPosition("se");
         graficoOxigeno.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         graficoOxigeno.setShadow(false);
-        graficoOxigeno.setSeriesColors("60d319,fcf330,fcac30,ff5500");
-        
+        graficoOxigeno.setSeriesColors(color);   
         graficoOxigeno.setExtender("customExtender");
     }
     
-    public void cargaGraficoTemperatura() {
-        graficoTemperatura.set("Normal [36.2° - 37.2°]", 0);
-        graficoTemperatura.set("Hipotermia [Menos de 35°]", 0);
-        graficoTemperatura.set("Fiebre [Mas de 37.5°]", 0);
-        graficoTemperatura.set("Hipertermia [Mas de 40°]", 0);
+    public void cargaGraficoTemperatura() {   
+        String color;
         
+        if(pacTemperatura>40){
+            color="ff5500";
+            graficoTemperatura.set("Hipertermia [Mas de 40°]", 0);
+        }else if(pacTemperatura>37.5){
+            color="ffc900";
+            graficoTemperatura.set("Fiebre [Mas de 37.5°]", 0);
+        }else if(pacTemperatura>36.2){
+            color="60d319";
+            graficoTemperatura.set("Normal [36.2° - 37.2°]", 0);
+        }else{
+            color="1984d3";
+            graficoTemperatura.set("Hipotermia [Menos de 35°]", 0);
+        }           
         graficoTemperatura.setLegendPosition("se");
         graficoTemperatura.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         graficoTemperatura.setShadow(false);
-        graficoTemperatura.setSeriesColors("60d319,1984d3,ffc900,ff5500,ffffff");
-        
+        graficoFR.setSeriesColors(color);        
         graficoTemperatura.setExtender("customExtender");
     }
     
     public void cargaGraficoFRespiratoria() {
-        graficoFR.set("Normal [12 - 20]", 0);
-        graficoFR.set("Bradipnea [Menos de 12]", 0);
-        graficoFR.set("Taquipnea [Mas de 20]", 0);
         
+        String color;
+        if(pacFrecRespiratoria<12){
+            color="ff5500";
+            graficoFR.set("Bradipnea [Menos de 12]", 0);
+        }else if(pacFrecRespiratoria>=12 && pacFrecRespiratoria<=20){
+            color="60d319";
+            graficoFR.set("Normal [12 - 20]", 0);
+        }else{
+            color="ffc900";
+            graficoFR.set("Taquipnea [Mas de 20]", 0);
+        } 
         graficoFR.setLegendPosition("se");
         graficoFR.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-        
         graficoFR.setShadow(false);
-        graficoFR.setSeriesColors("60d319,ffc900,ff5500");
-        
+        graficoFR.setSeriesColors(color);        
         graficoFR.setExtender("customExtender");
     }
     
     public void cargaGarficoFCardiaca() {
-        graficoFC.set("Normal [60 - 100]", 0);
-        graficoFC.set("Bradicardia [Menos de 60]", 0);
-        graficoFC.set("Taquiardia [Mas de 100]", 0);
         
+        String color;
+        
+        if(pacFrecCardiaca<60){
+            color="ff5500";
+            graficoFC.set("Bradicardia [Menos de 60]", 0);
+        }else if(pacFrecCardiaca>=60 && pacFrecCardiaca<=100){
+            color="60d319";
+            graficoFC.set("Normal [60 - 100]", 0);
+        }else{
+            color="ffc900";
+            graficoFC.set("Taquicardia [Mas de 100]", 0);
+        }   
         graficoFC.setLegendPosition("se");
         graficoFC.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-        
         graficoFC.setShadow(false);
-        graficoFC.setSeriesColors("60d319,ffc900,ff5500");
-        
+        graficoFC.setSeriesColors(color);
         graficoFC.setExtender("customExtender");
     }
     
     public void cargaGarficoPArterial() {
-        graficoPA.set("Normal [110/70 - 140/90] mmHg", 0);
-        graficoPA.set("Hipotension [Menos de 100/60 mmHg]", 0);
-        graficoPA.set("Hipertension [Mas de 140/90 mmHg]", 0);
-        
+        String color;
+        if(pacPreArtSistolica<100 && pacPreArtDiastolica<60){
+            color="ffc900";
+            graficoPA.set("Hipotension [Menos de 100/60 mmHg]", 0);
+        }else if(pacPreArtSistolica>140 && pacPreArtDiastolica>90){
+            color="ffc900";
+            graficoPA.set("Hipertension [Mas de 140/90 mmHg]", 0);
+        }else{
+            color="60d319";
+            graficoPA.set("Normal [110/70 - 140/90] mmHg", 0);
+        }          
         graficoPA.setLegendPosition("se");
-        graficoPA.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-        
+        graficoPA.setLegendPlacement(LegendPlacement.OUTSIDEGRID);   
         graficoPA.setShadow(false);
-        graficoPA.setSeriesColors("60d319,ffc900,ff5500");
-        
+        graficoPA.setSeriesColors(color);    
         graficoPA.setExtender("customExtender");
     }
     
     public void cargaHistoricoSOxigeno() {
-        ChartSeries saturacion1 = new ChartSeries();
-        saturacion1.setLabel("Normal [95% - 100%]");
-        saturacion1.set("00:00", 85);
-        saturacion1.set("01:00", 86);
-        saturacion1.set("02:00", 80);
-        saturacion1.set("03:00", 88);
-        saturacion1.set("04:00", 80);
-        saturacion1.set("05:00", 85);
-        saturacion1.set("06:00", 90);
-        saturacion1.set("07:00", 96);
-        saturacion1.set("08:00", 85);
-        saturacion1.set("09:00", 80);
-        saturacion1.set("10:00", 90);
-        saturacion1.set("11:00", 92);
-        saturacion1.set("12:00", 94);
-        saturacion1.set("13:00", 94);
-//        saturacion1.set("14:00", 0);
-//        saturacion1.set("15:00", 0);
-//        saturacion1.set("16:00", 0);
-//        saturacion1.set("17:00", 0);
-//        saturacion1.set("18:00", 0);
-//        saturacion1.set("19:00", 0);
-//        saturacion1.set("20:00", 0);
-//        saturacion1.set("21:00", 0);
-//        saturacion1.set("22:00", 0);
-//        saturacion1.set("23:00", 0);   
-
-        ChartSeries saturacion2 = new ChartSeries();
-        saturacion2.setLabel("Hipoxia Leve [91% - 94%]");
         
-        ChartSeries saturacion3 = new ChartSeries();
-        saturacion3.setLabel("Hipoxia Moderada [86% - 90%]");
+        historicoSOxigeno.clear();
         
-        ChartSeries saturacion4 = new ChartSeries();
-        saturacion4.setLabel("Hipoxia Grave [Menos de 85%]");
+        ChartSeries p1 = new ChartSeries();
+        p1.setLabel("Saturacion de oxígeno");
+        //p1.setLabel("Normal [95% - 100%]");
+                
+        //ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+        //logger.log(Level.INFO,"fechaHist: {0}",fechaHist);
 
-        historicoSOxigeno.addSeries(saturacion1);
-        historicoSOxigeno.addSeries(saturacion2);
-        historicoSOxigeno.addSeries(saturacion3);
-        historicoSOxigeno.addSeries(saturacion4);
+        for(EntMedidas medida:medidasComp){
+            
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+         
+            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
+                p1.set(fechaMedicion.format(formatoHora), medida.getSaturacionOxigeno());
+            }
+        }
+       
+        /*ChartSeries p2 = new ChartSeries();
+        p2.setLabel("Hipoxia Leve [91% - 94%]");
+        
+        ChartSeries p3 = new ChartSeries();
+        p3.setLabel("Hipoxia Moderada [86% - 90%]");
+        
+        ChartSeries p4 = new ChartSeries();
+        p4.setLabel("Hipoxia Grave [Menos de 85%]");*/
+
+        historicoSOxigeno.addSeries(p1);
+        //historicoSOxigeno.addSeries(p2);
+        //historicoSOxigeno.addSeries(p3);
+        //historicoSOxigeno.addSeries(p4);
         
         historicoSOxigeno.setTitle("Saturación de Oxígeno");
         historicoSOxigeno.setLegendPosition("se");
         historicoSOxigeno.setShowPointLabels(true);
-        historicoSOxigeno.setStacked(true);
-        //model.setBarPadding(5);
+        historicoSOxigeno.setStacked(false);
         historicoSOxigeno.setBarWidth(8);
         
-        historicoSOxigeno.setSeriesColors("60d319,fcf330,fcac30,ff5500");
-        
+        //historicoSOxigeno.setSeriesColors("60d319,fcf330,fcac30,ff5500");
+        historicoSOxigeno.setSeriesColors("3492eb");
+                
         Axis xAxis = historicoSOxigeno.getAxis(AxisType.X);
         xAxis.setLabel("Tiempo (Horas)");
+        //xAxis.setTickAngle(-30);
         
         Axis yAxis = historicoSOxigeno.getAxis(AxisType.Y);
         yAxis.setLabel("Porcentaje (%)");
+        yAxis.setTickFormat("%.1f");
         yAxis.setMin(0);
         yAxis.setMax(120);
     }
     
     public void cargaHistoricoTemperatura() {
-        ChartSeries saturacion1 = new ChartSeries();
-        saturacion1.setLabel("Normal [36.2° - 37.2°]");
-        saturacion1.set("00:00", 36.2);
-        saturacion1.set("01:00", 36.3);
-        saturacion1.set("02:00", 36.4);
-        saturacion1.set("03:00", 36);
-        saturacion1.set("04:00", 36);
-        saturacion1.set("05:00", 36);
-        saturacion1.set("06:00", 36);
-        saturacion1.set("07:00", 36);
-        saturacion1.set("08:00", 36);
-        saturacion1.set("09:00", 36);
-        saturacion1.set("10:00", 36);
-        saturacion1.set("11:00", 36);
-        saturacion1.set("12:00", 36);
-        saturacion1.set("13:00", 36);
-//        saturacion1.set("14:00", 0);
-//        saturacion1.set("15:00", 0);
-//        saturacion1.set("16:00", 0);
-//        saturacion1.set("17:00", 0);
-//        saturacion1.set("18:00", 0);
-//        saturacion1.set("19:00", 0);
-//        saturacion1.set("20:00", 0);
-//        saturacion1.set("21:00", 0);
-//        saturacion1.set("22:00", 0);
-//        saturacion1.set("23:00", 0);   
+        
+        historicoTemperatura.clear();
+        
+        ChartSeries p1 = new ChartSeries();
+        p1.setLabel("Temperatura");
+        //saturacion1.setLabel("Normal [36.2° - 37.2°]");
 
-        ChartSeries saturacion2 = new ChartSeries();
+        /*ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+        
+        for(EntMedidas medida:medidasComp){
+            saturacion1.set(ft.format(medida.getFechaMedicion()), medida.getTemperatura());
+        }*/
+        
+        for(EntMedidas medida:medidasComp){
+            
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+         
+            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
+                p1.set(fechaMedicion.format(formatoHora), medida.getTemperatura());
+            }
+        }
+        /*ChartSeries saturacion2 = new ChartSeries();
         saturacion2.setLabel("Hipotermia [Menos de 35°]");
         
         ChartSeries saturacion3 = new ChartSeries();
@@ -274,75 +331,72 @@ public class DashboardPacienteMB implements Serializable{
         
         ChartSeries saturacion4 = new ChartSeries();
         saturacion4.setLabel("Hipertermia [Mas de 40°]");
-
-        historicoTemperatura.addSeries(saturacion1);
-        historicoTemperatura.addSeries(saturacion2);
-        historicoTemperatura.addSeries(saturacion3);
-        historicoTemperatura.addSeries(saturacion4);
+        */
+        historicoTemperatura.addSeries(p1);
+        //historicoTemperatura.addSeries(saturacion2);
+        //historicoTemperatura.addSeries(saturacion3);
+        //historicoTemperatura.addSeries(saturacion4);
         
         historicoTemperatura.setTitle("Temperatura");
         historicoTemperatura.setLegendPosition("se");
         historicoTemperatura.setShowPointLabels(true);
         historicoTemperatura.setStacked(true);
-        //model.setBarPadding(5);
         historicoTemperatura.setBarWidth(8);
         
-         historicoTemperatura.setSeriesColors("60d319,1984d3,ffc900,ff5500");
-        
+        //historicoTemperatura.setSeriesColors("60d319,1984d3,ffc900,ff5500");
+        historicoTemperatura.setSeriesColors("3492eb");
+
         Axis xAxis = historicoTemperatura.getAxis(AxisType.X);
         xAxis.setLabel("Tiempo (Horas)");
-        
+        //xAxis.setTickAngle(-30);
+
         Axis yAxis = historicoTemperatura.getAxis(AxisType.Y);
         yAxis.setLabel("Grados (°C)");
+        yAxis.setTickFormat("%.1f");
         yAxis.setMin(0);
         yAxis.setMax(50);
     }
 
     public void cargaHistoricoFCardiaca() {
+        historicoFrecCardiaca.clear();
+        
         ChartSeries p1 = new ChartSeries();
-        p1.setLabel("Normal [60 - 100]");
-        p1.set("00:00", 85);
-        p1.set("01:00", 86);
-        p1.set("02:00", 80);
-        p1.set("03:00", 88);
-        p1.set("04:00", 80);
-        p1.set("05:00", 85);
-        p1.set("06:00", 90);
-        p1.set("07:00", 96);
-        p1.set("08:00", 85);
-        p1.set("09:00", 80);
-        p1.set("10:00", 90);
-        p1.set("11:00", 92);
-        p1.set("12:00", 94);
-        p1.set("13:00", 94);
-//        p1.set("14:00", 0);
-//        p1.set("15:00", 0);
-//        p1.set("16:00", 0);
-//        p1.set("17:00", 0);
-//        p1.set("18:00", 0);
-//        p1.set("19:00", 0);
-//        p1.set("20:00", 0);
-//        p1.set("21:00", 0);
-//        p1.set("22:00", 0);
-//        p1.set("23:00", 0);   
-
-        ChartSeries p2 = new ChartSeries();
+        p1.setLabel("Frecuencia cardiaca");
+        
+        /*ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+        
+        for(EntMedidas medida:medidasComp){
+            p1.set(ft.format(medida.getFechaMedicion()), medida.getFrecCardiaca());
+        }*/
+        
+        for(EntMedidas medida:medidasComp){
+            
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+         
+            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
+                p1.set(fechaMedicion.format(formatoHora), medida.getFrecCardiaca());
+            }
+        }
+        
+        /*ChartSeries p2 = new ChartSeries();
         p2.setLabel("Bradicardia [Menos de 60]");
         
         ChartSeries p3 = new ChartSeries();
-        p3.setLabel("Taquiardia [Mas de 100]");
+        p3.setLabel("Taquiardia [Mas de 100]");*/
         
         historicoFrecCardiaca.addSeries(p1);
-        historicoFrecCardiaca.addSeries(p2);
-        historicoFrecCardiaca.addSeries(p3);
+        //historicoFrecCardiaca.addSeries(p2);
+        //historicoFrecCardiaca.addSeries(p3);
         
-        historicoFrecCardiaca.setSeriesColors("60d319,ffc900,ff5500");
-        
+        //historicoFrecCardiaca.setSeriesColors("60d319,ffc900,ff5500");
+        historicoFrecCardiaca.setSeriesColors("3492eb");
+
         historicoFrecCardiaca.setTitle("Frecuencia Cardíaca");
         historicoFrecCardiaca.setLegendPosition("se");
         historicoFrecCardiaca.setShowPointLabels(true);
-        
+                
         historicoFrecCardiaca.getAxes().put(AxisType.X, new CategoryAxis("Tiempo (Horas)"));
+        
         Axis yAxis = historicoFrecCardiaca.getAxis(AxisType.Y);
         yAxis.setLabel("Frecuencia (LPM)");
         yAxis.setMin(0);
@@ -350,44 +404,39 @@ public class DashboardPacienteMB implements Serializable{
     }
     
     public void cargaHistoricoFRespiratoria() {
+        
+        historicoFrecRespiratoria.clear();
+        
         ChartSeries p1 = new ChartSeries();
-        p1.setLabel("Normal [12 - 20]");
-        p1.set("00:00", 15);
-        p1.set("01:00", 12);
-        p1.set("02:00", 14);
-        p1.set("03:00", 18);
-        p1.set("04:00", 12);
-        p1.set("05:00", 18);
-        p1.set("06:00", 12);
-        p1.set("07:00", 16);
-        p1.set("08:00", 16);
-        p1.set("09:00", 16);
-        p1.set("10:00", 15);
-        p1.set("11:00", 18);
-        p1.set("12:00", 12);
-        p1.set("13:00", 18);
-//        p1.set("14:00", 0);
-//        p1.set("15:00", 0);
-//        p1.set("16:00", 0);
-//        p1.set("17:00", 0);
-//        p1.set("18:00", 0);
-//        p1.set("19:00", 0);
-//        p1.set("20:00", 0);
-//        p1.set("21:00", 0);
-//        p1.set("22:00", 0);
-//        p1.set("23:00", 0);   
+        p1.setLabel("Frecuencia Respiratoria");
+        
+        /*ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+        
+        for(EntMedidas medida:medidasComp){
+            p1.set(ft.format(medida.getFechaMedicion()), medida.getFrecRespiratoria());
+        }*/
+        for(EntMedidas medida:medidasComp){
+            
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+         
+            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
+                p1.set(fechaMedicion.format(formatoHora), medida.getFrecRespiratoria());
+            }
+        }
 
-        ChartSeries p2 = new ChartSeries();
+        /*ChartSeries p2 = new ChartSeries();
         p2.setLabel("Bradipnea [Menos de 12]");
         
         ChartSeries p3 = new ChartSeries();
-        p3.setLabel("Taquipnea [Mas de 20]");
+        p3.setLabel("Taquipnea [Mas de 20]");*/
         
         historicoFrecRespiratoria.addSeries(p1);
-        historicoFrecRespiratoria.addSeries(p2);
-        historicoFrecRespiratoria.addSeries(p3);
+        //historicoFrecRespiratoria.addSeries(p2);
+        //historicoFrecRespiratoria.addSeries(p3);
         
-        historicoFrecRespiratoria.setSeriesColors("60d319,ffc900,ff5500");
+        //historicoFrecRespiratoria.setSeriesColors("60d319,ffc900,ff5500");
+        historicoFrecRespiratoria.setSeriesColors("3492eb");
+
         
         historicoFrecRespiratoria.setTitle("Frecuencia Respiratoria");
         historicoFrecRespiratoria.setLegendPosition("ne");
@@ -401,83 +450,52 @@ public class DashboardPacienteMB implements Serializable{
     }
     
     public void cargaHistoricoPArterial() {
+        historicoPreArterial.clear();
+        
         ChartSeries sistolica = new ChartSeries();
         sistolica.setLabel("Presión Arterial Sistólica");
-        sistolica.set("00:00", 110);
-        sistolica.set("01:00", 112);
-        sistolica.set("02:00", 123);
-        sistolica.set("03:00", 120);
-        sistolica.set("04:00", 130);
-        sistolica.set("05:00", 120);
-        sistolica.set("06:00", 130);
-        sistolica.set("07:00", 112);
-        sistolica.set("08:00", 126);
-        sistolica.set("09:00", 140);
-        sistolica.set("10:00", 130);
-        sistolica.set("11:00", 134);
-        sistolica.set("12:00", 120);
-        sistolica.set("13:00", 120);
-//        sistolica.set("14:00", 0);
-//        sistolica.set("15:00", 0);
-//        sistolica.set("16:00", 0);
-//        sistolica.set("17:00", 0);
-//        sistolica.set("18:00", 0);
-//        sistolica.set("19:00", 0);
-//        sistolica.set("20:00", 0);
-//        sistolica.set("21:00", 0);
-//        sistolica.set("22:00", 0);
-//        sistolica.set("23:00", 0);  
+        
+        ChartSeries diastolica = new ChartSeries();
+        diastolica.setLabel("Presión Arterial Distólica");
+        
+        for(EntMedidas medida:medidasComp){
+            
+            LocalDateTime fechaMedicion = LocalDateTime.ofInstant(medida.getFechaMedicion().toInstant(), ZoneId.of("UTC"));
+         
+            if(fechaHist.equals(fechaMedicion.format(formatoFecha))){
+                sistolica.set(fechaMedicion.format(formatoHora), medida.getPreArtSistolica());
+                diastolica.set(fechaMedicion.format(formatoHora), medida.getPreArtDiastolica());
+            }
+        }
+        
+        /*for(EntMedidas medida:medidasComp){
+            sistolica.set(ft.format(medida.getFechaMedicion()), medida.getPreArtSistolica());
+        }
 
-        ChartSeries distolica = new ChartSeries();
-        distolica.setLabel("Presión Arterial Distólica");
-        distolica.set("00:00", 70);
-        distolica.set("01:00", 71);
-        distolica.set("02:00", 80);
-        distolica.set("03:00", 82);
-        distolica.set("04:00", 78);
-        distolica.set("05:00", 80);
-        distolica.set("06:00", 88);
-        distolica.set("07:00", 80);
-        distolica.set("08:00", 78);
-        distolica.set("09:00", 76);
-        distolica.set("10:00", 86);
-        distolica.set("11:00", 84);
-        distolica.set("12:00", 76);
-        distolica.set("13:00", 80);
-//        distolica.set("14:00", 78);
-//        distolica.set("15:00", 85);
-//        distolica.set("16:00", 84);
-//        distolica.set("17:00", 80);
-//        distolica.set("18:00", 70);
-//        distolica.set("19:00", 76);
-//        distolica.set("20:00", 85);
-//        distolica.set("21:00", 70);
-//        distolica.set("22:00", 78);
-//        distolica.set("23:00", 80);
+        for(EntMedidas medida:medidasComp){
+            diastolica.set(ft.format(medida.getFechaMedicion()), medida.getPreArtDiastolica());
+        }*/
+        
         
         historicoPreArterial.addSeries(sistolica);
-        historicoPreArterial.addSeries(distolica);
+        historicoPreArterial.addSeries(diastolica);
         
-        historicoPreArterial.setTitle("Presión Arterial Sistólica y Distólica");
+        historicoPreArterial.setTitle("Presión Arterial Sistólica y Diastólica");
         historicoPreArterial.setLegendPosition("se");
         historicoPreArterial.setShowPointLabels(true);
         historicoPreArterial.getAxes().put(AxisType.X, new CategoryAxis("Tiempo(Horas)"));
         
         Axis yAxis = historicoPreArterial.getAxis(AxisType.Y);
         yAxis.setLabel("mmHg");
-        yAxis.setMin(0);yAxis.setMax(200);
+        yAxis.setMin(0);
+        yAxis.setMax(220);
     }
     
-    /**
-     * @return the pacienteNombre
-     */
+
     public String getPacienteNombre() {
         return pacienteNombre;
     }
 
-    /**
-     * @param pacienteNombre the pacienteNombre to set
-     */
     public void setPacienteNombre(String pacienteNombre) {
         this.pacienteNombre = pacienteNombre;
     }
@@ -554,6 +572,38 @@ public class DashboardPacienteMB implements Serializable{
         this.pacPreArtDiastolica = pacPreArtDiastolica;
     }
     
+    public String getFechaUltMedicion() {
+        return fechaUltMedicion;
+    }
+
+    public void setFechaUltMedicion(String fechaUltMedicion) {
+        this.fechaUltMedicion = fechaUltMedicion;
+    }
+    
+    public String getHoraUltMedicion() {
+        return horaUltMedicion;
+    }
+
+    public void setHoraUltMedicion(String horaUltMedicion) {
+        this.horaUltMedicion = horaUltMedicion;
+    }
+
+    public String getFechaHist() {
+        return fechaHist;
+    }
+
+    public void setFechaHist(String fechaHist) {
+        this.fechaHist = fechaHist;
+    }    
+    
+    public LocalDate getFechaCalendario() {
+        return fechaCalendario;
+    }
+
+    public void setFechaCalendario(LocalDate fechaCalendario) {
+        this.fechaCalendario = fechaCalendario;
+    }
+        
     public PieChartModel getGraficoOxigeno() {
         return graficoOxigeno;
     }
