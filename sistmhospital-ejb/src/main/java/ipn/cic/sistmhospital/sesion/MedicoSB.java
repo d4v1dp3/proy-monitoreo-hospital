@@ -10,6 +10,7 @@ import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntPacienteMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,31 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         
         query = em.createQuery("SELECT e From EntMedico e WHERE e.idPersona = :idPersona")
                 .setParameter("idPersona", entPersona);
-//        
 //        logger.log(Level.INFO, "PacienteSB: consulta ejecutada.");
         EntMedico res = new EntMedico();
         res = (EntMedico)query.getSingleResult();
 
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
+    }
+    
+    @Override
+    public EntMedico getMedicoDePaciente(EntPaciente entPaciente) throws MedicoException {
+        logger.log(Level.INFO, "MedicoSB: Entra a recuperar medico de un paciente.");
+        
+        query = em.createQuery("SELECT e From EntPacienteMedico e WHERE e.entPacienteMedicoPK.idPaciente = :idPaciente")
+                .setParameter("idPaciente", entPaciente.getIdPaciente());
+        EntPacienteMedico res = new EntPacienteMedico();
+        res = (EntPacienteMedico)query.getSingleResult();
+        EntMedico med = res.getEntMedico();
+        logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", med.getCedulaProf());
+        
+        med.getEmail();
+        med.getIdPersona().getNombre();
+        med.getIdPersona().getPrimerApellido();
+        med.getIdPersona().getSegundoApellido();
+        
+        return med;
     }
 
     @Override
@@ -75,4 +94,35 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
          return lista;
     }
     
+    @Override
+    public List<EntMedico> getMedicos() throws MedicoException {
+        try{
+            query = em.createQuery("SELECT med From EntMedico med LEFT JOIN FETCH  med.idPersona p "
+                    + "ORDER BY p.primerApellido, p.segundoApellido, p.nombre");
+            return query.getResultList();
+            
+//            
+//            List<EntMedico> lista = new ArrayList<>();
+//            lista = query.getResultList();
+//
+//            logger.log(Level.INFO, "Tamaño de Lista : {0}", lista.size());
+//            for (int i = 0; i < lista.size(); i++) {
+//                EntMedico medico = lista.get(i);
+//                medico.getIdMedico();
+//                medico.getCedulaProf();
+//                medico.getEntPacienteMedicoList();
+//                medico.getIdPersona().getNombre();
+//                medico.getIdPersona().getPrimerApellido();
+//                medico.getIdPersona().getSegundoApellido();
+//                //logger.log(Level.INFO,"Datos Paciente : {0}",medico.getIdPersona().getNombre());
+//                lista.add(medico);
+//
+//            }
+//            return lista;
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener la lista de medicos: {0}",e.getMessage());
+            throw new MedicoException("No esposible obtener la lista de medicos",e);
+        }
+                    
+    }
 }

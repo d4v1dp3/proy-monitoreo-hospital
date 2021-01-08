@@ -25,4 +25,8 @@ public interface MedicoSBLocal {
     
     public List<EntPaciente> getListaPaciente(EntMedico entMedico) throws MedicoException;
     
+    public List<EntMedico> getMedicos() throws MedicoException;
+    
+    public EntMedico getMedicoDePaciente(EntPaciente entPaciente) throws MedicoException;
+    
 }
