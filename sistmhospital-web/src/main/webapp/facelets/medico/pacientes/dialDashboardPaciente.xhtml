@@ -50,15 +50,15 @@
             <h:form id="dashboardForm">
                 <p:growl id="msgAltaMed" showDetail="true" />
                 
-                                <h2>
-                                    <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
-                                        <p:outputLabel value="  "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
-                                        <p:outputLabel value=" "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
-                                        <p:outputLabel value=" "></p:outputLabel>
-                                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
-                                </h2>
+                <h2>
+                    <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
+                    <p:outputLabel value="  "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
+                    <p:outputLabel value=" "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
+                    <p:outputLabel value=" "></p:outputLabel>
+                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
+                </h2>
 
                 <p:panelGrid id="grid" style="margin-top:20px">
                     <f:facet name="header">
@@ -141,21 +141,17 @@
 
                     <p:row>
                         <p:column colspan="2">
-                            <panel id="historial" style="text-align: center;font-weight: bold; font-size: 20px">
-                                <h:outputText value="HISTORIAL DEL PACIENTE AL: " />                        
-                                <h:outputText value="#{dashboardPacienteMB.fechaHist}"/>
-                            </panel>
+                            <h:outputText value="HISTORIAL DEL PACIENTE AL: " style="text-align: center;font-weight: bold; font-size: 20px" />                        
+                            <h:outputText id ="fechaHist" value="#{dashboardPacienteMB.fechaHist}" style="text-align: center;font-weight: bold; font-size: 20px"/>
                         </p:column>
                         <p:column>
-                            <panel id="calendario">
-                                <p:calendar id="inline" value="#{dashboardPacienteMB.fechaCalendario}" locale="es" mode="inline"/>
-                                <p:commandButton value="Buscar" id = "btnCalendar" update="grid" action="#{dashboardPacienteMB.updateDashboard}"/>          
-                            </panel>
+                            <p:calendar id="inline" value="#{dashboardPacienteMB.fechaCalendario}" locale="es" mode="inline"/>
+                            <p:commandButton value="Buscar" id = "btnCalendar" update="fechaHist graficas" action="#{dashboardPacienteMB.updateDashboard}"/>          
                         </p:column>
                     </p:row>                
                     <p:row>
                         <p:column  colspan="3">
-                            <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
+                            <p:panelGrid columns="1" id="graficas" layout="grid" styleClass="showcase-text-align-center">
                                 <p:chart type="bar" model="#{dashboardPacienteMB.historicoSOxigeno}" style="height:250px;" />
                                 <p:chart type="bar" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
                                 <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecCardiaca}" style="height:250px;" />
@@ -164,7 +160,7 @@
                             </p:panelGrid>
                         </p:column>
                     </p:row>
-
+                    
                 </p:panelGrid>
             </h:form>                         
         </h:body>

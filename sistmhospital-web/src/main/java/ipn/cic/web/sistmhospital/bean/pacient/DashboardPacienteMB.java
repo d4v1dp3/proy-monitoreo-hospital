@@ -12,7 +12,6 @@ import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.dashboard.DashboardBDLocal;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -129,12 +128,16 @@ public class DashboardPacienteMB implements Serializable{
     }  
     
     public void updateDashboard(){
-        fechaHist =fechaCalendario.format(formatoFecha);
-        cargaHistoricoSOxigeno();
-        cargaHistoricoTemperatura();
-        cargaHistoricoFCardiaca();
-        cargaHistoricoFRespiratoria();
-        cargaHistoricoPArterial();
+        if (fechaCalendario!=null){
+            fechaHist =fechaCalendario.format(formatoFecha);
+            cargaHistoricoSOxigeno();
+            cargaHistoricoSOxigeno();
+            cargaHistoricoTemperatura();
+            cargaHistoricoFCardiaca();
+            cargaHistoricoFRespiratoria();
+            cargaHistoricoPArterial();
+        }
+        
     }
         
     @PostConstruct
