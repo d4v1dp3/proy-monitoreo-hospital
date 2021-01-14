@@ -6,10 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view>
-        <f:metadata>
+        <f:metadata> 
             <f:viewParam name="pacNombre" value="#{dashboardPacienteMB.pacienteNombre}" />
             <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
             <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
+            <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>  
+            <f:viewAction action="#{dashboardPacienteMB.cargaInicial}"/>
         </f:metadata>
         <h:head>
             <title>Signos del Paciente</title>
@@ -27,10 +29,6 @@
                 .titulo{
                     font-weight: bold !important;
                 }
-                .labelMedida{
-                    font-weight: bold;
-                    font-size: 55px;
-                }
             </style>
             
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
@@ -38,7 +36,8 @@
 
         </h:head>
 
-        <h:body>                
+        <h:body>       
+            <center>
                 <p:growl id="msgAltaMed" showDetail="true" />
                 
                                 <h2>
@@ -149,10 +148,16 @@
                             </p:panelGrid>
                         </p:column>
                     </p:row>
-
+                    <p:row>
+                        <p:column colspan="3" style="text-align: right">
+                            <h:form>
+                            <p:commandButton value="Cerrar" icon="pi pi-times" actionListener="#{dashboardPacienteMB.cerrarDialogo}"  />
+                            </h:form>
+                        </p:column>
+                    </p:row>
                 </p:panelGrid>
 
-
+            </center>
         </h:body>
     </f:view>
 </html>

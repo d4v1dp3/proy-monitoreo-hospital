@@ -12,6 +12,7 @@
             <f:viewParam name="medSegundoAp" value="#{dialMedicoPacienteMB.medSegundoAp}" />
             <f:viewParam name="medEmail" value="#{dialMedicoPacienteMB.medEmail}" />
             <f:viewParam name="medTel" value="#{dialMedicoPacienteMB.medTel}" />
+            <f:viewParam name="medTel" value="#{dialMedicoPacienteMB.medCedula}" />
         </f:metadata>
         <h:head>
 
@@ -37,40 +38,56 @@
         </h:head>
 
         <h:body>
-<!--<i class="far fa-save"></i>-->
+
+            <center>
             <h:form id="frmDatosMedico">
                 <p:growl id="msgDatosMed" showDetail="true" />
 
                 <p:panelGrid>
                     <p:row>
-                        <p:column>
+                        <p:column colspan="3">
 
                             <center>
-                                <h2>
-                                    <p:outputLabel value="DATOS DE MÉDICO ASIGNADO" class="titulo"></p:outputLabel>
+                                <h1><i class="fas fa-user-md" style="font-size: 4em"></i></h1>
+                                <h2>                                    
+                                    <p:outputLabel value="MÉDICO ASIGNADO" class="titulo"></p:outputLabel>
                                 </h2>
                             </center>
                             
                             <p:panelGrid>
                                 <p:row>
-                                    <p:column colspan="3" class="ui-widget-header">Médico</p:column>
+                                    
+                                    <p:column colspan="3" class="ui-widget-header">Datos</p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column colspan="3">
                                         <table width="100%" border="0">
-
                                             <tr>
                                                 <td>
-                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medPrimerAp}" style="font-weight: bold"></p:outputLabel>
+                                                    <i class="fas fa-user-md"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Nombre:" />
                                                 </td>
                                                 <td>
-                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medSegundoAp}" style="font-weight: bold"></p:outputLabel>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medPrimerAp}" style="font-weight: bold"> </p:outputLabel>
+                                                    <p:outputLabel value=" " />
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medSegundoAp}" style="font-weight: bold"> </p:outputLabel>
+                                                    <p:outputLabel value=" " />
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medNombre}" style="font-weight: bold"> </p:outputLabel>
+                                                </td>
+                                            </tr>    
+                                            <tr>
+                                                <td>                                                    
+                                                    <i class="fas fa-stethoscope"></i>
                                                 </td>
                                                 <td>
-                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medNombre}" style="font-weight: bold"></p:outputLabel>
+                                                    <p:outputLabel value="Cédula Profesional:" />
+                                                </td>
+                                                <td>
+                                                    <p:outputLabel value="#{dialMedicoPacienteMB.medCedula}" style="font-weight: bold"/>
                                                 </td>
                                             </tr>
-                                                                                      
                                         </table>
                                     </p:column>
                                 </p:row>
@@ -81,12 +98,13 @@
 
                                 <p:row>
                                     <p:column>
-                                        <table width="100%" border="0" align="center">
-
-                                            
+                                        <table width="100%" border="0" align="center">                                           
                                             <tr>
                                                 <td>
-                                                    <p:outputLabel value="Correo Electronico:" />
+                                                    <i class="far fa-envelope"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Correo Electrónico:" />
                                                 </td>
                                                 <td>
                                                     <p:outputLabel value="#{dialMedicoPacienteMB.medEmail}" style="font-weight: bold"></p:outputLabel>
@@ -94,7 +112,10 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <p:outputLabel value="Telefono Celular:" />
+                                                    <i class="fas fa-tablet"></i>
+                                                </td>
+                                                <td>                                                    
+                                                    <p:outputLabel value="Teléfono Celular:" />
                                                 </td>
                                                 <td>
                                                     <p:outputLabel value="#{dialMedicoPacienteMB.medTel}" style="font-weight: bold"></p:outputLabel>
@@ -107,13 +128,15 @@
                             </p:panelGrid>
                         </p:column>
                     </p:row>
+                    <p:row>
+                        <p:column colspan="3" style="text-align: right">
+                            <p:commandButton value="Cerrar" actionListener="#{inicioPacienteMB.cerrarDialogo}"  />                 
+                        </p:column>
+                    </p:row>
                 </p:panelGrid>
 
             </h:form>
-            <h:form>
-                <p:commandButton value="Cerrar" actionListener="#{inicioPacienteMB.cerrarDialogo()}"  />    
-            </h:form>
-            
+            </center>
         </h:body>
     </f:view>
 </html>

@@ -170,12 +170,12 @@
 
 
                                 <p:row>
-                                    <p:column>
+                                    <p:column colspan="3" style="text-align: right">
                                         <p:commandButton icon="fas fa-save" value="Guardar" 
                                                          actionListener="#{gestionMedicoMB.guardarMedico()}"
-                                                         update="@all"/>                 
+                                                         update="@all"/>
+                                        <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo}"  />    
                                     </p:column>
-                                    
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
@@ -183,10 +183,10 @@
                 </p:panelGrid>
 
             </h:form>
-            <h:form>
+<!--            <h:form>
                 <p:commandButton value="Cerrar" actionListener="#{gestionMedicoMB.cerrarDialogo()}"  />    
             </h:form>
-            
+            -->
         </h:body>
     </f:view>
 </html>
