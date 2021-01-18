@@ -8,8 +8,11 @@ package ipn.cic.sistmhospital.sesion.dashboard;
 
 import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
+import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
+import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntValoresReferencia;
 import ipn.cic.sistmhospital.sesion.BaseSB;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,5 +54,25 @@ public class DashboardBD extends BaseSB implements DashboardBDLocal {
         }
     }
     
+    @Override
+    public EntValoresReferencia getValoresRef(Short idValRef) throws NoExisteValoresRefException{
+        query = em.createQuery("SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValRef");
+        query.setParameter("idValRef", idValRef);
+        try{
+            EntValoresReferencia valoresRef = (EntValoresReferencia)query.getSingleResult();
+            return valoresRef;
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener valores de referencia: {0}",e.getMessage());
+            throw new NoExisteValoresRefException("No es posible obtener los valores de referencia");
+        }
+    }
     
+    @Override
+    public EntEstadopaciente getEstadoPac(Long idPaciente){
+        query = em.createQuery("SELECT e.idEstadopaciente FROM EntPaciente e WHERE e.idPaciente = :idPaciente");
+        query.setParameter("idPaciente", idPaciente);
+        EntEstadopaciente estadoPaciente = (EntEstadopaciente)query.getSingleResult();
+        return estadoPaciente;
+    }
+       
 }
