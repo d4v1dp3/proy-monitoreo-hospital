@@ -22,15 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
-import static org.primefaces.behavior.validate.ClientValidator.PropertyKeys.event;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -52,6 +48,16 @@ public class DialMedicoPacienteMB implements Serializable {
     private String medSegundoAp="";
     private String medEmail = "";
     private String medTel = "";
+    private String medCedula = "";
+
+    public String getMedCedula() {
+        return medCedula;
+    }
+
+    public void setMedCedula(String medCedula) {
+        this.medCedula = medCedula;
+    }
+    
 
     public String getMedEmail() {
         return medEmail;
