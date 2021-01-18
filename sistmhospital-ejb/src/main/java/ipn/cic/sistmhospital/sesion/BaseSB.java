@@ -44,6 +44,7 @@ public class BaseSB implements BaseSBLocal {
      * @throws SaveEntityException
      */
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Object saveEntity(Object entity) throws SaveEntityException {
         try {
             em.persist(entity);
