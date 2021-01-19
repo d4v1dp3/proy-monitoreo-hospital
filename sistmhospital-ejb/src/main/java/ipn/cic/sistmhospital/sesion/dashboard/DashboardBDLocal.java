@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion.dashboard;
 
+import ipn.cic.sistmhospital.exception.NoExisteEstadoPacException;
 import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
 import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
@@ -25,5 +26,5 @@ public interface DashboardBDLocal {
     public EntPaciente getPaciente(Long idPaciente) throws NoExistePacienteDashException;
     public List<EntMedidas> getListaMedidas(EntPaciente entPaciente) throws NoExisteMedicionesException;
     public EntValoresReferencia getValoresRef(Short idValRef) throws NoExisteValoresRefException;
-    public EntEstadopaciente getEstadoPac(Long idPaciente);
+    public EntEstadopaciente getEstadoPac(Long idPaciente) throws NoExisteEstadoPacException;
 }
