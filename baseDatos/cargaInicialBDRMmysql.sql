@@ -48,7 +48,6 @@ Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (1, 'S
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (2, 'Gestión Usuarios', 'fas fa-id-card', '/faces/facelets/admon/gestionUsuarios.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'Gestión Hospital', 'fas fa-hospital', '/faces/facelets/admon/gestionHospital.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
-
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'fas fa-clipboard', '/faces/facelets/paciente/inicioPaciente.xhtml');
 
@@ -60,7 +59,6 @@ INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,3);
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,4);
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,5);
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (3,3);
-
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (4,4);
 
 
@@ -69,7 +67,6 @@ INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICIO
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (2,2,2,null,1);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (3,2,3,null,2);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (4,3,4,null,1);
-
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (5,3,5,null,2);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (6,4,6,null,2);
 

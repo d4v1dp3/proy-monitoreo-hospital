@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+    Document   : gestionHospital
+    Created on : Enero 2021
+    Author     : Iliac Huerta Trujillo
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">    
+    <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
+        <ui:define name="nombrePagina">
+            Valores_Referencia
+        </ui:define>
+
+        <ui:define name="titulo">
+        </ui:define>
+
+        <ui:define name="contenido">
+            
+            <h:form id="frmValRef" rendered="true">  
+                
+                <p:growl id="msgsVR" showDetail="true" />
+                
+                <p:panel id="pnVRef" header="Valores de Referencia" footer="" style="margin-bottom:20px">
+                    <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                            <p> 
+                                Valores de referencia máximos y mínimos para los signos de pacientes. Administrado por  <b>#{gestionHospitalMB.nomSistema}</b>
+                            </p>     
+                            <h3>ACTUALIZACIÓN DE VALORES DE REFERENCIA</h3>
+                        </div>
+                        <div class="p-col" style="align-content: center;">
+                            
+                            <p:panel id="ehpDatos" header="Valores de Referencia">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Saturación de Oxígeno</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrSOMin" value="Saturación Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrSOMax" value="Saturación Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrSOMin" value="#{valoresReferenciaMB.valrefEnt.satOxigenoMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrSOMax" value="#{valoresReferenciaMB.valrefEnt.satOxigenoMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrSOMin" /></p:column>
+                                        <p:column><p:message for="evrSOMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Temperatura</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrTempMin" value="Temperatura Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrTempMax" value="Temperatura Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrTempMin" value="#{valoresReferenciaMB.valrefEnt.temperaturaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrTempMax" value="#{valoresReferenciaMB.valrefEnt.temperaturaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrTempMin" /></p:column>
+                                        <p:column><p:message for="evrTempMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Capnografía</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrCapMin" value="Capnografía Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrCapMax" value="Capnografía Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrCapMin" value="#{valoresReferenciaMB.valrefEnt.capnografiaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrCapMax" value="#{valoresReferenciaMB.valrefEnt.capnografiaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrCapMin" /></p:column>
+                                        <p:column><p:message for="evrCapMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Frecuencia Cardiaca</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrFrecCMin" value="Frecuencia Cardiaca Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrFrecCMax" value="Frecuencia Cardiaca Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrFrecCMin" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrFrecCMax" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrFrecCMin" /></p:column>
+                                        <p:column><p:message for="evrFrecCMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Frecuencia Respiratoria</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrFrecRMin" value="Frecuencia Respiratoria Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrFrecRMax" value="Frecuencia Respiratoria Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrFrecRMin" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrFrecRMax" value="#{valoresReferenciaMB.valrefEnt.frecRespiratoriaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrFrecRMin" /></p:column>
+                                        <p:column><p:message for="evrFrecRMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Presión Arterial Sistólica</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrPASMin" value="Presión Arterial Sistólica Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrPASMax" value="Presión Arterial Sistólica Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrPASMin" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrPASMax" value="#{valoresReferenciaMB.valrefEnt.preArtSistolicaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrPASMin" /></p:column>
+                                        <p:column><p:message for="evrPASMax" /></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align: center" class="ui-widget-header">Presión Arterial Diastólica</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:outputLabel for="evrPADMin" value="Presión Arterial Diastólica Mínima:" /></p:column>
+                                        <p:column><p:outputLabel for="evrPADMax" value="Presión Arterial Diastólica Máxima:" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:inputText id="evrPADMin" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaMin}" required="true" /></p:column>
+                                        <p:column><p:inputText id="evrPADMax" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaMax}" required="true" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><p:message for="evrPADMin" /></p:column>
+                                        <p:column><p:message for="evrPADMax" /></p:column>
+                                    </p:row>
+                                    
+                                </p:panelGrid>
+                                
+                               
+                            </p:panel>
+                        </div>
+                        <div class="p-grid p-justify-end" >
+                            <div class="p-col-1">
+                                <p:commandButton value="Guardar Cambios" id="updateValRef" action="#{valoresReferenciaMB.updateValoresDeReferencia()}" 
+                                                 update="msgsVR pnVRef" icon="pi pi-save" />
+                            </div>
+                            <div class="p-col-2">
+                            </div>
+                        </div>
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>    
+    </ui:composition>
+</html>
+
+
+
+
+
