@@ -83,8 +83,8 @@ public class ListadoPacientesMB implements Serializable {
                             "Pacientes cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-//        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
-//        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+        PrimeFaces.current().ajax().update("frGestPacientes:msgsGP");
     }
 
     
@@ -133,17 +133,71 @@ public class ListadoPacientesMB implements Serializable {
 
     public void retornoMuestraDashboard(SelectEvent event) {
         FacesMessage msg = null;
-
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
-
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
-                            "Diálogo cerrado sin aplicar cambios",
+                            "Diálogo cerrado sin aplicar cambios.",
                             FacesMessage.SEVERITY_INFO);
         }
-//        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
+    }
+    
+    public void mostrarAntecedentes() {
+        logger.log(Level.INFO,"Abre antecedentes del paciente.");
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 890);
+        options.put("height", 640);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
+        
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+        
+        List<String> valNombre = new ArrayList<>();
+        valNombre.add(pacienteMostrar.getIdPersona().getNombre());
+        
+        List<String> valPrimerAp = new ArrayList<>();
+        valPrimerAp.add(pacienteMostrar.getIdPersona().getPrimerApellido());
+        
+        List<String> valSegundoAp = new ArrayList<>();
+        valSegundoAp.add(pacienteMostrar.getIdPersona().getSegundoApellido());
+            
+        List<String> valId = new ArrayList<>();
+        valId.add(pacienteMostrar.getIdPaciente().toString());
+            
+        DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<String> valFechaHist = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        valFechaHist.add(fechaActual.format(formatoFecha));
+                
+        logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
+        logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
+        logger.log(Level.INFO,"Fecha Actual: {0}",valFechaHist.get(0));
+        
+        parametros.put("pacNombre", valNombre);
+        parametros.put("pacPrimerAp", valPrimerAp);
+        parametros.put("pacSegundoAp", valSegundoAp);
+        parametros.put("pacId", valId);
+        parametros.put("pacfechaHist",valFechaHist);
+                
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialAntecedentesPaciente", options, parametros);
+    }
+    
+    public void retornoMostrarAntecedentes(SelectEvent event) {
+        FacesMessage msg = null;
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo ",
+                            "Diálogo cerrado sin aplicar cambios.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
 
     /**
