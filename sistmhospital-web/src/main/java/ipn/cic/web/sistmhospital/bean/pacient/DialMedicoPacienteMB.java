@@ -6,28 +6,11 @@
  */
 package ipn.cic.web.sistmhospital.bean.pacient;
 
-import ipn.cic.sistmhospital.exception.MedicoException;
-import ipn.cic.sistmhospital.exception.NoExistePacienteException;
-import ipn.cic.sistmhospital.exception.PacienteException;
-import ipn.cic.sistmhospital.modelo.EntMedico;
-import ipn.cic.sistmhospital.modelo.EntMedidas;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
-import ipn.cic.sistmhospital.modelo.EntUsuario;
-import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
-import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
-import ipn.cic.web.sistmhospital.util.Mensaje;
-import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 
 /**
  * ManageBean que se utiliza para carga de usuarios en el sistema
