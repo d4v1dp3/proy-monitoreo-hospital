@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view>
+        <f:metadata> 
+            <f:viewParam name="pacNombre" value="#{dialAntecedentesMB.pacienteNombre}" />
+            <f:viewParam name="pacPrimerAp" value="#{dialAntecedentesMB.pacientePrimerAp}" />
+            <f:viewParam name="pacSegundoAp" value="#{dialAntecedentesMB.pacienteSegundoAp}" />
+
+            <f:viewParam name="diab" value="#{dialAntecedentesMB.diabetes}" />
+            <f:viewParam name="canc" value="#{dialAntecedentesMB.cancer}" />
+            <f:viewParam name="asma" value="#{dialAntecedentesMB.asma}" />
+            <f:viewParam name="vih" value="#{dialAntecedentesMB.vih}" />
+            <f:viewParam name="has" value="#{dialAntecedentesMB.has}" />
+            <f:viewParam name="epoc" value="#{dialAntecedentesMB.epoc}" />
+            <f:viewParam name="emba" value="#{dialAntecedentesMB.embarazo}" />
+            <f:viewParam name="artr" value="#{dialAntecedentesMB.artritis}" />
+            <f:viewParam name="enfa" value="#{dialAntecedentesMB.enfautoinmune}" />
+
+
+        </f:metadata>
+        <h:head>
+            <title>Antecedentes del Paciente</title>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 90%;
+                }
+                .ui-widget-header{
+                    background-color: #e7e8e9 !important;
+                    border-color: #cacaca !important;
+                    font-weight: bold !important;
+                    color: black !important;
+                    text-align: left !important;
+                }
+                .titulo{
+                    font-weight: bold !important;
+                }
+                .greenBackground .ui-panel-content{
+                    background: greenyellow !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }
+                .redBackground .ui-panel-content{
+                    background: crimson !important;
+                    text-align: center !important;
+                    font-weight: bold !important;
+                }
+
+            </style>
+
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+        </h:head>
+
+        <h:body>   
+            <center>
+                <h:form id="frmAntecedentes" rendered="true" >
+                    <p:growl id="msgsAnt" showDetail="true" />
+
+                    <h2>
+
+                    </h2>
+
+                    <!--<p:panel id="pnAntPac" header="ANTECEDENTES" style="margin-bottom:20px">-->
+                    <div class="p-grid p-dir-col">
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="2">
+                                    <center>
+
+<!--                                        <h2>                                    
+                                            <p:outputLabel value="ANTECEDENTES" class="titulo"></p:outputLabel>
+                                        </h2>-->
+                                        <h1><i class="fas fa-clipboard" style="font-size: 3em"></i></h1>
+                                    </center>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="2" style="text-align: center" class="ui-widget-header">PACIENTE</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="2">
+                                    <p:outputLabel value="          "></p:outputLabel>
+                                    <p:outputLabel value="  "></p:outputLabel>
+                                    <p:outputLabel value="#{dialAntecedentesMB.pacienteNombre}"></p:outputLabel>
+                                    <p:outputLabel value=" "></p:outputLabel>
+                                    <p:outputLabel value="#{dialAntecedentesMB.pacientePrimerAp}"></p:outputLabel>
+                                    <p:outputLabel value=" "></p:outputLabel>
+                                    <p:outputLabel value="#{dialAntecedentesMB.pacienteSegundoAp}"></p:outputLabel>
+                                    <p:outputLabel value="          "></p:outputLabel>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="2" style="text-align: center" class="ui-widget-header">ANTECEDENTES</p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.diabetes}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Diabetes" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.cancer}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Cáncer" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.asma}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Asma" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.vih}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="VIH" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.has}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="HAS" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.epoc}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="EPOC" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.embarazo}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Embarazo" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.artritis}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Artritis" /></p:column>
+                            </p:row>
+                            <p:row rendered="#{dialAntecedentesMB.enfautoinmune}">
+                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                                <p:column><p:outputLabel value="Enfautoinmune" /></p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <!--                        <div class="p-grid p-justify-end" >
+                                                    <div class="p-col-1">
+                                                        <p:commandButton value="Cerrar" id="cerrarAnt" action="" 
+                                                                         update="msgsAnt pnAntPac" icon="pi pi-save" />
+                                                    </div>
+                                                    <div class="p-col-2">
+                                                    </div>
+                                                </div>-->
+                    </div>
+                    <!--</p:panel>-->
+                </h:form> 
+            </center>
+
+        </h:body>
+    </f:view>
+</html>
+
