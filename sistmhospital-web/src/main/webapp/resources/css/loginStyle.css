@@ -68,7 +68,7 @@ body {
 
 .header {
     padding: 20px 0;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .contenido {
@@ -77,14 +77,14 @@ body {
 
 .footer {
     padding-bottom: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+    /*box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.10);*/
 }
 
 
 /*-------BarraTitulo-----------------*/
 
 .barraTitulo {
-    padding: 0px 30;
+    padding: 0px 30px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -195,7 +195,7 @@ body {
 #formContent {
     display: block;
     padding: 30px;
-    border: 8px solid #f1f1f1;
+    border: 2px solid #f1f1f1;
     border-radius: 5px;
     padding: 20px;
     width: 90%;
