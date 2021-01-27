@@ -5,16 +5,19 @@
  */
 package ipn.cic.web.sistmhospital.delegate;
 
+import ipn.cic.sistmhospital.exception.AntecedentesException;
 import ipn.cic.sistmhospital.exception.GeneroException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.RolException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.modelo.EntAntecedentes;
 import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.sesion.AntecedentesSBLocal;
 import ipn.cic.sistmhospital.sesion.GeneroSBLocal;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
@@ -22,9 +25,11 @@ import ipn.cic.sistmhospital.sesion.PersonaSBLocal;
 import ipn.cic.sistmhospital.sesion.RolSBLocal;
 import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.sistmhospital.util.Constantes;
+import ipn.cic.web.sistmhospital.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmhospital.bean.vo.PacienteVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.PermitAll;
@@ -58,10 +63,12 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
     private RolSBLocal  rolSB;
     @EJB
     private HospitalSBLocal hospitalSB;
+    @EJB
+    private AntecedentesSBLocal antecedentesSB;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, UsuarioVO usuario) throws PacienteException {
+    public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, AntecedentesVO antecedentes, UsuarioVO usuario) throws PacienteException {
         
         EntPersona entPersona = new EntPersona();
         
@@ -118,9 +125,37 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             logger.log(Level.SEVERE,"Error al ObtenerDatos de hospital : {0}",ex.getMessage());
             throw new PacienteException("Error al consultar datos de hospital ", ex);
         }
-
+                        
+        logger.log(Level.INFO,"Invocando GuardaPaciente en BD");
         
-        entPac = pacienteSB.guardaPaciente(entPac);
+        try{
+            entPac = pacienteSB.guardaPaciente(entPac);
+        }catch(PacienteException ex){
+            logger.log(Level.SEVERE,"Error al intentar salvar entidad paciente : {0}", ex.getMessage());
+            throw new PacienteException("Error al salvar entidad en PacienteSB",ex);
+        }
+        
+        logger.log(Level.INFO,"Creando Entidad Antecedente[1]");
+       
+        EntAntecedentes entAnt = new EntAntecedentes();
+        entAnt.setDiabetes(antecedentes.getDiabetes());
+        entAnt.setCancer(antecedentes.getCancer());
+        entAnt.setIdPaciente(entPac.getIdPaciente());
+        entAnt.setAsma(antecedentes.getAsma());
+        entAnt.setVih(antecedentes.getVih());
+        entAnt.setHas(antecedentes.getHas());
+        entAnt.setEpoc(antecedentes.getEpoc());
+        entAnt.setEmbarazo(antecedentes.getEmbarazo());
+        entAnt.setArtritis(antecedentes.getArtritis());
+        entAnt.setEnfautoinmune(antecedentes.getEnfautoinmune());        
+        entAnt.setFecha(Calendar.getInstance().getTime());
+        entAnt.setEntPaciente(entPac);
+         
+        try{
+            entAnt = antecedentesSB.guardaAntecedentes(entAnt);
+        }catch (AntecedentesException ex) {
+            logger.log(Level.SEVERE,"Error al salvar entidad en AntecedentesSB: {0}",ex.getMessage());
+        }
         
         return entPac;
     }
