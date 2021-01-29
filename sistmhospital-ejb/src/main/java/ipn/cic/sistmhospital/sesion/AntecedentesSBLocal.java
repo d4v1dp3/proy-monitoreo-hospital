@@ -6,6 +6,8 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.AntecedentesException;
+import ipn.cic.sistmhospital.modelo.EntAntecedentes;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +16,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface AntecedentesSBLocal {
-    
+    EntAntecedentes guardaAntecedentes(EntAntecedentes antecedentes) throws AntecedentesException;
 }

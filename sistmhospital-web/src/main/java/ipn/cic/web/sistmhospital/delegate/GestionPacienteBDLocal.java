@@ -7,6 +7,7 @@ package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.web.sistmhospital.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmhospital.bean.vo.PacienteVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
@@ -18,6 +19,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface GestionPacienteBDLocal {
-     public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, 
+     public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona,AntecedentesVO antecedentes ,
                                         UsuarioVO usuario) throws PacienteException;
 }

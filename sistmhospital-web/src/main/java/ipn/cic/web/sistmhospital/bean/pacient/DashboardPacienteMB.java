@@ -6,6 +6,7 @@
  */
 package ipn.cic.web.sistmhospital.bean.pacient;
 
+import ipn.cic.sistmhospital.exception.NoExisteEstadoPacException;
 import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
 import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
@@ -94,10 +95,7 @@ public class DashboardPacienteMB implements Serializable{
             medidasComp = dashboardBD.getListaMedidas(paciente);
             valoresRef = dashboardBD.getValoresRef(new Short("1"));
             estadoPaciente = dashboardBD.getEstadoPac(Long.parseLong(pacienteId));
-            
-            logger.log(Level.SEVERE,"{0}",estadoPaciente.getDescripcion());
-
-            
+                       
             if(medidasComp.isEmpty()){
                 logger.log(Level.SEVERE,"No hay mediciones registradas para el paciente {0}",paciente.getIdPaciente().toString());
             }else{
@@ -137,6 +135,8 @@ public class DashboardPacienteMB implements Serializable{
             logger.log(Level.SEVERE,"Error al obtener lista de mediciones.");
         }catch(NoExisteValoresRefException ex3){
             logger.log(Level.SEVERE,"Error al obtener valores de referencia.");
+        }catch(NoExisteEstadoPacException ex4){
+            logger.log(Level.SEVERE,"Error al obtener estado del paciente.");
         }
     }  
     

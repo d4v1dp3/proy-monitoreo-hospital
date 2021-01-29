@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion.dashboard;
 
+import ipn.cic.sistmhospital.exception.NoExisteEstadoPacException;
 import ipn.cic.sistmhospital.exception.NoExisteMedicionesException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteDashException;
 import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
@@ -68,11 +69,17 @@ public class DashboardBD extends BaseSB implements DashboardBDLocal {
     }
     
     @Override
-    public EntEstadopaciente getEstadoPac(Long idPaciente){
+    public EntEstadopaciente getEstadoPac(Long idPaciente)throws NoExisteEstadoPacException{
         query = em.createQuery("SELECT e.idEstadopaciente FROM EntPaciente e WHERE e.idPaciente = :idPaciente");
         query.setParameter("idPaciente", idPaciente);
-        EntEstadopaciente estadoPaciente = (EntEstadopaciente)query.getSingleResult();
-        return estadoPaciente;
+        try{
+            EntEstadopaciente estadoPaciente = (EntEstadopaciente)query.getSingleResult();
+            return estadoPaciente;
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener estado paciente: {0}",e.getMessage());
+            throw new NoExisteEstadoPacException("No es posible obtener el estado del paciente");
+        }
+
     }
        
 }
