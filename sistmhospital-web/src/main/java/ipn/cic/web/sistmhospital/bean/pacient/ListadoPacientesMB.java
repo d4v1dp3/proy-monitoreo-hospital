@@ -146,7 +146,7 @@ public class ListadoPacientesMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 340);
-        options.put("height", 560);
+        options.put("height", 500);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");

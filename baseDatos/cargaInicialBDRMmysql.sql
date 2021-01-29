@@ -51,6 +51,7 @@ Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'P
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'pi pi-id-card', '/faces/facelets/paciente/inicioPaciente.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (7, 'Valores de Referencia', 'pi pi-sliders-h', '/faces/facelets/admon/valoresReferencia.xhtml');
+Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (8, 'Gestion Dispositivos', 'fa fa-hdd-o', '/faces/facelets/admon/gestionDispositivos.xhtml');
 
 /*--Asociación de Rol con Menu*/
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,1); /*--Todos los roles tienen el menú general*/
@@ -71,6 +72,7 @@ INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICIO
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (5,2,5,null,3);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (6,4,6,null,3);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (7,2,7,null,4);
+INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (8,2,8,null,5);
 
 /*--- Definición catálogo de géneros*/
 INSERT INTO MH_GENERO (ID_GENERO,DESCRIPCION) VALUES(1,'FEMENINO');

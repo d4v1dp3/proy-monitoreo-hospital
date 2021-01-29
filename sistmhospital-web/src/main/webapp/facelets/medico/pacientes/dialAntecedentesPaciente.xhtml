@@ -49,7 +49,12 @@
                     text-align: center !important;
                     font-weight: bold !important;
                 }
-
+                .verde{
+                    color: green;
+                }
+                .rojo{
+                    color: red;
+                }
             </style>
 
             <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
@@ -61,21 +66,16 @@
                 <h:form id="frmAntecedentes" rendered="true" >
                     <p:growl id="msgsAnt" showDetail="true" />
 
-                    <h2>
-
-                    </h2>
-
                     <!--<p:panel id="pnAntPac" header="ANTECEDENTES" style="margin-bottom:20px">-->
                     <div class="p-grid p-dir-col">
 
                         <p:panelGrid>
-                            <p:row>
+<!--                            <p:row>
                                 <p:column colspan="2">
                                     <center>
-
-<!--                                        <h2>                                    
+                                        <h2>                                    
                                             <p:outputLabel value="ANTECEDENTES" class="titulo"></p:outputLabel>
-                                        </h2>-->
+                                        </h2>
                                         <h1><i class="fas fa-clipboard" style="font-size: 3em"></i></h1>
                                     </center>
                                 </p:column>
@@ -83,9 +83,10 @@
                             <p:row>
                                 <p:column colspan="2" style="text-align: center" class="ui-widget-header">PACIENTE</p:column>
                             </p:row>
-                            <p:row>
+-->                            <p:row>
                                 <p:column colspan="2">
-                                    <p:outputLabel value="          "></p:outputLabel>
+                                    <p:outputLabel value="PACIENTE: "></p:outputLabel>
+                                    <p:outputLabel value="       "></p:outputLabel>
                                     <p:outputLabel value="  "></p:outputLabel>
                                     <p:outputLabel value="#{dialAntecedentesMB.pacienteNombre}"></p:outputLabel>
                                     <p:outputLabel value=" "></p:outputLabel>
@@ -98,41 +99,86 @@
                             <p:row>
                                 <p:column colspan="2" style="text-align: center" class="ui-widget-header">ANTECEDENTES</p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.diabetes}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.diabetes}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.diabetes}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="Diabetes" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.cancer}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.cancer}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.cancer}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="Cáncer" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.asma}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.asma}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.asma}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="Asma" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.vih}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.vih}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.vih}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="VIH" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.has}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.has}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.has}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="HAS" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.epoc}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.epoc}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.epoc}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="EPOC" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.embarazo}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.embarazo}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.embarazo}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="Embarazo" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.artritis}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.artritis}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.artritis}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
                                 <p:column><p:outputLabel value="Artritis" /></p:column>
                             </p:row>
-                            <p:row rendered="#{dialAntecedentesMB.enfautoinmune}">
-                                <p:column><i class="pi pi-circle-off"></i></p:column>
-                                <p:column><p:outputLabel value="Enfautoinmune" /></p:column>
+                            <p:row>
+                                <p:column rendered="#{!dialAntecedentesMB.enfautoinmune}">
+                                    <i class="pi pi-times rojo"></i>
+                                </p:column>
+                                <p:column rendered="#{dialAntecedentesMB.enfautoinmune}">
+                                    <i class="pi pi-check verde"></i>
+                                </p:column>
+                                <p:column><p:outputLabel value="Enf. Autoinmune" /></p:column>
                             </p:row>
                         </p:panelGrid>
 

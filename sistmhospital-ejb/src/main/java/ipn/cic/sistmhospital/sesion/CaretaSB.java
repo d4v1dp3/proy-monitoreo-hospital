@@ -6,9 +6,17 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.CaretaException;
 import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
+import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.exception.RemoveEntityException;
+import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.Query;
@@ -20,9 +28,19 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class CaretaSB extends BaseSB implements CaretaSBLocal{
+    private static final Logger logger = Logger.getLogger(HospitalSB.class.getName());
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
+    public EntCareta guardaCareta(EntCareta careta) throws CaretaException {
+        try {
+            return (EntCareta)saveEntity(careta);
+        } catch (SaveEntityException ex) {
+            logger.log(Level.SEVERE,"Error al intentar salvar entidad : {0}", ex.getMessage());
+            throw new CaretaException("Error al salvar entidad en CaretaSB",ex);
+        }
+    }
     
     @Override
     public EntCareta getCareta(long idCareta) throws NoExisteCaretaException {        
@@ -33,5 +51,20 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
             throw new NoExisteCaretaException("Careta no encontrada.");
         }
         return res.get(0);
+    }
+    
+    @Override
+    public List<EntCareta> getCaretas() throws NoExisteCaretaException {        
+        Query qry = em.createQuery("SELECT e FROM EntCareta e");
+        List<EntCareta> res = qry.getResultList();        
+        if(res.size()==0){
+            throw new NoExisteCaretaException("Careta no encontrada.");
+        }
+        return res;
+    }
+    
+    @Override
+    public boolean borrarCareta(EntCareta careta) throws RemoveEntityException {  
+        return removeEntity(careta);
     }
 }

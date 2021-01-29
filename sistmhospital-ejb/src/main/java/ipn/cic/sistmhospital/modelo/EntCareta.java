@@ -7,6 +7,8 @@
 package ipn.cic.sistmhospital.modelo;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -84,6 +86,13 @@ public class EntCareta implements Serializable {
 
     public void setFechaManufactura(Date fechaManufactura) {
         this.fechaManufactura = fechaManufactura;
+    }
+    
+    public void setFechaManufactura(String fechaManufactura){
+        try {
+            this.fechaManufactura = new SimpleDateFormat("yyyy-MM-dd").parse(fechaManufactura);
+        } catch (ParseException e) {
+        }
     }
 
     @XmlTransient
