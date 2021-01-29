@@ -17,6 +17,8 @@ import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +97,7 @@ public class InicioPacienteMB implements Serializable {
     
     
     public void mostrarDashboard() {
-        logger.log(Level.INFO,"Abre dashboard paciente.");
+        logger.log(Level.INFO,"Abre dashboard de un paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 890);
@@ -103,29 +105,36 @@ public class InicioPacienteMB implements Serializable {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
-       
+        
         //Envio de Parametros
         Map<String, List<String>> parametros = new HashMap<>();
         
         List<String> valNombre = new ArrayList<>();
         valNombre.add(paciente.getIdPersona().getNombre());
         
-         List<String> valPrimerAp = new ArrayList<>();
+        List<String> valPrimerAp = new ArrayList<>();
         valPrimerAp.add(paciente.getIdPersona().getPrimerApellido());
         
-         List<String> valSegundoAp = new ArrayList<>();
+        List<String> valSegundoAp = new ArrayList<>();
         valSegundoAp.add(paciente.getIdPersona().getSegundoApellido());
             
         List<String> valId = new ArrayList<>();
         valId.add(paciente.getIdPaciente().toString());
-        
+            
+        DateTimeFormatter formatoFecha =  DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<String> valFechaHist = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        valFechaHist.add(fechaActual.format(formatoFecha));
+                
         logger.log(Level.INFO,"PrimerAp: {0}", valPrimerAp.get(0));
         logger.log(Level.INFO,"SegundoAp: {0}", valSegundoAp.get(0));
+        logger.log(Level.INFO,"Fecha Actual: {0}",valFechaHist.get(0));
         
         parametros.put("pacNombre", valNombre);
         parametros.put("pacPrimerAp", valPrimerAp);
         parametros.put("pacSegundoAp", valSegundoAp);
         parametros.put("pacId", valId);
+        parametros.put("pacfechaHist",valFechaHist);
                 
         PrimeFaces.current().dialog().openDynamic("dialDashboardPaciente", options, parametros);
     }
