@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.ValoresReferenciaException;
 import ipn.cic.sistmhospital.modelo.EntValoresReferencia;
@@ -21,5 +22,5 @@ public interface ValoresReferenciaSBLocal {
     EntValoresReferencia guardaValoresReferencia(EntValoresReferencia vref) throws ValoresReferenciaException;
     EntValoresReferencia getValoresReferencia() throws ValoresReferenciaException;
     EntValoresReferencia updateValoresReferencia(EntValoresReferencia vref) throws UpdateEntityException;
-    
+    EntValoresReferencia getValoresReferenciaId(Short idValRef) throws NoExisteValoresRefException;
 }
