@@ -36,7 +36,7 @@ import javax.ejb.EJB;
 
 @Path("persistemedicion")
 public class ServiciosMovilWS {
-    
+        
     @EJB
     private MedidasBDLocal medidasDB;
     
@@ -61,7 +61,7 @@ public class ServiciosMovilWS {
             MedidasVO med = gson.fromJson(datos.toString(), MedidasVO.class);
             med.setFechaMedicion(Calendar.getInstance().getTime());
             
-            respuesta = medidasDB.guardarMedidas(med);
+            respuesta = medidasDB.guardarMedidas(med);           
         }catch(NoExistePacienteException ex){
             respuesta = Json.createObjectBuilder()
             .add("Respuesta", "1")

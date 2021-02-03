@@ -16,5 +16,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface PersonaSBLocal {
-    EntPersona savePersona(EntPersona persona)throws SaveEntityException;
+    EntPersona savePersona(EntPersona persona)throws SaveEntityException; 
+    EntPersona getPersonaDePaciente(Long idPaciente);
 }

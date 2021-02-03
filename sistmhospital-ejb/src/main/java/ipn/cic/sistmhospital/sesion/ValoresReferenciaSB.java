@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.NoExisteValoresRefException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.ValoresReferenciaException;
@@ -56,5 +57,19 @@ public class ValoresReferenciaSB extends BaseSB implements ValoresReferenciaSBLo
     @Override
     public EntValoresReferencia updateValoresReferencia(EntValoresReferencia vref) throws UpdateEntityException{
         return (EntValoresReferencia)this.updateEntity(vref); 
+    }
+    
+    @Override
+    public EntValoresReferencia getValoresReferenciaId(Short idValRef) throws NoExisteValoresRefException{
+        logger.log(Level.SEVERE,"Recuperando valores de referencia");
+        query = em.createQuery("SELECT e FROM EntValoresReferencia e WHERE e.idValref = :idValRef");
+        query.setParameter("idValRef", idValRef);
+        try{
+            EntValoresReferencia valoresRef = (EntValoresReferencia)query.getSingleResult();
+            return valoresRef;
+        }catch(Exception e){
+            logger.log(Level.SEVERE,"Error al obtener valores de referencia: {0}",e.getMessage());
+            throw new NoExisteValoresRefException("No es posible obtener los valores de referencia");
+        }
     }
 }
