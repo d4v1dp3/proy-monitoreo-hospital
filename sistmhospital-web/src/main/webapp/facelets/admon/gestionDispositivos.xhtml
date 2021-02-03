@@ -45,8 +45,12 @@ Todos los derechos reservados
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
                                  rowsPerPageTemplate="10,20,30">
-                        <p:column headerText="Id" filterBy="#{careta.idCareta}" filterMatchMode="contains">
+                        <p:column headerText="Id">
                             <h:outputText value="#{careta.idCareta}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Número de Serie" filterBy="#{careta.noSerie}" filterMatchMode="contains">
+                            <h:outputText value="#{careta.noSerie}" />
                         </p:column>
 
                         <p:column headerText="Fecha de Manufactura" filterBy="#{careta.fechaManufactura}" filterMatchMode="contains">
@@ -69,7 +73,7 @@ Todos los derechos reservados
                         </p:column>
 
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.eliminarDispositivo()}">
+                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.confirmarBaja()}">
                                 <f:setPropertyActionListener value="#{careta}" target="#{gestionDispositivosMB.caretaEliminar}" />
                                 <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEliminarDispositivo}" update="@all"/>
                             </p:commandButton>
@@ -85,8 +89,12 @@ Todos los derechos reservados
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
                                  rowsPerPageTemplate="10,20,30">
-                        <p:column headerText="Id" filterBy="#{careta.idCareta}" filterMatchMode="contains">
+                        <p:column headerText="Id">
                             <h:outputText value="#{careta.idCareta}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Número de Serie" filterBy="#{careta.noSerie}" filterMatchMode="contains">
+                            <h:outputText value="#{careta.noSerie}" />
                         </p:column>
 
                         <p:column headerText="Fecha de Manufactura" filterBy="#{careta.fechaManufactura}" filterMatchMode="contains">
@@ -109,7 +117,7 @@ Todos los derechos reservados
                         </p:column>
 
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.eliminarDispositivo()}">
+                            <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.confirmarBaja()}">
                                 <f:setPropertyActionListener value="#{careta}" target="#{gestionDispositivosMB.caretaEliminar}" />
                                 <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEliminarDispositivo}" update="@all"/>
                             </p:commandButton>

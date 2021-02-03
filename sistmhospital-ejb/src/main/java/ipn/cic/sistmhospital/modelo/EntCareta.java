@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "EntCareta.findAll", query = "SELECT e FROM EntCareta e"),
     @NamedQuery(name = "EntCareta.findByIdCareta", query = "SELECT e FROM EntCareta e WHERE e.idCareta = :idCareta"),
+    @NamedQuery(name = "EntCareta.findByNoSerie", query = "SELECT e FROM EntCareta e WHERE e.noSerie = :noSerie"),
     @NamedQuery(name = "EntCareta.findByFechaManufactura", query = "SELECT e FROM EntCareta e WHERE e.fechaManufactura = :fechaManufactura")})
 public class EntCareta implements Serializable {
 
@@ -53,6 +54,11 @@ public class EntCareta implements Serializable {
     @Column(name = "FECHA_MANUFACTURA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaManufactura;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NO_SERIE")
+    private long noSerie;
+    @Basic(optional = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entCareta", fetch = FetchType.LAZY)
     private List<EntMedidas> entMedidasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entCareta", fetch = FetchType.LAZY)
@@ -146,5 +152,14 @@ public class EntCareta implements Serializable {
     public String toString() {
         return "ipn.cic.sistmhospital.modelo.EntCareta[ idCareta=" + idCareta + " ]";
     }
+
+    public long getNoSerie() {
+        return noSerie;
+    }
+
+    public void setNoSerie(long noSerie) {
+        this.noSerie = noSerie;
+    }
+    
     
 }

@@ -7,16 +7,21 @@
 package ipn.cic.web.sistmhospital.bean.admon;
 
 import ipn.cic.sistmhospital.exception.CaretaException;
+import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
-import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
-import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
+import ipn.cic.sistmhospital.modelo.EntHospital;
+import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CaretaSBLocal;
-import ipn.cic.web.sistmhospital.bean.vo.CaretaVO;
+import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,25 +50,39 @@ public class GestionDispositivosMB implements Serializable {
     @EJB
     private CaretaSBLocal caretaSB;
     @EJB
+    private CaretaHospitalSBLocal caretahospitalSB;
+    @EJB
+    private HospitalSBLocal hospitalSB;
+    @EJB
     private UtilWebSBLocal utilWebSB;
 
     private List<EntCareta> caretas;//Caretas Asginadas
     private List<EntCareta> caretasNA;//Caretas no Asignadas
     
     private EntCareta caretaEditar;
-    private EntCareta caretaEliminar;
-    
+    private EntCareta caretaEliminar;    
     private EntCareta caretaGuard;
     
-    private EntUsuario usuarioEditar;
+    private EntCaretaHospital caretaHospital;
+    private EntHospital entHospital;
     
     private String fechaManufactura = "";    
     private long idCareta = 0;
+    private long noSerie = 0;
     
 
     @PostConstruct
     public void cargarDispositivos() {
         caretaGuard = new EntCareta();
+        caretaEditar = new EntCareta();
+        caretaEliminar = new EntCareta();
+        
+        caretaHospital = new EntCaretaHospital();
+        try {
+            entHospital = hospitalSB.getPrimerHospital();
+        } catch (NoExisteHospitalException ex) {
+            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         FacesMessage msg=null;
         try {
@@ -83,7 +102,7 @@ public class GestionDispositivosMB implements Serializable {
                             "Dispositivos cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-        utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+        //utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
 //        PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
     }
     
@@ -91,18 +110,35 @@ public class GestionDispositivosMB implements Serializable {
         logger.log(Level.INFO,"Entrando a Guardar Dispositivo.");
         
         caretaGuard.setFechaManufactura(fechaManufactura);
-        //caretaGuard.setIdCareta(idCareta);
+        caretaGuard.setNoSerie(noSerie);
         
         try{            
             caretaGuard = caretaSB.guardaCareta(caretaGuard);
+            
+            caretaHospital.setEntCareta(caretaGuard);
+            
+            //entHospital = hospitalSB.getPrimerHospital();
+            
+            caretaHospital.setEntHospital(entHospital);
+            
+            caretaHospital = caretahospitalSB.guardaCaretaHospital(caretaHospital);
+            
         } catch (CaretaException ex) {
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
                                                 "Error al intentar guardar careta :"+ex.getMessage(), 
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);
-            return;
+            cerrarDialogo(msg);
+        } catch (CaretaHospitalException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "Error al intentar guardar caretahospital :"+ex.getMessage(), 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);
+            cerrarDialogo(msg);
         }
+        
         FacesMessage msg=null;
         if (caretaGuard == null){
             msg = Mensaje.getInstance()
@@ -182,6 +218,7 @@ public class GestionDispositivosMB implements Serializable {
     public void editarDispositivo() {
     
         idCareta = caretaEditar.getIdCareta();
+        noSerie = caretaEditar.getNoSerie();
         fechaManufactura = caretaEditar.getFechaManufactura().toString();
         
         Map<String, Object> options = new HashMap<String, Object>();
@@ -191,9 +228,28 @@ public class GestionDispositivosMB implements Serializable {
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
-        logger.log(Level.INFO, "Dispositivo Seleccionado: {0}", caretaEditar.getFechaManufactura());
-        PrimeFaces.current().dialog().openDynamic("dispositivos/dialEditarDispositivo", options, null);
+        
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+        
+        List<String> idcareta = new ArrayList<>();
+        idcareta.add(caretaEditar.getIdCareta()+"");
+        
+        List<String> nSerie = new ArrayList<>();
+        nSerie.add(caretaEditar.getNoSerie()+"");
+        
+        List<String> fManufactura = new ArrayList<>();
+        fManufactura.add(caretaEditar.getFechaManufactura().toString());
+        
+        parametros.put("idCareta", idcareta);
+        parametros.put("noSerie", nSerie);
+        parametros.put("fecManufac", fManufactura);        
+        
+        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", caretaEditar.getIdCareta());
+        PrimeFaces.current().dialog().openDynamic("dispositivos/dialEditarDispositivo", options, parametros);
     }
+    
+    
 
     public void retornoEditarDispositivo(SelectEvent event) {
         FacesMessage msg = null;
@@ -207,27 +263,77 @@ public class GestionDispositivosMB implements Serializable {
                             "Diálogo cerrado sin aplicar cambios",
                             FacesMessage.SEVERITY_INFO);
         }
-        cargarDispositivos();
+        
         utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+        cargarDispositivos();
     }
     
     public void actualizarDispositivo(){
         FacesMessage msg = null;
-               
-        
-        msg = Mensaje.getInstance()
+        try {         
+            caretaEditar.setIdCareta(idCareta);
+            caretaEditar.setNoSerie(noSerie);
+            caretaEditar.setFechaManufactura(fechaManufactura);
+            
+            caretaSB.updateCareta(caretaEditar);         
+            
+            
+            msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
                             "Datos de dispositivo actualizados correctamente.",
                             FacesMessage.SEVERITY_INFO);
+            
+            
+            cerrarDialogo(msg);
+        } catch (UpdateEntityException ex) {
+            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void confirmarBaja() {
+
+        idCareta = caretaEliminar.getIdCareta();
+        noSerie = caretaEliminar.getNoSerie();
+        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", caretaEliminar.getIdCareta());
         
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("modal", true);
+        options.put("width", 350);
+        options.put("height", 150);
+        options.put("contentWidth", "100%");
+        options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
         
-        cerrarDialogo(msg);
+        //Envio de Parametros
+        Map<String, List<String>> parametros = new HashMap<>();
+        
+        List<String> idcareta = new ArrayList<>();
+        idcareta.add(caretaEliminar.getIdCareta()+"");
+        
+        List<String> nSerie = new ArrayList<>();
+        nSerie.add(caretaEliminar.getNoSerie()+"");
+        
+        List<String> fManufactura = new ArrayList<>();
+        fManufactura.add(caretaEliminar.getFechaManufactura().toString());
+                
+        parametros.put("idCareta", idcareta);
+        parametros.put("noSerie", nSerie);    
+        parametros.put("fecManufac", fManufactura);        
+        
+        PrimeFaces.current().dialog().openDynamic("dispositivos/dialConfirmacion", options, parametros);
     }
     
     public void eliminarDispositivo(){
+        caretaEliminar.setIdCareta(idCareta);
+        caretaEliminar.setNoSerie(noSerie);
+        caretaEliminar.setFechaManufactura(fechaManufactura);
+        
         FacesMessage msg = null;
         logger.log(Level.INFO, "Dispositivo Seleccionado: ID[{0}]",
                 caretaEliminar.getIdCareta());
+        
+        //AQUI DEBERIA ABRIR UNA ADVERTENCIA 
         
         try {
             boolean borrado = caretaSB.borrarCareta(caretaEliminar);
@@ -239,14 +345,28 @@ public class GestionDispositivosMB implements Serializable {
                             FacesMessage.SEVERITY_INFO);
             }
             
-            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-            cargarDispositivos();
+            cerrarDialogo(msg);
+            
         } catch (RemoveEntityException ex) {
             Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-    public void retornoEliminarDispositivo(){
+    
+    public void retornoEliminarDispositivo(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo ",
+                            "Dispositivo eliminado.",
+                            FacesMessage.SEVERITY_INFO);
+        }
+        
+        utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+        cargarDispositivos();
     }
 
     public CaretaSBLocal getCaretaSB() {
@@ -271,14 +391,6 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setCaretaEditar(EntCareta caretaEditar) {
         this.caretaEditar = caretaEditar;
-    }
-
-    public EntUsuario getUsuarioEditar() {
-        return usuarioEditar;
-    }
-
-    public void setUsuarioEditar(EntUsuario usuarioEditar) {
-        this.usuarioEditar = usuarioEditar;
     }
 
     public EntCareta getCaretaGuard() {
@@ -319,6 +431,22 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setCaretasNA(List<EntCareta> caretasNA) {
         this.caretasNA = caretasNA;
+    }
+
+    public long getNoSerie() {
+        return noSerie;
+    }
+
+    public void setNoSerie(long noSerie) {
+        this.noSerie = noSerie;
+    }
+
+    public EntHospital getEntHospital() {
+        return entHospital;
+    }
+
+    public void setEntHospital(EntHospital entHospital) {
+        this.entHospital = entHospital;
     }
     
     

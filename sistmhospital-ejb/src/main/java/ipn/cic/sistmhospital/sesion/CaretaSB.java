@@ -11,6 +11,7 @@ import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import java.util.ArrayList;
@@ -66,5 +67,10 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
     @Override
     public boolean borrarCareta(EntCareta careta) throws RemoveEntityException {  
         return removeEntity(careta);
+    }
+    
+    @Override
+    public EntCareta updateCareta(EntCareta careta) throws UpdateEntityException {//*
+        return (EntCareta)this.updateEntity(careta);   
     }
 }

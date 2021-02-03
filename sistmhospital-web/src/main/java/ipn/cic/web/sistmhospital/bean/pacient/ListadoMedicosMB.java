@@ -60,9 +60,6 @@ public class ListadoMedicosMB implements Serializable {
         //Recuperar lista de Medicos       
         try {
             listadoMedicos = medicoSB.getMedicos();
-//            for(int i=0; i<listadoMedicos.size(); i++){
-//                logger.log(Level.INFO,"Num Pacientes: {0}.",listadoMedicos.get(i).getEntPacienteMedicoList());
-//            }
             logger.log(Level.INFO,"Lista medicos recuperada.");
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar listado de medicos.");

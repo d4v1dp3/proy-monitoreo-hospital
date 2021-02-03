@@ -9,6 +9,7 @@ package ipn.cic.sistmhospital.sesion;
 import ipn.cic.sistmhospital.exception.CaretaException;
 import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import java.util.List;
 import javax.ejb.Local;
@@ -24,4 +25,5 @@ public interface CaretaSBLocal {
     EntCareta getCareta(long idCareta) throws NoExisteCaretaException;
     List<EntCareta> getCaretas() throws NoExisteCaretaException;
     boolean borrarCareta(EntCareta careta) throws RemoveEntityException;
+    EntCareta updateCareta(EntCareta careta) throws UpdateEntityException;
 }
