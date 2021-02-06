@@ -68,7 +68,7 @@ public class MedidasBD implements MedidasBDLocal {
     @EJB
     private ValoresReferenciaSBLocal valoresSB;
         
-    @Resource(name = "java:jboss/mail/gmailSalida")
+    @Resource(name = "java:jboss/mail/sisMHospitalMail")
     private Session mailSesion;
             
     private EntPaciente cargarPaciente(long idPaciente) throws NoExistePacienteException {
