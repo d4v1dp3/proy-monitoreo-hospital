@@ -36,6 +36,7 @@ public class CorreoSB implements CorreoSBLocal {
             logger.log(Level.INFO, "Correo enviado a: {0}", correoDestinatario);
             return Boolean.TRUE;
         } catch (MessagingException e) {
+            logger.log(Level.SEVERE,"Error al enviar correo a: {0}", e.getMessage());
             logger.log(Level.SEVERE,"Error al enviar correo a: {0}", correoDestinatario);
         }
         return null;     
