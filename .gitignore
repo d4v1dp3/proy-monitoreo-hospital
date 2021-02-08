@@ -3,3 +3,4 @@
 /sistmhospital-ear/target/
 /${env.JBOSS_HOME}/
 /nbactions.xml
+/nb-configuration.xml
