@@ -6,6 +6,7 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
 import ipn.cic.sistmhospital.modelo.EntRol;
@@ -22,6 +23,15 @@ import javax.ejb.Local;
 public interface UsuarioSBLocal {
     
     /**
+     * Verifica si el Id de usuario existe en la base de datos, de ser así retorna true.
+     * 
+     * @param idUsuario identificador a revisar.
+     * @return boolean True si el identificador existe.
+     * 
+     */
+    boolean existeIdUsiario(String idUsuario); 
+    
+    /**
      * Persiste la entidad usuario en base de datos, retorna la entidad usuario 
      * persistida
      * 
@@ -30,7 +40,7 @@ public interface UsuarioSBLocal {
      * @throws ipn.cic.sistmhospital.exception.SaveEntityException Exceptción lanzada en caso de error.
      * 
      */
-    EntUsuario saveUsuario(EntUsuario usuario) throws SaveEntityException; 
+    EntUsuario saveUsuario(EntUsuario usuario) throws SaveEntityException,IDUsuarioException; 
     
     /**
      * Obtiene al usuario que tiene el nombre de usuario especificado como

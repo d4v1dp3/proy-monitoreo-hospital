@@ -7,6 +7,7 @@ package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.AntecedentesException;
 import ipn.cic.sistmhospital.exception.GeneroException;
+import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.RolException;
@@ -68,7 +69,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, AntecedentesVO antecedentes, UsuarioVO usuario) throws PacienteException {
+    public EntPaciente guardarPacienteNuevo(PacienteVO paciente, PersonaVO persona, AntecedentesVO antecedentes, UsuarioVO usuario) throws PacienteException, IDUsuarioException {
         
         EntPersona entPersona = new EntPersona();
         
