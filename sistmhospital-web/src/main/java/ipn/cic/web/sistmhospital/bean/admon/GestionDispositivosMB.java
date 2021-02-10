@@ -201,8 +201,8 @@ public class GestionDispositivosMB implements Serializable {
     public void registrarDispositivo(){        
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 580);
-        options.put("height", 500);
+        options.put("width", 500);
+        options.put("height", 550);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
@@ -223,8 +223,8 @@ public class GestionDispositivosMB implements Serializable {
         
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
-        options.put("width", 580);
-        options.put("height", 500);
+        options.put("width", 500);
+        options.put("height", 550);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");

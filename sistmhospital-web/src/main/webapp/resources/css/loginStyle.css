@@ -27,9 +27,9 @@ Todos los derechos reservados
     display: grid; 
     grid-gap: 20px;/*Espaciado*/
     height: 100%;
-    width: 90%;
-    /*max-width: 1000px;*/   
-    margin: auto;/*Para centrarlo*/
+    width: 100%;
+    /*min-width: 1000px;*/   
+    margin: auto;
     text-align: center;
 
     grid-template-columns:1fr 1fr 1fr;
@@ -53,8 +53,7 @@ Todos los derechos reservados
 }
 
 
-/*-------------Estilos Generales --------------*/
-
+/*-------------Estilos --------------*/
 body {
     background: #eeeeee;
 }
@@ -82,7 +81,6 @@ body {
 
 
 /*-------BarraTitulo-----------------*/
-
 .barraTitulo {
     padding: 0px 30px;
     display: flex;
