@@ -116,12 +116,10 @@ public class MedidasBD implements MedidasBDLocal {
             String cuerpo = "Paciente: "+ persona.getPrimerApellido() 
                                         + " " + persona.getSegundoApellido()
                                         + " " + persona.getNombre();
-   
-            logger.log(Level.INFO, "Entrando a revision de medidas");
-            if(revisarMedidas(medidas)){
-                logger.log(Level.INFO, "Parametros fuera de los rangos");
-                correoSB.enviarCorreo(mailSesion,medico.getEmail(),asunto,cuerpo);
-            }else{
+            
+            String reporteMedidas = revisarMedidas(medidas);
+            logger.log(Level.INFO, "reporte medidas {0}",reporteMedidas); 
+            if(reporteMedidas.isBlank()){
                 logger.log(Level.INFO, "Parametros dentro de los rangos");
                 logger.log(Level.INFO, "satOxg: {0}",medidas.getSaturacionOxigeno());
                 logger.log(Level.INFO, "temp: {0}",medidas.getTemperatura());
@@ -129,6 +127,9 @@ public class MedidasBD implements MedidasBDLocal {
                 logger.log(Level.INFO, "fcard: {0}",medidas.getFrecCardiaca());
                 logger.log(Level.INFO, "pSis: {0}",medidas.getPreArtSistolica());
                 logger.log(Level.INFO, "pDias: {0}",medidas.getPreArtDiastolica());
+            }else{ 
+                logger.log(Level.INFO, "Parametros fuera de los rangos");
+                correoSB.enviarCorreo(mailSesion,medico.getEmail(),asunto,cuerpo+reporteMedidas);
             }
             
             respuesta = Json.createObjectBuilder()
@@ -160,30 +161,32 @@ public class MedidasBD implements MedidasBDLocal {
         return respuesta;
     }
    
-    public Boolean revisarMedidas(EntMedidas medidas){
-        boolean oxgWarning;
-        boolean tempWarning;
-        boolean frespWarning;  
-        boolean fcardWarning; 
-        boolean pSistWarning;
-        boolean pDiasWarning;
+    public String revisarMedidas(EntMedidas medidas){
         try {
             EntValoresReferencia valoresRef;
             valoresRef = valoresSB.getValoresReferenciaId(new Short("1"));
+            String medidaStr="";
             
-            oxgWarning= medidas.getSaturacionOxigeno()<valoresRef.getSatOxigenoMin() || medidas.getSaturacionOxigeno()>valoresRef.getSatOxigenoMax();  
-            tempWarning = medidas.getTemperatura()<valoresRef.getTemperaturaMin() || medidas.getTemperatura()>valoresRef.getTemperaturaMax();
-            frespWarning = medidas.getFrecRespiratoria()<valoresRef.getFrecRespiratoriaMin() || medidas.getFrecRespiratoria()>valoresRef.getFrecRespiratoriaMax();
-            fcardWarning = medidas.getFrecCardiaca()<valoresRef.getFrecCardiacaMin() || medidas.getFrecCardiaca()>valoresRef.getFrecCardiacaMax();
-            pSistWarning = medidas.getPreArtSistolica()<valoresRef.getPreArtSistolicaMin() || medidas.getPreArtSistolica()>valoresRef.getPreArtSistolicaMax();
-            pDiasWarning = medidas.getPreArtDiastolica()<valoresRef.getPreArtDiastolicaMin() || medidas.getPreArtDiastolica()>valoresRef.getPreArtDiastolicaMax();
-            
-            if(oxgWarning || tempWarning || frespWarning || fcardWarning || pSistWarning || pDiasWarning){
-                return Boolean.TRUE;
-            }else{
-                return Boolean.FALSE;
+            if(medidas.getSaturacionOxigeno()<valoresRef.getSatOxigenoMin() || medidas.getSaturacionOxigeno()>valoresRef.getSatOxigenoMax()){
+                medidaStr += " \nSaturacion de Oxigeno: "+Float.toString(medidas.getSaturacionOxigeno());
             }
-            
+            if(medidas.getTemperatura()<valoresRef.getTemperaturaMin() || medidas.getTemperatura()>valoresRef.getTemperaturaMax()){
+                medidaStr += " \nTemperatura: "+Float.toString(medidas.getTemperatura());
+            }
+            if(medidas.getFrecRespiratoria()<valoresRef.getFrecRespiratoriaMin() || medidas.getFrecRespiratoria()>valoresRef.getFrecRespiratoriaMax()){
+                medidaStr += " \nFrecuencia respiratoria: "+ Short.toString(medidas.getFrecRespiratoria());
+            }
+            if(medidas.getFrecCardiaca()<valoresRef.getFrecCardiacaMin() || medidas.getFrecCardiaca()>valoresRef.getFrecCardiacaMax()){
+                medidaStr += " \nFrecuencua cardiaca: "+ Short.toString(medidas.getFrecCardiaca());
+            }
+            if(medidas.getPreArtSistolica()<valoresRef.getPreArtSistolicaMin() || medidas.getPreArtSistolica()>valoresRef.getPreArtSistolicaMax()){
+                medidaStr += " \nPresion Arterial Sistolica: "+ Integer.toString(medidas.getPreArtSistolica());
+            }
+            if(medidas.getPreArtDiastolica()<valoresRef.getPreArtDiastolicaMin() || medidas.getPreArtDiastolica()>valoresRef.getPreArtDiastolicaMax()){
+                medidaStr += " \nPresion Arterial Diastolica: "+Integer.toString(medidas.getPreArtSistolica());
+            }
+             
+            return medidaStr;
         } catch (NoExisteValoresRefException ex) {
             logger.log(Level.INFO, "Error al obtener valores de referencia");
         }
