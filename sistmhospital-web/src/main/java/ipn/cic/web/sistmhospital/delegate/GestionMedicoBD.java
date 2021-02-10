@@ -7,6 +7,7 @@
 package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.GeneroException;
+import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.RolException;
@@ -62,9 +63,10 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public EntMedico guardarMedicoNuevo(MedicoVO medico, PersonaVO persona,
-                                        UsuarioVO usuario) throws MedicoException {
+                                        UsuarioVO usuario) throws MedicoException, IDUsuarioException {
         // Aquí hay que preparar los datos para almacenar la información
         // primero los datos de persona para persistirlos
+        logger.log(Level.INFO, "Inicia Delegate guardar medico nuevo ");
         EntPersona entPersona = new EntPersona();
         entPersona.setNombre(persona.getNombre().toUpperCase());
         entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
@@ -81,6 +83,9 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         } catch (SaveEntityException ex) {
             logger.log(Level.SEVERE,"Error al persistir EnPersona : {0}",ex.getMessage());
             throw new MedicoException("Imposible salvar Persona para Médico ", ex);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE,"Error Desconocido : {0}",ex.getMessage());
+            throw new MedicoException("Imposible salvar Persona para Médico ", ex);
         }
         
         // Creando la Entidad USUARIO
@@ -90,7 +95,6 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         entUsuario.setIdPersona(entPersona);
         entUsuario.setActivo(usuario.getActivo());
         Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
-        
         
         try {
             EntRol rolMedico = rolSB.getRolId(medRol);

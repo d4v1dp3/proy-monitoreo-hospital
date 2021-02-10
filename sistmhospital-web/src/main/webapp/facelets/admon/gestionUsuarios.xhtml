@@ -70,7 +70,7 @@ Todos los derechos reservados
                         <p:column style="width:32px;text-align: center">
                             <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{gestionUsuariosMB.editarUsuario()}">
                                 <f:setPropertyActionListener value="#{usuario}" target="#{gestionUsuariosMB.usuarioEditar}" />
-                                <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario}" update="@all"/>
+                                <p:ajax event="dialogReturn" listener="#{gestionUsuariosMB.retornoEditaUsuario()}" update="@all"/>
                             </p:commandButton>
                         </p:column>
 

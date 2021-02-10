@@ -61,7 +61,7 @@ public class GestionUsuariosMB implements Serializable {
         
         if(msg==null){
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Éxito:",
+                    .getMensajeAdaptado("",
                             "Usuarios cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
@@ -81,8 +81,8 @@ public class GestionUsuariosMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaMedico", options, null);
     }
     
-    public void retornoAltaMedico(){
-        
+    public void retornoAltaMedico(SelectEvent event){
+        retornoEditaUsuario(event);
     }
     
     
