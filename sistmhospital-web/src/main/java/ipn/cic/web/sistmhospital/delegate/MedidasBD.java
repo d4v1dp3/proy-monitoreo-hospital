@@ -177,13 +177,13 @@ public class MedidasBD implements MedidasBDLocal {
                 medidaStr += " \nFrecuencia respiratoria: "+ Short.toString(medidas.getFrecRespiratoria());
             }
             if(medidas.getFrecCardiaca()<valoresRef.getFrecCardiacaMin() || medidas.getFrecCardiaca()>valoresRef.getFrecCardiacaMax()){
-                medidaStr += " \nFrecuencua cardiaca: "+ Short.toString(medidas.getFrecCardiaca());
+                medidaStr += " \nFrecuencia cardiaca: "+ Short.toString(medidas.getFrecCardiaca());
             }
             if(medidas.getPreArtSistolica()<valoresRef.getPreArtSistolicaMin() || medidas.getPreArtSistolica()>valoresRef.getPreArtSistolicaMax()){
                 medidaStr += " \nPresion Arterial Sistolica: "+ Integer.toString(medidas.getPreArtSistolica());
             }
             if(medidas.getPreArtDiastolica()<valoresRef.getPreArtDiastolicaMin() || medidas.getPreArtDiastolica()>valoresRef.getPreArtDiastolicaMax()){
-                medidaStr += " \nPresion Arterial Diastolica: "+Integer.toString(medidas.getPreArtSistolica());
+                medidaStr += " \nPresion Arterial Diastolica: "+Integer.toString(medidas.getPreArtDiastolica());
             }
              
             return medidaStr;

@@ -135,7 +135,7 @@ public class DashboardPacienteMB implements Serializable{
                     frespColor="redBackground";
                 }else if((pacFrecRespiratoria>=valoresRef.getFrecRespiratoriaMin()  && pacFrecRespiratoria<valoresRef.getFrecRespiratoriaMinInter())
                         ||(pacFrecRespiratoria>valoresRef.getFrecRespiratoriaMaxInter() && pacFrecRespiratoria<=valoresRef.getFrecRespiratoriaMax())){
-                    frespColor="yellowBackgound";        
+                    frespColor="yellowBackground";        
                 }else{
                     frespColor="greenBackground";        
                 }
