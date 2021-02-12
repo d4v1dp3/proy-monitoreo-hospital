@@ -26,10 +26,9 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
-
             <h:form id="frmValRef" rendered="true">  
 
-<!--                <p:growl id="msgsVR" showDetail="true" />-->
+                <!--                <p:growl id="msgsVR" showDetail="true" />-->
 
                 <p:panel id="pnVRef" header="Valores de Referencia" footer="" style="margin-bottom:20px">
                     <style type="text/css">
@@ -50,12 +49,18 @@ Todos los derechos reservados
                                 <p> 
                                     Valores de referencia máximos y mínimos para los signos de pacientes. Administrado por  <b>#{gestionHospitalMB.nomSistema}</b>
                                 </p>     
-                                <h3>ACTUALIZACIÓN DE VALORES DE REFERENCIA</h3>
+                                <!--                                <h3></h3>-->
                             </div>
                             <div class="p-col" style="align-content: center;">
-                                <p:panelGrid>
-                                    <p:row>
-                                        <p:column class="sinborde">
+
+                                <p:panel id="pnAct" header="ACTUALIZACIÓN DE VALORES DE REFERENCIA" footer="" style="max-width: 800px">
+                                    <p:panelGrid columns="2"
+                                                 columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                                 layout="grid"
+                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                 style="border:0px none; background-color:transparent;">
+
+                                        <p:column style="background-color: lightcoral">
                                             <p:panelGrid>
                                                 <p:row>
                                                     <p:column colspan="2" style="text-align: center" class="ui-widget-headerM">Saturación de Oxígeno</p:column>
@@ -103,10 +108,10 @@ Todos los derechos reservados
                                                         <p:outputLabel for="evrFrecCMax" value="Máxima:" />
                                                         <p:inputText id="evrFrecCMax" value="#{valoresReferenciaMB.valrefEnt.frecCardiacaMax}" required="true" size="8"/></p:column>
                                                 </p:row>
-
                                             </p:panelGrid>
                                         </p:column>
-                                        <p:column class="sinborde">
+
+                                        <p:column style="background-color: lightcoral">
                                             <p:panelGrid>
 
                                                 <p:row>
@@ -144,7 +149,7 @@ Todos los derechos reservados
                                                         <p:outputLabel for="evrPADMax" value="Máxima:" />
                                                         <p:inputText id="evrPADMax" value="#{valoresReferenciaMB.valrefEnt.preArtDiastolicaMax}" required="true" size="8"/></p:column>
                                                 </p:row>
-                                                
+
                                                 <p:row>
                                                     <p:column colspan="2">
                                                         <p:growl id="msgsVR" showDetail="true" />
@@ -159,17 +164,14 @@ Todos los derechos reservados
                                                     </p:column>
                                                 </p:row>
                                             </p:panelGrid>
-                                        </p:column>                                    
-                                    </p:row>
-                                </p:panelGrid>
+                                        </p:column>
 
-
+                                    </p:panelGrid>
+                                </p:panel>
                             </div>
                         </center>
                     </div>
-
                 </p:panel>
-
             </h:form>
         </ui:define>    
     </ui:composition>

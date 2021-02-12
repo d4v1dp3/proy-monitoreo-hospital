@@ -8,10 +8,13 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -30,6 +33,19 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
         } catch (SaveEntityException ex) {
             logger.log(Level.SEVERE,"Error al intentar salvar entidad : {0}", ex.getMessage());
             throw new CaretaHospitalException("Error al salvar entidad en CaretaHospitalSB",ex);
+        }
+    }
+    
+    @Override
+    public EntCaretaHospital getCaretaHospital(EntCareta careta) throws CaretaHospitalException {          
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entCareta = :entCareta");
+        qry.setParameter("entCareta", careta);
+        try{
+            EntCaretaHospital res = (EntCaretaHospital)qry.getSingleResult();
+            return res;
+        }catch(NoResultException ex){
+            logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
+            throw new CaretaHospitalException("No se encontro caretahospital SB.");
         }
     }
 }

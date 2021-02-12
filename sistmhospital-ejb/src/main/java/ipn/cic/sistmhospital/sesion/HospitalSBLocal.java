@@ -18,13 +18,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface HospitalSBLocal {
-    Boolean existeHospital()throws HospitalException;
+
+    Boolean existeHospital() throws HospitalException;
+
     EntHospital guardaHospital(EntHospital hosp) throws HospitalException;
+
     EntHospital getPrimerHospital() throws NoExisteHospitalException;
-    
-    
+
     EntHospital updateHospital(EntHospital hosp) throws UpdateEntityException;//*
-       
-    
-    
+
+    EntHospital getHospital(Integer idHospital) throws NoExisteHospitalException;
+
 }

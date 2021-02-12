@@ -6,9 +6,11 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
+import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
+import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
