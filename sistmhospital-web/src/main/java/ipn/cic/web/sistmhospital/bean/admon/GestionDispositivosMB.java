@@ -15,6 +15,7 @@ import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
+import ipn.cic.sistmhospital.modelo.EntCaretaHospitalPK;
 import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CaretaSBLocal;
@@ -24,6 +25,8 @@ import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +64,7 @@ public class GestionDispositivosMB implements Serializable {
     CatalogoSBLocal catalogoSB; 
 
     private List<EntCareta> caretas;//Caretas Asginadas
+    private List<EntCaretaHospital> caretashospital;
     private List<EntCareta> caretasNA;//Caretas no Asignadas
     
     private EntCareta caretaEditar;
@@ -86,11 +90,6 @@ public class GestionDispositivosMB implements Serializable {
         listHospital = new ArrayList();
         
         caretaHospital = new EntCaretaHospital();
-//        try {
-//            entHospital = hospitalSB.getPrimerHospital();
-//        } catch (NoExisteHospitalException ex) {
-//            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         
         try {
             //Cargar Lista de Hospitales
@@ -99,12 +98,24 @@ public class GestionDispositivosMB implements Serializable {
             Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        //Cargar lista de caretas
         FacesMessage msg=null;
         try {
-            logger.log(Level.INFO,"Entra a cargar dispositivos.");
+            logger.log(Level.INFO,"Entra a cargar dispositivos (1).");
             caretas = caretaSB.getCaretas();
         } catch (NoExisteCaretaException ex) {
             logger.log(Level.SEVERE, "Error en MB al cargar caretas : {0}", ex.getMessage());
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error dispositivos:",
+                            "Error al intentar recuperar caretas intente más tarde.",
+                            FacesMessage.SEVERITY_ERROR);
+        }
+        
+        try {
+            logger.log(Level.INFO,"Entra a cargar dispositivos (2).");
+            caretashospital = caretahospitalSB.getCaretasAsignadas();
+        } catch (CaretaHospitalException ex) {
+            logger.log(Level.SEVERE, "Error en MB al cargar caretashopital : {0}", ex.getMessage());
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error dispositivos:",
                             "Error al intentar recuperar caretas intente más tarde.",
@@ -127,16 +138,37 @@ public class GestionDispositivosMB implements Serializable {
         caretaGuard.setFechaManufactura(fechaManufactura);
         caretaGuard.setNoSerie(noSerie);
         
+        
+        //Obtener fecha:
+        Calendar fecha = new GregorianCalendar();
+                                                     
+        int anio = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto = fecha.get(Calendar.MINUTE);
+        int segundo = fecha.get(Calendar.SECOND);
+        
+        
+          
         //Guradar Careta en BD
         try{            
+            logger.log(Level.INFO,"Guardando careta...");
             caretaGuard = caretaSB.guardaCareta(caretaGuard);
-            
-            caretaHospital.setEntCareta(caretaGuard);
-            
-            entHospital = hospitalSB.getHospital(idHosp);
-            
+            logger.log(Level.INFO,"Asignando hospital a careta...");
+            caretaHospital.setEntCareta(caretaGuard);            
+            entHospital = hospitalSB.getHospital(idHosp);            
             caretaHospital.setEntHospital(entHospital);
+            caretaHospital.setFechaAsignacion(anio+"-"+mes+"-"+dia);
             
+            EntCaretaHospitalPK ech = new EntCaretaHospitalPK();
+            ech.setIdCareta(caretaGuard.getIdCareta());
+            ech.setIdHospital(entHospital.getIdHospital());
+            
+            caretaHospital.setEntCaretaHospitalPK(ech);
+            
+            logger.log(Level.INFO,"Fecha de asignacion: {0}", caretaHospital.getFechaAsignacion());
+            logger.log(Level.INFO,"Guardando relacion careta hospital...{0}", caretaHospital.getFechaAsignacion());
             caretaHospital = caretahospitalSB.guardaCaretaHospital(caretaHospital);
             
         } catch (CaretaException ex) {
@@ -498,6 +530,22 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setIdHosp(Integer idHosp) {
         this.idHosp = idHosp;
+    }
+
+    public EntCaretaHospital getCaretaHospital() {
+        return caretaHospital;
+    }
+
+    public void setCaretaHospital(EntCaretaHospital caretaHospital) {
+        this.caretaHospital = caretaHospital;
+    }
+
+    public List<EntCaretaHospital> getCaretashospital() {
+        return caretashospital;
+    }
+
+    public void setCaretashospital(List<EntCaretaHospital> caretashospital) {
+        this.caretashospital = caretashospital;
     }
     
     

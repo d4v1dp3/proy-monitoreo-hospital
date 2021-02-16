@@ -9,6 +9,7 @@ package ipn.cic.sistmhospital.sesion;
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -19,4 +20,5 @@ import javax.ejb.Local;
 public interface CaretaHospitalSBLocal {
     EntCaretaHospital guardaCaretaHospital(EntCaretaHospital caretahospital) throws CaretaHospitalException;
     EntCaretaHospital getCaretaHospital(EntCareta careta) throws CaretaHospitalException;
+    List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException;
 }

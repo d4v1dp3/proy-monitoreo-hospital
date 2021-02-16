@@ -10,6 +10,8 @@ import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -47,5 +49,25 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
             logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
             throw new CaretaHospitalException("No se encontro caretahospital SB.");
         }
+    }
+    
+    @Override
+    public List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException {        
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e");
+        List<EntCaretaHospital> res = qry.getResultList();  
+        List<EntCaretaHospital> resp = new ArrayList();  
+        for(EntCaretaHospital ent: res){
+            ent.getEntCareta().getIdCareta();
+            ent.getEntCareta().getNoSerie();
+            ent.getEntCareta().getFechaManufactura();
+            ent.getEntHospital().getIdHospital();
+            ent.getEntHospital().getNombre();
+            ent.getFechaAsignacion();
+            resp.add(ent);
+        }
+        if(resp.isEmpty()){
+            throw new CaretaHospitalException("Relacion no encontrada.");
+        }
+        return resp;
     }
 }
