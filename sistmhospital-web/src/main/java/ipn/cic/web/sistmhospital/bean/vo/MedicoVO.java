@@ -26,8 +26,6 @@ public class MedicoVO implements Serializable{
         celular = "";
         email = "";
     }
-
-    
     
     public MedicoVO(String cedulaProf, String celular, String email) {
         this.cedulaProf = cedulaProf;

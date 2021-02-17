@@ -67,6 +67,8 @@ public class GestionDispositivosMB implements Serializable {
     private List<EntCaretaHospital> caretashospital;
     private List<EntCareta> caretasNA;//Caretas no Asignadas
     
+    private EntCaretaHospital caretaHospitalEditar;
+    
     private EntCareta caretaEditar;
     private EntCareta caretaEliminar;    
     private EntCareta caretaGuard;
@@ -88,6 +90,8 @@ public class GestionDispositivosMB implements Serializable {
         caretaEditar = new EntCareta();
         caretaEliminar = new EntCareta();
         listHospital = new ArrayList();
+        
+//        caretaHospitalEditar = new EntCaretaHospital();
         
         caretaHospital = new EntCaretaHospital();
         
@@ -272,16 +276,10 @@ public class GestionDispositivosMB implements Serializable {
     
     public void editarDispositivo() {
     
-        idCareta = caretaEditar.getIdCareta();
-        noSerie = caretaEditar.getNoSerie();
-        fechaManufactura = caretaEditar.getFechaManufactura().toString();
-        
-        try {
-            caretaHospital = caretahospitalSB.getCaretaHospital(caretaEditar);
-        } catch (CaretaHospitalException ex) {
-            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        idCareta = caretaHospitalEditar.getEntCareta().getIdCareta();
+        noSerie = caretaHospitalEditar.getEntCareta().getNoSerie();
+        fechaManufactura = caretaHospitalEditar.getEntCareta().getFechaManufactura().toString();
+              
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 650);
@@ -294,16 +292,16 @@ public class GestionDispositivosMB implements Serializable {
         Map<String, List<String>> parametros = new HashMap<>();
         
         List<String> idcareta = new ArrayList<>();
-        idcareta.add(caretaEditar.getIdCareta()+"");
+        idcareta.add(idCareta+"");
         
         List<String> nSerie = new ArrayList<>();
-        nSerie.add(caretaEditar.getNoSerie()+"");
+        nSerie.add(noSerie+"");
         
         List<String> fManufactura = new ArrayList<>();
-        fManufactura.add(caretaEditar.getFechaManufactura().toString());
+        fManufactura.add(fechaManufactura);
         
         List<String> idHospit = new ArrayList<>();
-        idHospit.add(caretaHospital.getEntHospital().getIdHospital().toString());
+        idHospit.add(caretaHospitalEditar.getEntHospital().getIdHospital().toString());
         
         parametros.put("idCareta", idcareta);
         parametros.put("noSerie", nSerie);
@@ -333,24 +331,27 @@ public class GestionDispositivosMB implements Serializable {
         cargarDispositivos();
     }
     
-    public void actualizarDispositivo(){
+    public void actualizarDispositivo() {
         FacesMessage msg = null;
-        try {         
+        try {
+
+            //Actualizar datos de careta
             caretaEditar.setIdCareta(idCareta);
             caretaEditar.setNoSerie(noSerie);
             caretaEditar.setFechaManufactura(fechaManufactura);
-            
-            caretaSB.updateCareta(caretaEditar);   
-            
-            //Falta la actualizacion de la relacion CaretaHospital
-            
-            
+
+            caretaSB.updateCareta(caretaEditar);
+
+            //Actualizacion de relacion careta hospital
+//            caretaHospitalEditar.setEntCareta(caretaEditar);
+//            entHospital = hospitalSB.getHospital(idHosp);
+//            caretaHospitalEditar.setEntHospital(entHospital);
+
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
                             "Datos de dispositivo actualizados correctamente.",
                             FacesMessage.SEVERITY_INFO);
-            
-            
+
             cerrarDialogo(msg);
         } catch (UpdateEntityException ex) {
             Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
@@ -546,6 +547,14 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setCaretashospital(List<EntCaretaHospital> caretashospital) {
         this.caretashospital = caretashospital;
+    }
+
+    public EntCaretaHospital getCaretaHospitalEditar() {
+        return caretaHospitalEditar;
+    }
+
+    public void setCaretaHospitalEditar(EntCaretaHospital caretaHospitalEditar) {
+        this.caretaHospitalEditar = caretaHospitalEditar;
     }
     
     

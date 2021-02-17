@@ -66,6 +66,10 @@ public class EntCaretaHospital implements Serializable {
         this.entCaretaHospitalPK = new EntCaretaHospitalPK(idCareta, idHospital);
     }
 
+//    public EntCaretaHospital() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+
     public EntCaretaHospitalPK getEntCaretaHospitalPK() {
         return entCaretaHospitalPK;
     }

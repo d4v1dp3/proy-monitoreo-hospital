@@ -10,6 +10,7 @@ import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
+import ipn.cic.sistmhospital.modelo.EntHospital;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,7 +21,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author leoj_
+ * @author J.Perez
  */
 @Stateless
 public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
@@ -67,6 +68,47 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
         }
         if(resp.isEmpty()){
             throw new CaretaHospitalException("Relacion no encontrada.");
+        }
+        return resp;
+    }
+    
+    @Override
+    public List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException {  
+        //No implementado correctamente
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e");
+        List<EntCaretaHospital> res = qry.getResultList();  
+        List<EntCaretaHospital> resp = new ArrayList();  
+        for(EntCaretaHospital ent: res){
+            ent.getEntCareta().getIdCareta();
+            ent.getEntCareta().getNoSerie();
+            ent.getEntCareta().getFechaManufactura();
+            ent.getEntHospital().getIdHospital();
+            ent.getEntHospital().getNombre();
+            ent.getFechaAsignacion();
+            resp.add(ent);
+        }
+        if(resp.isEmpty()){
+            throw new CaretaHospitalException("Relacion no encontrada.");
+        }
+        return resp;
+    }
+    
+    @Override
+    public List<EntCaretaHospital> getCaretasNoAsignadas(EntHospital entHospital) throws CaretaHospitalException {        
+        Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e WHERE e.entHospital = :entHospital");
+        qry.setParameter("entHospital", entHospital);
+        
+        List<EntCaretaHospital> res = qry.getResultList(); 
+        
+        List<EntCaretaHospital> resp = new ArrayList();  
+        for(EntCaretaHospital ent: res){
+            ent.getEntCareta().getIdCareta();
+            ent.getEntCareta().getNoSerie();
+            ent.getEntCareta().getFechaManufactura();
+            ent.getEntHospital().getIdHospital();
+            ent.getEntHospital().getNombre();
+            ent.getFechaAsignacion();
+            resp.add(ent);
         }
         return resp;
     }

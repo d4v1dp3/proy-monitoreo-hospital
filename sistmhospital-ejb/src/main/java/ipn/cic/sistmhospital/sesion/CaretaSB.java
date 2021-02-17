@@ -8,13 +8,10 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.CaretaException;
 import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
-import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,12 +43,11 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
     @Override
     public EntCareta getCareta(long idCareta) throws NoExisteCaretaException {        
         Query qry = em.createQuery("SELECT e FROM EntCareta e WHERE e.idCareta = :idCareta");
-        List<EntCareta> res = qry.getResultList();//DUDA
+        qry.setParameter("idCareta", idCareta);
         
-        if(res.size()==0){
-            throw new NoExisteCaretaException("Careta no encontrada.");
-        }
-        return res.get(0);
+        EntCareta res = (EntCareta)qry.getSingleResult();
+        
+        return res;
     }
     
     @Override

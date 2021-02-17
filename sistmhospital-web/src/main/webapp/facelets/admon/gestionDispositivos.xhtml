@@ -49,41 +49,41 @@ Todos los derechos reservados
                             </div>
 
                             <p:panel id="pnGDispositivos" header="Dispositivos Asignados" footer="" style="margin-bottom:20px">
-                                <p:dataTable var="careta" value="#{gestionDispositivosMB.caretashospital}" rows="10"
+                                <p:dataTable var="caretahospital" value="#{gestionDispositivosMB.caretashospital}" rows="10"
                                              paginator="true"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
                                              rowsPerPageTemplate="10,20,30">
                                     <p:column headerText="Id">
-                                        <h:outputText value="#{careta.entCareta.idCareta}"/>
+                                        <h:outputText value="#{caretahospital.entCareta.idCareta}"/>
                                     </p:column>
 
-                                    <p:column headerText="Número de Serie" filterBy="#{careta.entCareta.noSerie}" filterMatchMode="contains">
-                                        <h:outputText value="#{careta.entCareta.noSerie}" />
+                                    <p:column headerText="Número de Serie" filterBy="#{caretahospital.entCareta.noSerie}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.noSerie}" />
                                     </p:column>
 
-                                    <p:column headerText="Fecha de Manufactura" filterBy="#{careta.entCareta.fechaManufactura}" filterMatchMode="contains">
-                                        <h:outputText value="#{careta.entCareta.fechaManufactura}" />
+                                    <p:column headerText="Fecha de Manufactura" filterBy="#{caretahospital.entCareta.fechaManufactura}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entCareta.fechaManufactura}" />
                                     </p:column>
 
-                                    <p:column headerText="Id Hospital" filterBy="#{careta.entHospital.idHospital}" filterMatchMode="contains">
-                                        <h:outputText value="#{careta.entHospital.idHospital}" />
+                                    <p:column headerText="Id Hospital" filterBy="#{caretahospital.entHospital.idHospital}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.entHospital.idHospital}" />
                                     </p:column>
 
-                                    <p:column headerText="Fecha de Asignacion:" filterBy="#{careta.fechaAsignacion}" filterMatchMode="contains">
-                                        <h:outputText value="#{careta.fechaAsignacion}" />
+                                    <p:column headerText="Fecha de Asignacion:" filterBy="#{caretahospital.fechaAsignacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{caretahospital.fechaAsignacion}" />
                                     </p:column>
 
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton icon="pi pi-pencil" title="Editar" action="#{gestionDispositivosMB.editarDispositivo()}">
-                                            <f:setPropertyActionListener value="#{careta}" target="#{gestionDispositivosMB.caretaEditar}" />
+                                            <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaHospitalEditar}" />
                                             <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEditarDispositivo}" update="@all"/>
                                         </p:commandButton>
                                     </p:column>
 
                                     <p:column style="width:32px;text-align: center">
                                         <p:commandButton icon="pi pi-trash" title="Eliminar" action="#{gestionDispositivosMB.confirmarBaja()}">
-                                            <f:setPropertyActionListener value="#{careta}" target="#{gestionDispositivosMB.caretaEliminar}" />
+                                            <f:setPropertyActionListener value="#{caretahospital}" target="#{gestionDispositivosMB.caretaEliminar}" />
                                             <p:ajax event="dialogReturn" listener="#{gestionDispositivosMB.retornoEliminarDispositivo}" update="@all"/>
                                         </p:commandButton>
                                     </p:column>

@@ -26,6 +26,7 @@
     <class>ipn.cic.sistmhospital.modelo.EntValoresReferencia</class>
     <class>ipn.cic.sistmhospital.modelo.EntCaretaHospital</class>
     <class>ipn.cic.sistmhospital.modelo.EntHospital</class>
+    <class>ipn.cic.sistmhospital.modelo.EntHospitalMedico1</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <!-- Properties for Hibernate -->

@@ -6,12 +6,17 @@
  */
 package ipn.cic.web.sistmhospital.bean.admon;
 
+import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
 import ipn.cic.sistmhospital.modelo.EntGenero;
+import ipn.cic.sistmhospital.modelo.EntHospital;
+import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmhospital.bean.vo.PacienteVO;
@@ -54,13 +59,18 @@ public class GestionPacienteMB implements Serializable {
     private List<EntEstadopaciente> catEstado;
     private List<String> antecedentes;
     private String[] antecedentesSeleccionados;
-
+    private List<EntHospital> listaHospital;
+    private List<EntMedico> listaMedicos;
+    private List<EntCaretaHospital> listCaretaHospital;
+    
     @EJB
     GestionPacienteBDLocal gstPac;
     @EJB
     UtilWebSBLocal utilWebSB;
     @EJB
     CatalogoSBLocal catalogoSB;
+    @EJB
+    CaretaHospitalSBLocal caretahospitalSB;
 
     @PostConstruct
     public void iniciaVO() {
@@ -79,6 +89,22 @@ public class GestionPacienteMB implements Serializable {
         antecedentes.add("Embarazo");
         antecedentes.add("Artritis");
         antecedentes.add("Enf autoinmune");
+        
+        listaHospital = new ArrayList();
+        
+        try {
+            //Cargar Lista de Hospitales
+            setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
+        } catch (CatalogoException ex) {
+            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        listCaretaHospital = new ArrayList();
+        try {
+            setListCaretaHospital(caretahospitalSB.getCaretasNoAsignadas(listaHospital.get(0)));
+        } catch (CaretaHospitalException ex) {
+            Logger.getLogger(GestionPacienteMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         try {
             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
@@ -88,6 +114,14 @@ public class GestionPacienteMB implements Serializable {
                             "No es posible recuperar catálogo de género :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+        }
+        
+        listaMedicos = new ArrayList();        
+        try {
+            //Cargar Lista de Medicos
+            setListaMedicos((List<EntMedico>) catalogoSB.getCatalogo("EntMedico"));
+        } catch (CatalogoException ex) {
+            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -222,4 +256,37 @@ public class GestionPacienteMB implements Serializable {
         this.antecedentesSeleccionados = antecedentesSeleccionados;
     }
 
+    public List<EntHospital> getListHospital() {
+        return listaHospital;
+    }
+
+    public void setListHospital(List<EntHospital> listHospital) {
+        this.listaHospital = listHospital;
+    }
+
+    public List<EntCaretaHospital> getListCaretaHospital() {
+        return listCaretaHospital;
+    }
+
+    public void setListCaretaHospital(List<EntCaretaHospital> listCaretaHospital) {
+        this.listCaretaHospital = listCaretaHospital;
+    }
+
+    public List<EntHospital> getListaHospital() {
+        return listaHospital;
+    }
+
+    public void setListaHospital(List<EntHospital> listaHospital) {
+        this.listaHospital = listaHospital;
+    }
+
+    public List<EntMedico> getListaMedicos() {
+        return listaMedicos;
+    }
+
+    public void setListaMedicos(List<EntMedico> listaMedicos) {
+        this.listaMedicos = listaMedicos;
+    }
+
+    
 }

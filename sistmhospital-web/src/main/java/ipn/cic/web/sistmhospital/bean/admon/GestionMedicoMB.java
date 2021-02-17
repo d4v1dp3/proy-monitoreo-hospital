@@ -10,10 +10,9 @@ import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntGenero;
+import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntMedico;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
-import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.MedicoVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.bean.vo.UsuarioVO;
@@ -21,6 +20,7 @@ import ipn.cic.web.sistmhospital.delegate.GestionMedicoBDLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -47,6 +47,8 @@ public class GestionMedicoMB implements Serializable{
     private EntMedico medGuardado;
     private List<EntGenero> catGenero;
     
+    private List<EntHospital> listHospital;
+    
     @EJB
     GestionMedicoBDLocal gstMed;
     @EJB
@@ -70,14 +72,28 @@ public class GestionMedicoMB implements Serializable{
             utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
         }
+        
+        listHospital = new ArrayList();
+        
+        try {
+            setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
+        } catch (CatalogoException ex) {
+            FacesMessage msg = Mensaje.getInstance()
+                                     .getMensajeAdaptado("Error",
+                                                "No es posible recuperar catálogo de hospital :"+ex.getMessage(), 
+                                                FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
+            return;
+        }
     }
     
     public void guardarMedico(){
-        logger.log(Level.INFO, "Inica pproceso de guardar médico");
+        logger.log(Level.INFO, "Inicia proceso de guardar médico");
         medGuardado = null;
         try{
-            logger.log(Level.INFO, "Inica pproceso de guardar médico");
+            logger.log(Level.INFO, "Guardando entidad médico");
             medGuardado = gstMed.guardarMedicoNuevo(datMedico, datPersona, datUsuario);
+            
         } catch (MedicoException ex) {
             logger.log(Level.INFO, "Error al guardar médico: {0}",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
@@ -95,6 +111,7 @@ public class GestionMedicoMB implements Serializable{
             utilWebSB.addMsg("frmAltaMedico:idUsrMess", msg);
             return;
         }
+        
         FacesMessage msg=null;
         if (medGuardado == null){
             msg = Mensaje.getInstance()
@@ -194,4 +211,15 @@ public class GestionMedicoMB implements Serializable{
     public void setCatGenero(List<EntGenero> catGenero) {
         this.catGenero = catGenero;
     }
+
+    public List<EntHospital> getListHospital() {
+        return listHospital;
+    }
+
+    public void setListHospital(List<EntHospital> listHospital) {
+        this.listHospital = listHospital;
+    }
+    
+    
+    
 }

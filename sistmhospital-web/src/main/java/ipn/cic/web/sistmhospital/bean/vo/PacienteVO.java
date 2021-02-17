@@ -6,16 +6,7 @@
  */
 package ipn.cic.web.sistmhospital.bean.vo;
 
-import ipn.cic.sistmhospital.modelo.EntAntecedentes;
-import ipn.cic.sistmhospital.modelo.EntCareta;
-import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
-import ipn.cic.sistmhospital.modelo.EntHospital;
-import ipn.cic.sistmhospital.modelo.EntMedidas;
-import ipn.cic.sistmhospital.modelo.EntPacienteMedico;
-import ipn.cic.sistmhospital.modelo.EntPersona;
-import ipn.cic.sistmhospital.modelo.EntSintomas;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *

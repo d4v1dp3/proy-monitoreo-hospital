@@ -7,7 +7,6 @@
 package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.SaveEntityException;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.util.logging.Level;
 import java.util.logging.Logger;

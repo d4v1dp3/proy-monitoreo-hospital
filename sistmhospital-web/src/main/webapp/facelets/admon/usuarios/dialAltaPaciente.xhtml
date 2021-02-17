@@ -166,14 +166,20 @@
 
                             <p:column style="background-color: lightcoral">
                                 <p:outputLabel for="idHosp" value="Hospital:" />
-                                <p:inputText id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true" />
-                                <p:message for="idHosp" />
+                                <p:selectOneMenu id="idHosp" value="#{gestionPacienteMB.datPaciente.idHospital}" required="true">
+                                    <f:selectItems value="#{gestionPacienteMB.listHospital}" var="hospital" 
+                                                   itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="idCareta" value="Careta:" />
-                                <p:inputText id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true" />
-                                <p:message for="idCareta" />
+                                <p:outputLabel for="idCareta" value="Careta (No. Serie):" />
+                                <p:selectOneMenu id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true">
+                                    <f:selectItems value="#{gestionPacienteMB.listCaretaHospital}" var="caretahospital" 
+                                                   itemLabel="#{caretahospital.entCareta.noSerie}" itemValue="#{caretahospital.entCareta.idCareta}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
@@ -186,8 +192,12 @@
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="idMed" value="Médico:" />
-                                <p:inputText id="idMed" value="#{gestionPacienteMB.datPaciente.idMedico}" required="true" />
+                                 <p:outputLabel for="idMed" value="Médico (Cedula Prof.):" />
+                                 <p:selectOneMenu id="idMed" value="#{gestionPacienteMB.datPaciente.idMedico}" required="true">
+                                    <f:selectItems value="#{gestionPacienteMB.listaMedicos}" var="medico" 
+                                                   itemLabel="#{medico.cedulaProf}" itemValue="#{medico.idMedico}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu>
                                 <p:message for="idMed" />
                             </p:column>
 
