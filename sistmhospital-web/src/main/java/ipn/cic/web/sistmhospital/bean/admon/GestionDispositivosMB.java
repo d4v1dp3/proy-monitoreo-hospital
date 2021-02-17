@@ -63,11 +63,11 @@ public class GestionDispositivosMB implements Serializable {
     @EJB
     CatalogoSBLocal catalogoSB; 
 
-    private List<EntCareta> caretas;//Caretas Asginadas
-    private List<EntCaretaHospital> caretashospital;
-    private List<EntCareta> caretasNA;//Caretas no Asignadas
+    private List<EntCaretaHospital> caretashospital;//Caretas Asginadas
+    private List<EntCaretaHospital> caretashospitalNA;//Caretas no Asignadas
     
     private EntCaretaHospital caretaHospitalEditar;
+    private EntCaretaHospital caretaHospitalEliminar;
     
     private EntCareta caretaEditar;
     private EntCareta caretaEliminar;    
@@ -102,22 +102,15 @@ public class GestionDispositivosMB implements Serializable {
             Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //Cargar lista de caretas
-        FacesMessage msg=null;
-        try {
-            logger.log(Level.INFO,"Entra a cargar dispositivos (1).");
-            caretas = caretaSB.getCaretas();
-        } catch (NoExisteCaretaException ex) {
-            logger.log(Level.SEVERE, "Error en MB al cargar caretas : {0}", ex.getMessage());
-            msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error dispositivos:",
-                            "Error al intentar recuperar caretas intente más tarde.",
-                            FacesMessage.SEVERITY_ERROR);
-        }
-        
+        //Cargar lista de caretas Asignadas a pacientes
+        FacesMessage msg=null;       
         try {
             logger.log(Level.INFO,"Entra a cargar dispositivos (2).");
-            caretashospital = caretahospitalSB.getCaretasAsignadas();
+            caretashospital = caretahospitalSB.getCaretasAsignadas();            
+            caretashospitalNA = caretahospitalSB.getCaretasNoAsignadas();
+            
+            //Trucaso!
+            caretashospitalNA.removeAll(caretashospital);
         } catch (CaretaHospitalException ex) {
             logger.log(Level.SEVERE, "Error en MB al cargar caretashopital : {0}", ex.getMessage());
             msg = Mensaje.getInstance()
@@ -361,9 +354,9 @@ public class GestionDispositivosMB implements Serializable {
     
     public void confirmarBaja() {
 
-        idCareta = caretaEliminar.getIdCareta();
-        noSerie = caretaEliminar.getNoSerie();
-        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", caretaEliminar.getIdCareta());
+        idCareta = caretaHospitalEliminar.getEntCareta().getIdCareta();
+        noSerie = caretaHospitalEliminar.getEntCareta().getNoSerie();
+        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", idCareta);
         
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
@@ -377,13 +370,13 @@ public class GestionDispositivosMB implements Serializable {
         Map<String, List<String>> parametros = new HashMap<>();
         
         List<String> idcareta = new ArrayList<>();
-        idcareta.add(caretaEliminar.getIdCareta()+"");
+        idcareta.add(idCareta+"");
         
         List<String> nSerie = new ArrayList<>();
-        nSerie.add(caretaEliminar.getNoSerie()+"");
+        nSerie.add(noSerie+"");
         
         List<String> fManufactura = new ArrayList<>();
-        fManufactura.add(caretaEliminar.getFechaManufactura().toString());
+        fManufactura.add(caretaHospitalEliminar.getEntCareta().getFechaManufactura().toString());
                 
         parametros.put("idCareta", idcareta);
         parametros.put("noSerie", nSerie);    
@@ -445,14 +438,6 @@ public class GestionDispositivosMB implements Serializable {
         this.caretaSB = caretaSB;
     }
 
-    public List<EntCareta> getCaretas() {
-        return caretas;
-    }
-
-    public void setCaretas(List<EntCareta> caretas) {
-        this.caretas = caretas;
-    }
-
     public EntCareta getCaretaEditar() {
         return caretaEditar;
     }
@@ -491,14 +476,6 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setIdCareta(long idCareta) {
         this.idCareta = idCareta;
-    }
-
-    public List<EntCareta> getCaretasNA() {
-        return caretasNA;
-    }
-
-    public void setCaretasNA(List<EntCareta> caretasNA) {
-        this.caretasNA = caretasNA;
     }
 
     public long getNoSerie() {
@@ -555,6 +532,22 @@ public class GestionDispositivosMB implements Serializable {
 
     public void setCaretaHospitalEditar(EntCaretaHospital caretaHospitalEditar) {
         this.caretaHospitalEditar = caretaHospitalEditar;
+    }
+
+    public List<EntCaretaHospital> getCaretashospitalNA() {
+        return caretashospitalNA;
+    }
+
+    public void setCaretashospitalNA(List<EntCaretaHospital> caretashospitalNA) {
+        this.caretashospitalNA = caretashospitalNA;
+    }
+
+    public EntCaretaHospital getCaretaHospitalEliminar() {
+        return caretaHospitalEliminar;
+    }
+
+    public void setCaretaHospitalEliminar(EntCaretaHospital caretaHospitalEliminar) {
+        this.caretaHospitalEliminar = caretaHospitalEliminar;
     }
     
     
