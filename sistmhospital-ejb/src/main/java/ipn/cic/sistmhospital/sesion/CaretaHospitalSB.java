@@ -7,6 +7,7 @@
 package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
+import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
@@ -94,8 +95,7 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
         List<EntCaretaHospital> resp = new ArrayList();
         for (EntCaretaHospital ent : res) {
             if (!res2.contains(ent.getEntCareta())) {
-                logger.log(Level.INFO, "Careta no asignada encontrada id={0}", ent.getEntCareta().getIdCareta());
-
+//                logger.log(Level.INFO, "Careta no asignada encontrada id={0}", ent.getEntCareta().getIdCareta());
                 ent.getEntCareta().getIdCareta();
                 ent.getEntCareta().getNoSerie();
                 ent.getEntCareta().getFechaManufactura();
@@ -134,5 +134,10 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
             }
         }
         return resp;
+    }
+    
+    @Override
+    public boolean borrarCaretaHospital(EntCaretaHospital caretahospital) throws RemoveEntityException {  
+        return removeEntity(caretahospital);
     }
 }

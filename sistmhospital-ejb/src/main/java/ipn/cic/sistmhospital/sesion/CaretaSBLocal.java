@@ -11,6 +11,7 @@ import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
+import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import java.util.List;
 import javax.ejb.Local;
 

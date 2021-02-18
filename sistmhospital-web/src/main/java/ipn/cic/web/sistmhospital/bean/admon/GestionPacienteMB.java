@@ -62,6 +62,7 @@ public class GestionPacienteMB implements Serializable {
     private List<EntHospital> listaHospital;
     private List<EntMedico> listaMedicos;
     private List<EntCaretaHospital> listCaretaHospital;
+    private List<EntCaretaHospital> listCaretaHospitalAsignadas;
     
     @EJB
     GestionPacienteBDLocal gstPac;
@@ -101,7 +102,12 @@ public class GestionPacienteMB implements Serializable {
         
         listCaretaHospital = new ArrayList();
         try {
+            
+            //CORREGIR EN EL FUTURO...
+            listCaretaHospitalAsignadas = caretahospitalSB.getCaretasAsignadas();
             setListCaretaHospital(caretahospitalSB.getCaretasNoAsignadas(listaHospital.get(0)));
+            listCaretaHospital.removeAll(listCaretaHospitalAsignadas);
+
         } catch (CaretaHospitalException ex) {
             Logger.getLogger(GestionPacienteMB.class.getName()).log(Level.SEVERE, null, ex);
         }

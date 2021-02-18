@@ -7,6 +7,7 @@
 package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
+import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import ipn.cic.sistmhospital.modelo.EntHospital;
@@ -24,4 +25,5 @@ public interface CaretaHospitalSBLocal {
     List<EntCaretaHospital> getCaretasAsignadas() throws CaretaHospitalException;
     List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException;
     List<EntCaretaHospital> getCaretasNoAsignadas(EntHospital entHospital) throws CaretaHospitalException;
+    boolean borrarCaretaHospital(EntCaretaHospital caretahospital) throws RemoveEntityException;
 }

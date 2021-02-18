@@ -255,6 +255,7 @@ public class GestionDispositivosMB implements Serializable {
         options.put("modal", true);
         options.put("width", 650);
         options.put("height", 580);
+        options.put("dynamic", true);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
@@ -386,17 +387,25 @@ public class GestionDispositivosMB implements Serializable {
     }
     
     public void eliminarDispositivo(){
+        FacesMessage msg = null;
+        
         caretaEliminar.setIdCareta(idCareta);
         caretaEliminar.setNoSerie(noSerie);
         caretaEliminar.setFechaManufactura(fechaManufactura);
         
-        FacesMessage msg = null;
+        try {
+            caretaHospitalEliminar = caretahospitalSB.getCaretaHospital(caretaEliminar);
+        } catch (CaretaHospitalException ex) {
+            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         logger.log(Level.INFO, "Dispositivo Seleccionado: ID[{0}]",
                 caretaEliminar.getIdCareta());
-        
-        //AQUI DEBERIA ABRIR UNA ADVERTENCIA 
+        logger.log(Level.INFO, "Relacion Seleccionada: FA[{0}]",
+                caretaHospitalEliminar.getFechaAsignacion());
         
         try {
+            caretahospitalSB.borrarCaretaHospital(caretaHospitalEliminar);
             boolean borrado = caretaSB.borrarCareta(caretaEliminar);
             if(borrado){
                 logger.log(Level.INFO, "Dispositivo eliminado.");
