@@ -97,7 +97,7 @@ public class InicioPacienteMB implements Serializable {
     
     
     public void mostrarDashboard() {
-        logger.log(Level.INFO,"Abre dashboard de un paciente.");
+        logger.log(Level.INFO,"Paciente: Abre dashboard.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 890);

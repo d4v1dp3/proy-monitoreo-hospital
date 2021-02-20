@@ -39,7 +39,7 @@ Todos los derechos reservados
                         </div>
                         <div class="p-col" style="align-content: center;">
 
-                            <p:panel id="pnGPacientes" header="Listado de Pacientes" footer="" style="margin-bottom:20px">
+                            <p:panel id="pnGPacientes" header="Listado de Pacientes" style="margin-bottom:20px">
 
                                 <p:dataTable var="paciente" value="#{listadoPacientesMB.pacientesComp}" rows="10"
                                              paginator="true"
@@ -64,18 +64,18 @@ Todos los derechos reservados
                                         <h:outputText value="#{paciente.idCareta.idCareta}" />
                                     </p:column>
 
-                                    <p:column headerText="Estado">
+                                    <p:column headerText="Estado de salud">
                                         <h:outputText value="#{paciente.idEstadopaciente.descripcion}" />
                                     </p:column>
 
-                                    <p:column headerText="Antecedentes" style="width:32px;text-align: center">
+                                    <p:column headerText="Antecedentes" style="width:40px;text-align: center">
                                         <p:commandButton icon="fas fa-clipboard" title="Antecedentes" action="#{listadoPacientesMB.mostrarAntecedentes()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMostrarAntecedentes}" update="@all"/>
                                         </p:commandButton>
                                     </p:column>
 
-                                    <p:column headerText="Signos y Sintomas" style="width:32px;text-align: center">
+                                    <p:column headerText="Signos y Sintomas" style="width:40px;text-align: center">
                                         <p:commandButton icon="fas fa-heartbeat" title="Signos" action="#{listadoPacientesMB.mostrarDashboard()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteMostrar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoMuestraDashboard}" update="@all"/>

@@ -105,12 +105,9 @@ public class GestionDispositivosMB implements Serializable {
         //Cargar lista de caretas Asignadas a pacientes
         FacesMessage msg=null;       
         try {
-            logger.log(Level.INFO,"Entra a cargar dispositivos (2).");
+            logger.log(Level.INFO,"Entra a cargar dispositivos.");
             caretashospital = caretahospitalSB.getCaretasAsignadas();            
             caretashospitalNA = caretahospitalSB.getCaretasNoAsignadas();
-            
-            //Trucaso!
-            caretashospitalNA.removeAll(caretashospital);
         } catch (CaretaHospitalException ex) {
             logger.log(Level.SEVERE, "Error en MB al cargar caretashopital : {0}", ex.getMessage());
             msg = Mensaje.getInstance()

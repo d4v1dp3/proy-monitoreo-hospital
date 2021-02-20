@@ -88,22 +88,18 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
     public List<EntCaretaHospital> getCaretasNoAsignadas() throws CaretaHospitalException {
         Query qry = em.createQuery("SELECT e FROM EntCaretaHospital e");
         List<EntCaretaHospital> res = qry.getResultList();
-
-        Query qry2 = em.createQuery("SELECT f.idCareta FROM EntPaciente f");
-        List<EntCareta> res2 = qry2.getResultList();
+        List<EntCaretaHospital> res2 = getCaretasAsignadas();
+        res.removeAll(res2);
 
         List<EntCaretaHospital> resp = new ArrayList();
         for (EntCaretaHospital ent : res) {
-            if (!res2.contains(ent.getEntCareta())) {
-//                logger.log(Level.INFO, "Careta no asignada encontrada id={0}", ent.getEntCareta().getIdCareta());
-                ent.getEntCareta().getIdCareta();
-                ent.getEntCareta().getNoSerie();
-                ent.getEntCareta().getFechaManufactura();
-                ent.getEntHospital().getIdHospital();
-                ent.getEntHospital().getNombre();
-                ent.getFechaAsignacion();
-                resp.add(ent);
-            }
+            ent.getEntCareta().getIdCareta();
+            ent.getEntCareta().getNoSerie();
+            ent.getEntCareta().getFechaManufactura();
+            ent.getEntHospital().getIdHospital();
+            ent.getEntHospital().getNombre();
+            ent.getFechaAsignacion();
+            resp.add(ent);
         }
         return resp;
     }

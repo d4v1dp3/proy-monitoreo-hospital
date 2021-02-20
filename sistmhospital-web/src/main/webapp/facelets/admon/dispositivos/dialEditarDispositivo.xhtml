@@ -109,14 +109,14 @@
                                          style="border:0px none; background-color:transparent;">
 
                                 <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="idHosp" value="Hospital:" />
-                                <p:selectOneMenu id="idHosp" value="#{gestionDispositivosMB.idHosp}" required="true">
-                                    <f:selectItems value="#{gestionDispositivosMB.listHospital}" var="hospital" 
-                                                   itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
-                                    <p:ajax />
-                                </p:selectOneMenu> 
-                                <p:message for="idHosp" />
-                            </p:column>
+                                    <p:outputLabel for="idHosp" value="Hospital:" />
+                                    <p:selectOneMenu id="idHosp" value="#{gestionDispositivosMB.idHosp}" required="true">
+                                        <f:selectItems value="#{gestionDispositivosMB.listHospital}" var="hospital" 
+                                                       itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                        <p:ajax />
+                                    </p:selectOneMenu> 
+                                    <p:message for="idHosp" />
+                                </p:column>
 
                             </p:panelGrid>
 
