@@ -7,11 +7,14 @@
 package ipn.cic.web.sistmhospital.bean.pacient;
 
 import ipn.cic.sistmhospital.exception.MedicoException;
+import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
+import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
@@ -52,11 +55,14 @@ public class InicioPacienteMB implements Serializable {
     private MedicoSBLocal medicoSB;
     @EJB
     private UtilWebSBLocal utilWebSB;
+    @EJB
+    private HospitalSBLocal hospitalSB;
 
     private EntPaciente paciente;
     
     private List<EntMedidas> medidas;
     private EntMedico medicoPac;
+    private EntHospital hospital;
     
 
     @PostConstruct
@@ -76,11 +82,15 @@ public class InicioPacienteMB implements Serializable {
             medicoPac = medicoSB.getMedicoDePaciente(paciente);
             logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
             
+            hospital = hospitalSB.getPrimerHospital();
+            
             
         } catch (NoExistePacienteException ex) {
             logger.log(Level.SEVERE,"Error al cargar paciente.");
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE,"Error al cargar medico del paciente.");
+        } catch (NoExisteHospitalException ex) {
+            logger.log(Level.SEVERE,"Error al cargar hospital.");
         }
         
         
@@ -201,6 +211,30 @@ public class InicioPacienteMB implements Serializable {
     private void cerrarDialogo(FacesMessage mensaje){
         PrimeFaces.current().dialog().closeDynamic(mensaje);
     }
-    
 
+    public EntPaciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(EntPaciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public EntMedico getMedicoPac() {
+        return medicoPac;
+    }
+
+    public void setMedicoPac(EntMedico medicoPac) {
+        this.medicoPac = medicoPac;
+    }
+
+    public EntHospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(EntHospital hospital) {
+        this.hospital = hospital;
+    }
+
+    
 }
