@@ -149,7 +149,7 @@ public class MedidasBD implements MedidasBDLocal {
             respuesta = Json.createObjectBuilder()
                     .add("Respuesta", "3")
                     .add("Descripción", "Itente mas tarde.")
-                    .build();
+                    .build(); 
         }catch(Exception ex){
             logger.log(Level.SEVERE, "Error inesperado del sistema : {0}", ex.getMessage());
 

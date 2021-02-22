@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EntPersona.findByNombre", query = "SELECT e FROM EntPersona e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "EntPersona.findByPrimerApellido", query = "SELECT e FROM EntPersona e WHERE e.primerApellido = :primerApellido"),
     @NamedQuery(name = "EntPersona.findBySegundoApellido", query = "SELECT e FROM EntPersona e WHERE e.segundoApellido = :segundoApellido"),
-    @NamedQuery(name = "EntPersona.findByCurp", query = "SELECT e FROM EntPersona e WHERE e.curp = :curp")})
+    @NamedQuery(name = "EntPersona.findByCurp", query = "SELECT e FROM EntPersona e WHERE e.curp = :curp"),
+    @NamedQuery(name = "EntPersona.findByEdad", query = "SELECT e FROM EntPersona e WHERE e.edad = :edad")})
 public class EntPersona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,6 +61,9 @@ public class EntPersona implements Serializable {
     @Size(max = 50)
     @Column(name = "CURP")
     private String curp;
+    @Basic(optional = false)
+    @Column(name = "EDAD")
+    private Integer edad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
     private List<EntMedico> entMedicoList;
     @JoinColumn(name = "ID_GENERO", referencedColumnName = "ID_GENERO")
@@ -115,6 +119,14 @@ public class EntPersona implements Serializable {
 
     public void setCurp(String curp) {
         this.curp = curp;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
     }
 
     @XmlTransient
