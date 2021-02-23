@@ -9,7 +9,6 @@ package ipn.cic.web.sistmhospital.bean.admon;
 import ipn.cic.sistmhospital.exception.CaretaException;
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
-import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;

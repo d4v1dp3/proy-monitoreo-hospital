@@ -110,8 +110,9 @@
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="@next" value=""/>
-                                <p:outputLabel value=""/>
+                                <p:outputLabel for="edad" value="Edad:" />
+                                <p:inputText id="edad" value="#{gestionPacienteMB.datPersona.edad}" required="true" />
+                                <p:message for="edad"/>
                             </p:column>        
 
                             <p:column style="background-color: lightcoral">

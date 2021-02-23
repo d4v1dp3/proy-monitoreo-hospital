@@ -7,7 +7,6 @@ package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.AntecedentesException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
-import ipn.cic.sistmhospital.exception.EstadoPacienteException;
 import ipn.cic.sistmhospital.exception.GeneroException;
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.MedicoException;
@@ -105,6 +104,7 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
         entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
         entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
         entPersona.setCurp(persona.getCurp().toUpperCase());
+        entPersona.setEdad(persona.getEdad());
 
         try {
             

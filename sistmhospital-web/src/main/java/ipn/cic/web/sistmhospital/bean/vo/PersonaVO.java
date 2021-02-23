@@ -21,16 +21,19 @@ public class PersonaVO implements Serializable{
     private String segundoApellido;
     private String curp;
     private Integer idGenero;
+    private Integer edad;
     
     public PersonaVO(){}
     
-    public PersonaVO(Integer idPersona, String nombre, String primerApellido, String segundoApellido, String curp, Integer idGenero) {
+    public PersonaVO(Integer idPersona, String nombre, String primerApellido, String segundoApellido, String curp, Integer idGenero, Integer edad) {
         this.idPersona = idPersona;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.curp = curp;
         this.idGenero = idGenero;
+        this.edad = edad;
+        
     }
 
     public Integer getIdPersona() {
@@ -73,14 +76,6 @@ public class PersonaVO implements Serializable{
         this.curp = curp;
     }
 
-//    public List<EntMedico> getEntMedicoList() {
-//        return entMedicoList;
-//    }
-//
-//    public void setEntMedicoList(List<EntMedico> entMedicoList) {
-//        this.entMedicoList = entMedicoList;
-//    }
-
     public Integer getIdGenero() {
         return idGenero;
     }
@@ -89,20 +84,13 @@ public class PersonaVO implements Serializable{
         this.idGenero = idGenero;
     }
 
-//    public List<EntUsuario> getEntUsuarioList() {
-//        return entUsuarioList;
-//    }
-//
-//    public void setEntUsuarioList(List<EntUsuario> entUsuarioList) {
-//        this.entUsuarioList = entUsuarioList;
-//    }
-//
-//    public List<EntPaciente> getEntPacienteList() {
-//        return entPacienteList;
-//    }
-//
-//    public void setEntPacienteList(List<EntPaciente> entPacienteList) {
-//        this.entPacienteList = entPacienteList;
-//    }
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
     
 }

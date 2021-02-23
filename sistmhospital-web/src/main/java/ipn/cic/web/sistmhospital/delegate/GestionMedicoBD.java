@@ -72,6 +72,8 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
         entPersona.setPrimerApellido(persona.getPrimerApellido().toUpperCase());
         entPersona.setSegundoApellido(persona.getSegundoApellido().toUpperCase());
         entPersona.setCurp(persona.getCurp().toUpperCase());
+        entPersona.setEdad(persona.getEdad());
+        
         try {
             EntGenero genero = generoSB.getGeneroID(persona.getIdGenero().shortValue());
             entPersona.setIdGenero(genero);
