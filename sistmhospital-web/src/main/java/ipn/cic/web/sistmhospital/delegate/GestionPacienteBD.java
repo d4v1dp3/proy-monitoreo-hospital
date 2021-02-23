@@ -48,11 +48,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 /**
@@ -62,6 +66,8 @@ import org.jboss.ejb3.annotation.SecurityDomain;
 @Stateless
 @PermitAll
 @SecurityDomain("other")
+@TransactionManagement(value=TransactionManagementType.CONTAINER)
+@TransactionAttribute(value=TransactionAttributeType.REQUIRED)
 public class GestionPacienteBD implements GestionPacienteBDLocal {
 
     private static final Logger logger = Logger.getLogger(GestionMedicoBD.class.getName());
@@ -92,6 +98,8 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
     private EstadoPacienteSBLocal estadopacSB;
     @EJB
     CatalogoSBLocal catalogoSB;
+    @Resource
+    private EJBContext ejbContext;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -191,28 +199,38 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
         } catch (GeneroException ex) {
             logger.log(Level.SEVERE, "Error al obtener EntGenero con id : {0}", persona.getIdGenero());
             logger.log(Level.SEVERE, "Error al obtener EntGenero: {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
             throw new PacienteException("Imposible asignar genero ", ex);
         } catch (SaveEntityException ex) {
             logger.log(Level.SEVERE, "Error al persistir EntPersona : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
             throw new PacienteException("Imposible salvar Persona para Paciente ", ex);
         } catch (NoExisteCaretaException ex) {
             Logger.getLogger(GestionPacienteBD.class.getName()).log(Level.SEVERE, null, ex);
+            ejbContext.setRollbackOnly();
         } catch (NoExisteHospitalException ex) {
             logger.log(Level.SEVERE, "Error al ObtenerDatos de hospital : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
             throw new PacienteException("Error al consultar datos de hospital ", ex);
         } catch (AntecedentesException ex) {
             logger.log(Level.SEVERE, "Error al salvar entidad en AntecedentesSB: {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
         } catch (PacienteException ex) {
             logger.log(Level.SEVERE, "Error al intentar salvar entidad paciente : {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
             throw new PacienteException("Error al salvar entidad en PacienteSB", ex);
         } catch (MedicoException ex) {
             logger.log(Level.SEVERE, "Error al recuperar medico: {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
         } catch (PacienteMedicoException ex) {
             logger.log(Level.SEVERE, "Error al salvar entidad pacientemedico: {0}", ex.getMessage());
+            ejbContext.setRollbackOnly();
         } catch (RolException ex) {
             Logger.getLogger(GestionPacienteBD.class.getName()).log(Level.SEVERE, null, ex);
+            ejbContext.setRollbackOnly();
         } catch (CatalogoException ex) {
             Logger.getLogger(GestionPacienteBD.class.getName()).log(Level.SEVERE, null, ex);
+            ejbContext.setRollbackOnly();
         }
 
         return entPac;

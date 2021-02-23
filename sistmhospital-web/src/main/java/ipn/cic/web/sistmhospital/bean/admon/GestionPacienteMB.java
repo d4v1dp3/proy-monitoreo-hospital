@@ -71,7 +71,6 @@ public class GestionPacienteMB implements Serializable {
     @EJB
     CaretaHospitalSBLocal caretahospitalSB;
 
-    @PostConstruct
     public void iniciaVO() {
         setDatUsuario(new UsuarioVO());
         datPaciente = new PacienteVO();
@@ -95,7 +94,12 @@ public class GestionPacienteMB implements Serializable {
             //Cargar Lista de Hospitales
             setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
         } catch (CatalogoException ex) {
-            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Imposible recuperar Datos de Hospital :{0} ",ex.getMessage());
+            FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "No es posible recuperar datos de Hospital:" + ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         
         listCaretaHospital = new ArrayList();
@@ -103,17 +107,23 @@ public class GestionPacienteMB implements Serializable {
             setListCaretaHospital(caretahospitalSB.getCaretasNoAsignadas());
 
         } catch (CaretaHospitalException ex) {
-            Logger.getLogger(GestionPacienteMB.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Imposible recuperar Datos de Dispositivos :{0} ",ex.getMessage());
+            FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "No es posible recuperar lista de Dispositivos:" + ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
 
         try {
             setCatGenero((List<EntGenero>) catalogoSB.getCatalogo("EntGenero"));
         } catch (CatalogoException ex) {
+            logger.log(Level.SEVERE, "Imposible recuperar Datos de Genero :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
                             "No es posible recuperar catálogo de género :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         
         listaMedicos = new ArrayList();        
@@ -121,7 +131,12 @@ public class GestionPacienteMB implements Serializable {
             //Cargar Lista de Medicos
             setListaMedicos((List<EntMedico>) catalogoSB.getCatalogo("EntMedico"));
         } catch (CatalogoException ex) {
-            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Imposible recuperar catalogo de medicos:{0} ",ex.getMessage());
+            FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "No es posible recuperar catálogo de médicos :" + ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
 
         try {
@@ -131,7 +146,7 @@ public class GestionPacienteMB implements Serializable {
                     .getMensajeAdaptado("Error",
                             "No es posible recuperar catálogo de estadoPaciente :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         logger.log(Level.INFO, "Categorias en Form AltaPaciente[Fin]");
     }
