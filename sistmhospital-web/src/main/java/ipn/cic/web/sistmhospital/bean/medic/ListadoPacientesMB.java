@@ -4,7 +4,7 @@
  * Laboratorio de Robótica y Mecatrónica
  * Todos los derechos reservados
  */
-package ipn.cic.web.sistmhospital.bean.pacient;
+package ipn.cic.web.sistmhospital.bean.medic;
 
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntMedico;

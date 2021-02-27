@@ -6,7 +6,6 @@
 package ipn.cic.web.sistmhospital.bean.medic;
 
 
-import ipn.cic.web.sistmhospital.bean.admon.GestionHospitalMB;
 import java.io.Serializable;
 import java.util.logging.Logger;
 import javax.faces.view.ViewScoped;
@@ -21,7 +20,7 @@ import javax.inject.Named;
 public class DialAntecedentesMB implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = Logger.getLogger(GestionHospitalMB.class.getName());
+    private static final Logger logger = Logger.getLogger(DialAntecedentesMB.class.getName());
     
     private String pacienteNombre="";
     private String pacientePrimerAp="";

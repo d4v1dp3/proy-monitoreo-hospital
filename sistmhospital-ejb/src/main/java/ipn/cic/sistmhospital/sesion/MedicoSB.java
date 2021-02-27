@@ -46,9 +46,13 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
         
         query = em.createQuery("SELECT e From EntMedico e WHERE e.idPersona = :idPersona")
                 .setParameter("idPersona", entPersona);
-//        logger.log(Level.INFO, "PacienteSB: consulta ejecutada.");
         EntMedico res = new EntMedico();
         res = (EntMedico)query.getSingleResult();
+        res.getIdMedico();
+        res.getIdPersona();
+        res.getCedulaProf();
+        res.getCelular();
+        res.getEmail();
 
         logger.log(Level.INFO, "MedicoSB: Medico recuperado. {0}", res.getCedulaProf());
         return res;
@@ -97,7 +101,7 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
              paciente.getIdPersona().getNombre();
              paciente.getIdCareta().getIdCareta();
              paciente.getIdEstadopaciente().getDescripcion();
-             logger.log(Level.INFO,"Datos Paciente : {0}",paciente.getIdPersona().getNombre());
+//             logger.log(Level.INFO,"Datos Paciente : {0}",paciente.getIdPersona().getNombre());
              lista.add(paciente);
              
          }

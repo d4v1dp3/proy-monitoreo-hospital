@@ -18,6 +18,11 @@ Todos los derechos reservados
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
+    <f:metadata>
+        <f:viewAction action="#{gestionBienvenidaMB.redirecciona()}" />
+        
+    </f:metadata>
+
     <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
 
         <ui:define name="nombrePagina">
@@ -25,16 +30,17 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="titulo">
-            
+
         </ui:define>
 
         <ui:define name="contenido">
             <h1>
                 Bienvenido(a)!!!
             </h1>
-            
+
             <h:outputText id="txtContenido" value="Sistema de Monitoreo del Estado de Salud de Pacientes COVID-19 en Hospitales" />
             <h:outputText id="txtContenido2" value="Versión en Desarrollo" />
         </ui:define>    
     </ui:composition>
 </html>
+

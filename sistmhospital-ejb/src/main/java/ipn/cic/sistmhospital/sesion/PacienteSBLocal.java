@@ -6,15 +6,13 @@
  */
 package ipn.cic.sistmhospital.sesion;
 
-import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.exception.PacienteException;
-import ipn.cic.sistmhospital.exception.UsuarioException;
-import ipn.cic.sistmhospital.modelo.EntHospital;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
+import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
-import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,9 +23,11 @@ import javax.ejb.Local;
 @Local
 public interface PacienteSBLocal {
     
+    EntPaciente updatePaciente(EntPaciente pac) throws UpdateEntityException;
     EntPaciente guardaPaciente(EntPaciente paciente) throws PacienteException;
     EntPaciente getPaciente(long idPaciente) throws NoExistePacienteException;
     public EntPaciente getPaciente(EntPersona Persona) throws NoExistePacienteException;
     public List<EntPaciente> getPacientes(EntMedico entMedico) throws PacienteException;
+    EntCareta getCaretaDePaciente(EntPaciente Paciente) throws NoExistePacienteException;
     
 }
