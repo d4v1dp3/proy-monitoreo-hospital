@@ -45,15 +45,15 @@ INSERT INTO MH_ANTECEDENTES (ID_PACIENTE, DIABETES, CANCER, ASMA, VIH, HAS, EPOC
 
 /*Insertando Usuario de paciente y rol*/
 INSERT INTO MH_USUARIO (ID_USUARIO, CONTRASENIA, ACTIVO, ID_PERSONA)
-VALUES ("paciente3", "paciente3", true, 3);
+VALUES ("paciente1", "paciente1", true, 3);
 
 INSERT INTO MH_USUARIO (ID_USUARIO, CONTRASENIA, ACTIVO, ID_PERSONA)
-VALUES ("paciente4", "paciente4", true, 4);
+VALUES ("paciente2", "paciente2", true, 4);
 
 INSERT INTO MH_USUARIO_ROL (ID_USUARIO, ID_ROL)
-VALUES ('paciente3', 4);
+VALUES ('paciente1', 4);
 INSERT INTO MH_USUARIO_ROL (ID_USUARIO, ID_ROL)
-VALUES ('paciente4', 4);
+VALUES ('paciente2', 4);
 
 
 /*Insertando un médico*/
