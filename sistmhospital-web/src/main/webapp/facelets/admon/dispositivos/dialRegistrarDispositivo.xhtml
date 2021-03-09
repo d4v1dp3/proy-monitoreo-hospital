@@ -1,162 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <f:view>
-        <f:metadata> 
-            <f:viewParam name="pacNombre" value="#{dashboardPacienteMB.pacienteNombre}" />
-            <f:viewParam name="pacPrimerAp" value="#{dashboardPacienteMB.pacientePrimerAp}" />
-            <f:viewParam name="pacSegundoAp" value="#{dashboardPacienteMB.pacienteSegundoAp}" />
-            <f:viewParam name="pacId" value="#{dashboardPacienteMB.pacienteId}"/>
-            <f:viewParam name="pacfechaHist" value="#{dashboardPacienteMB.fechaHist}"/>
-            <f:viewAction action="#{dashboardPacienteMB.cargaInicial}"/>
-        </f:metadata>
-        <h:head>
-            <title>Signos del Paciente</title>
-            <script type="text/javascript">    
-                PrimeFaces.locales ['es'] = {
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
-                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
-                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
-                    dayNamesMin: ['D', 'L', 'M', 'M ', 'J', 'V ', 'S']
-                };
-            </script>
-            <style type="text/css">
-                .ui-widget {
-                    font-size: 90%;
-                }
-                .ui-widget-header{
-                    background-color: #e7e8e9 !important;
-                    border-color: #cacaca !important;
-                    font-weight: bold !important;
-                    color: black !important;
-                    text-align: left !important;
-                }
-                .titulo{
-                    font-weight: bold !important;
-                }
-                .greenBackground .ui-panel-content{
-                    background: greenyellow !important;
-                    text-align: center !important;
-                    font-weight: bold !important;
-                }
-                .redBackground .ui-panel-content{
-                    background: crimson !important;
-                    text-align: center !important;
-                    font-weight: bold !important;
-                }         
-                .yellowBackground .ui-panel-content{
-                    background: yellow !important;
-                    text-align: center !important;
-                    font-weight: bold !important;
-                } 
-                
-            </style>
-            
-            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
-            <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-        </h:head>
+    <h:head>
+        <title>Registro Dispositivo</title>
 
-        <h:body>      
-            <h:form id="dashboardForm">
-                <p:growl id="msgAltaMed" showDetail="true" />
-                
-                <h2>
-                    <p:outputLabel value="PACIENTE: " class="titulo"></p:outputLabel>
-                    <p:outputLabel value="  "></p:outputLabel>
-                    <p:outputLabel value="#{dashboardPacienteMB.pacienteNombre}"></p:outputLabel>
-                    <p:outputLabel value=" "></p:outputLabel>
-                    <p:outputLabel value="#{dashboardPacienteMB.pacientePrimerAp}"></p:outputLabel>
-                    <p:outputLabel value=" "></p:outputLabel>
-                    <p:outputLabel value="#{dashboardPacienteMB.pacienteSegundoAp}"></p:outputLabel>
-                </h2>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+            .ui-widget-header{
+                background-color: #e7e8e9 !important;
+                border-color: #cacaca !important;
+                font-weight: bold !important;
+                color: black !important;
+                text-align: left !important;
+            }
+            .sinborde{
+                border-color: white !important;
+            }
+            .titulo{
+                font-weight: bold !important;
+            }
 
-                <p:panelGrid id="grid" style="margin: 0 auto; ">
-                    <f:facet name="header">
-                        <p:row style="text-align: left;">
-                            <p:column colspan="2" >
-                                ESTADO DEL PACIENTE A LA ÚLTIMA TOMA DE SIGNOS Y SINTOMAS
+            /* reset on the showcase style*/
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            /* example use of styles for your form */
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+            }
+        </style>
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+    </h:head>
+
+    <h:body>
+        <i class="pi pi-plus" id="customheader" style="display:none"></i>
+        <h:form id="frmRegDispositivo">
+            <p:growl id="msgRegDisp" showDetail="true" />
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
+                        <center>
+                            <h2>
+                                <p:outputLabel value="FORMULARIO PARA EL REGISTRO DE DISPOSITIVO" class="titulo"></p:outputLabel>
+                            </h2>
+                            <p>Llene los siguientes campos para registrar un dispositivo. </p>
+                        </center>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Datos del Dispositivo</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="2" class="sinborde"></p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2"
+                                     columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="nSerie" value="No. Serie:" />
+                                <p:inputText id="nSerie" value="#{gestionDispositivosMB.noSerie}" required="true" />
+                                <p:message for="nSerie"/>
                             </p:column>
-                            <p:column>
-                                <h:outputText value="FECHA: "/>
-                                <h:outputText value="#{dashboardPacienteMB.fechaUltMedicion}"/>
-                                <h:outputText value=" HORA: "/>
-                                <h:outputText value="#{dashboardPacienteMB.horaUltMedicion}"/>
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="apDate" value="Fecha de Manufactura:" />
+                                <p:inputText id="apDate" value="#{gestionDispositivosMB.fechaManufactura}" required="true" />
+                                <p:message for="apDate"/>
                             </p:column>
-                        </p:row>
-                    </f:facet>
 
-                    <p:row>     
-                        <p:column>
-                            <p:panel id="panelOxigeno" header="Saturación de Oxígeno" styleClass="#{dashboardPacienteMB.satOxgColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacSaturacionOxg}" style="font-size: 50px;"/>
-                                <h:outputText value="%"  style="font-size: 15px;"/>
-                            </p:panel>
-                        </p:column>
-                        <p:column>
-                            <p:panel id="panelTemperatura" header="Temperatura" styleClass="#{dashboardPacienteMB.tempColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacTemperatura}"  style="font-size: 50px;"/>
-                                <h:outputText value="°C"  style="font-size: 15px;"/>
-                            </p:panel>
-                        </p:column>
-                        <p:column>
-                            <p:panel id="panelEstadoPac" header="Estado de salud" style="text-align: center;">
-                                <h:outputText value="#{dashboardPacienteMB.pacEstado}" style="font-weight: bold; font-size: 30px;"/>
-                            </p:panel>
-                        </p:column>                   
-                    </p:row>
-                    <p:row>
-                        <p:column>
-                            <p:panel id="panelfRespiratoria" header="Frecuencia Respiratoria" styleClass="#{dashboardPacienteMB.frespColor}" >  
-                                <h:outputText value="#{dashboardPacienteMB.pacFrecRespiratoria}"  style="font-size: 50px"/>
-                                <h:outputText value="RMP"  style="font-size: 15px"/>
-                            </p:panel>
-                        </p:column>
-                        <p:column>
-                            <p:panel id="panelfCardiaca" header="Frecuencia Cardíaca" styleClass="#{dashboardPacienteMB.fcardColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacFrecCardiaca}"  style="font-size: 50px"/>
-                                <h:outputText value="LPM" style="font-size: 15px"/>
-                            </p:panel>
-                        </p:column>
-                        <p:column> 
-                            <p:panel id="panelPArt" header="Presión Arterial" styleClass="#{dashboardPacienteMB.pArtColor}">
-                                <h:outputText value="#{dashboardPacienteMB.pacPreArtSistolica}"  style="font-size: 50px"/>
-                                <h:outputText value="/"  style="font-size: 50px"/>
-                                <h:outputText value="#{dashboardPacienteMB.pacPreArtDiastolica}"  style="font-size: 50px"/>
-                                <h:outputText value="mmHg"  style="font-size: 15px"/>
-                            </p:panel> 
-                        </p:column>
-                    </p:row>
+                        </p:panelGrid>
 
-                    <p:row>
-                        <p:column colspan="2">
-                            <h:outputText value="HISTORIAL DEL PACIENTE AL: " style="text-align: center;font-weight: bold; font-size: 20px" />                        
-                            <h:outputText id ="fechaHist" value="#{dashboardPacienteMB.fechaHist}" style="text-align: center;font-weight: bold; font-size: 20px"/>
-                        </p:column>
-                        <p:column>
-                            <p:calendar id="inline" value="#{dashboardPacienteMB.fechaCalendario}" locale="es" mode="inline"/>
-                            <p:commandButton value="Buscar" id = "btnCalendar" update="fechaHist graficas" action="#{dashboardPacienteMB.updateDashboard}"/>          
-                        </p:column>
-                    </p:row>                
-                    <p:row>
-                        <p:column  colspan="3">
-                            <p:panelGrid columns="1" id="graficas" layout="grid" styleClass="showcase-text-align-center">
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoSOxigeno}" style="height:250px;" />
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoTemperatura}" style="height:250px;" />
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecCardiaca}" style="height:250px;" />
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoFrecRespiratoria}" style="height:250px;" />
-                                <p:chart type="line" model="#{dashboardPacienteMB.historicoPreArterial}" style="height:250px;"/>
-                            </p:panelGrid>
-                        </p:column>
-                    </p:row>
-                    
-                </p:panelGrid>
-            </h:form>                         
-        </h:body>
-    </f:view>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" class="ui-widget-header">Asignación de Hospital</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:panelGrid columns="1"
+                                     columnClasses="ui-grid-col-12"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="idHosp" value="Hospital:" />
+                                <p:selectOneMenu id="idHosp" value="#{gestionDispositivosMB.idHosp}" required="true">
+                                    <f:selectItems value="#{gestionDispositivosMB.listHospital}" var="hospital" 
+                                                   itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
+                                <p:message for="idHosp" />
+                            </p:column>
+
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: right">
+                        <p:commandButton value="Guardar" actionListener="#{gestionDispositivosMB.guardarDispositivo()}"
+                                         icon="fas fa-save" update="@all"/>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+        </h:form>
+        <h:form>
+            <p:panelGrid>
+                <p:row>
+                    <p:column style="text-align: right" width="100%">
+                        <p:commandButton value="Cerrar" action="#{gestionDispositivosMB.cerrarDialogo}"
+                                         icon="pi pi-times" />  
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+        </h:form>
+    </h:body>
 </html>
-

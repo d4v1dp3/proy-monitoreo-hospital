@@ -8,7 +8,10 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.util.List;
@@ -41,6 +44,15 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
             query.setParameter("idUsuario", nomUsuario);
             entUsuario = (EntUsuario) query.getSingleResult();
+            
+            entUsuario.getIdPersona();
+            entUsuario.getIdPersona().getNombre();
+            entUsuario.getIdPersona().getPrimerApellido();
+            entUsuario.getIdPersona().getSegundoApellido();
+            entUsuario.getIdPersona().getCurp();
+            entUsuario.getIdPersona().getEdad();
+            entUsuario.getIdPersona().getIdGenero();
+                    
             return entUsuario;
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
@@ -104,5 +116,24 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         }catch(NoResultException e){
             return false;
         }
+    }
+    
+    @Override
+    public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
+        return (EntUsuario)this.updateEntity(usuario);   
+    }
+    
+    @Override
+    public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException {
+        query = em.createQuery("SELECT usr.idPersona From EntUsuario usr WHERE usr.idUsuario=:idUsuario");
+        query.setParameter("idUsuario", usuario.getIdUsuario());
+        EntPersona persona = (EntPersona) query.getSingleResult();
+        persona.getCurp();
+        persona.getNombre();
+        persona.getPrimerApellido();
+        persona.getSegundoApellido();
+        persona.getEdad();
+        persona.getIdGenero();
+        return persona;
     }
 }

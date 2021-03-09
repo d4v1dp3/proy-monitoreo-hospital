@@ -8,6 +8,7 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.NoExistePersonaException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,11 @@ public class PersonaSB extends BaseSB implements PersonaSBLocal {
     public EntPersona savePersona(EntPersona persona) throws SaveEntityException {
         persona = (EntPersona) this.saveEntity(persona);
         return persona;
+    }
+    
+    @Override
+    public EntPersona updatePersona(EntPersona persona) throws UpdateEntityException {
+        return (EntPersona)this.updateEntity(persona);   
     }
 
     @Override

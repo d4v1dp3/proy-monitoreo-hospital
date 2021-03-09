@@ -8,6 +8,7 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.NoExistePersonaException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import javax.ejb.Local;
 
@@ -18,6 +19,7 @@ import javax.ejb.Local;
 @Local
 public interface PersonaSBLocal {
     EntPersona savePersona(EntPersona persona)throws SaveEntityException; 
+    EntPersona updatePersona(EntPersona persona) throws UpdateEntityException;
     EntPersona getPersonaDePaciente(Long idPaciente);
     EntPersona getEntPersona(EntPersona Persona) throws NoExistePersonaException;
 }

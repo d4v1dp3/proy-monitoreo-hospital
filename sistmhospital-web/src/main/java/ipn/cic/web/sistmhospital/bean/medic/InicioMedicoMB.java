@@ -19,6 +19,7 @@ import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.PersonaSBLocal;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,9 +53,13 @@ public class InicioMedicoMB implements Serializable {
     private EntPaciente pacienteMostrar;
     private EntHospital hospital;
     private EntPersona persona;
+    
+    private ArrayList<String> notificaciones;
 
     @PostConstruct
     public void cargaDatosMedico() {
+        
+        notificaciones = new ArrayList();
 
         //Recuperar Datos       
         try {
@@ -78,6 +83,10 @@ public class InicioMedicoMB implements Serializable {
             logger.log(Level.SEVERE, "Error al cargar hospital.");
         }catch (NoExistePersonaException ex) {
             logger.log(Level.SEVERE, "Error al cargar esntidad persona.");
+        }
+        
+        for(int i=0;i<2;i++){
+            notificaciones.add("Alerta "+i);
         }
 
     }
@@ -133,6 +142,14 @@ public class InicioMedicoMB implements Serializable {
 
     public void setPersona(EntPersona persona) {
         this.persona = persona;
+    }
+
+    public ArrayList<String> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(ArrayList<String> notificaciones) {
+        this.notificaciones = notificaciones;
     }
 
     

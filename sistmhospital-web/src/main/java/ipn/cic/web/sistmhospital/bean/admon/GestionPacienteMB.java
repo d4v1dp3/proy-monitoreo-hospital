@@ -9,6 +9,7 @@ package ipn.cic.web.sistmhospital.bean.admon;
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
+import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.PacienteException;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
@@ -16,8 +17,10 @@ import ipn.cic.sistmhospital.modelo.EntGenero;
 import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
+import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.AntecedentesVO;
 import ipn.cic.web.sistmhospital.bean.vo.PacienteVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
@@ -31,7 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -61,6 +63,7 @@ public class GestionPacienteMB implements Serializable {
     private List<EntHospital> listaHospital;
     private List<EntMedico> listaMedicos;
     private List<EntCaretaHospital> listCaretaHospital;
+    private List<EntPersona> personaMedico;
     
     @EJB
     GestionPacienteBDLocal gstPac;
@@ -68,6 +71,8 @@ public class GestionPacienteMB implements Serializable {
     UtilWebSBLocal utilWebSB;
     @EJB
     CatalogoSBLocal catalogoSB;
+    @EJB
+    MedicoSBLocal medicoSB;
     @EJB
     CaretaHospitalSBLocal caretahospitalSB;
 
@@ -89,6 +94,7 @@ public class GestionPacienteMB implements Serializable {
         antecedentes.add("Enf autoinmune");
         
         listaHospital = new ArrayList();
+        personaMedico = new ArrayList();
         
         try {
             //Cargar Lista de Hospitales
@@ -129,14 +135,18 @@ public class GestionPacienteMB implements Serializable {
         listaMedicos = new ArrayList();        
         try {
             //Cargar Lista de Medicos
-            setListaMedicos((List<EntMedico>) catalogoSB.getCatalogo("EntMedico"));
-        } catch (CatalogoException ex) {
-            logger.log(Level.SEVERE, "Imposible recuperar catalogo de medicos:{0} ",ex.getMessage());
-            FacesMessage msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error",
-                            "No es posible recuperar catálogo de médicos :" + ex.getMessage(),
-                            FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            setListaMedicos((List<EntMedico>) medicoSB.getMedicos());
+                           
+            
+//        } catch (CatalogoException ex) {
+//            logger.log(Level.SEVERE, "Imposible recuperar catalogo de medicos:{0} ",ex.getMessage());
+//            FacesMessage msg = Mensaje.getInstance()
+//                    .getMensajeAdaptado("Error",
+//                            "No es posible recuperar catálogo de médicos :" + ex.getMessage(),
+//                            FacesMessage.SEVERITY_ERROR);
+//            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+        } catch (MedicoException ex) {
+            logger.log(Level.SEVERE, "Entidad de medico no encontrado:{0} ",ex.getMessage());
         }
 
         try {
@@ -303,5 +313,12 @@ public class GestionPacienteMB implements Serializable {
         this.listaMedicos = listaMedicos;
     }
 
-    
+    public List<EntPersona> getPersonaMedico() {
+        return personaMedico;
+    }
+
+    public void setPersonaMedico(List<EntPersona> personaMedico) {
+        this.personaMedico = personaMedico;
+    }
+   
 }

@@ -88,7 +88,6 @@ public class GestionDispositivosMB implements Serializable {
         caretaEliminar = new EntCareta();
         listHospital = new ArrayList();
 
-//        caretaHospitalEditar = new EntCaretaHospital();
         caretaHospital = new EntCaretaHospital();
 
         try {

@@ -8,7 +8,9 @@ package ipn.cic.sistmhospital.sesion;
 
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
+import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.util.List;
@@ -68,4 +70,7 @@ public interface UsuarioSBLocal {
      * @throws UsuarioException
      */
     public List<EntUsuario> getUsuarios()throws UsuarioException;
+    
+    public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException;
+    public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException ;
 }
