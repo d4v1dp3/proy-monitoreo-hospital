@@ -17,7 +17,7 @@ Todos los derechos reservados
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">  
-    
+
     <ui:composition template="/WEB-INF/facelets/plantilla/Estructura.xhtml">
         <ui:define name="nombrePagina">
             Gestión_Hospital
@@ -58,7 +58,7 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:inputText id="hCalle" value="#{gestionHospitalMB.hospEnt.dirCalle}" required="true" /></p:column>
-                                        <p:column><p:inputText id="hNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" /></p:column>
+                                        <p:column><p:inputNumber id="hNum" value="#{gestionHospitalMB.hospEnt.numero}" required="true" decimalPlaces="0" /></p:column>
                                         <p:column><p:inputText id="hCol" value="#{gestionHospitalMB.hospEnt.colonia}" required="true" /></p:column>
                                     </p:row>
                                     <p:row>
@@ -83,7 +83,10 @@ Todos los derechos reservados
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="hTel" value="Tel Emergencia:" /></p:column>
-                                        <p:column><p:inputText id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" /></p:column>
+                                        <p:column>
+                                            <p:inputMask id="hTel" value="#{gestionHospitalMB.hospEnt.telEmergencias}" required="true" 
+                                                         mask="999 999 9999" validateMask="true"/>
+                                        </p:column>
                                         <p:column><p:message for="hTel" /></p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -95,11 +98,11 @@ Todos los derechos reservados
                                     </f:facet>
                                     <p:row>
                                         <p:column><p:outputLabel for="lat" value="Latitud:" /></p:column>
-                                        <p:column><p:inputText id="lat" value="#{gestionHospitalMB.lat}" /></p:column>
+                                        <p:column><p:inputNumber id="lat" value="#{gestionHospitalMB.lat}" /></p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column><p:outputLabel for="lng" value="Longitud:" /></p:column>
-                                        <p:column><p:inputText id="lng" value="#{gestionHospitalMB.lon}" /></p:column>
+                                        <p:column><p:inputNumber id="lng" value="#{gestionHospitalMB.lon}" /></p:column>
                                     </p:row>
                                 </p:panelGrid>
                                 <p:gmap id="geoGmap" widgetVar="geoMap" center="41.381542, 2.122893" zoom="8" 
@@ -117,13 +120,13 @@ Todos los derechos reservados
                     </div>
                 </p:panel>
             </h:form>
-            
-            
-            
+
+
+
             <h:form id="frmExisteHosp" rendered="#{gestionHospitalMB.existeHosp}">  
-                
+
                 <p:growl id="msgsEH" showDetail="true" />
-                
+
                 <p:panel id="pnEHospital" header="Gestión de Hospital" footer="" style="margin-bottom:20px">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
@@ -133,7 +136,7 @@ Todos los derechos reservados
                             <h3>ACTUALIZACION DE DATOS DE HOSPITAL</h3>
                         </div>
                         <div class="p-col" style="align-content: center;">
-                            
+
                             <p:panel id="ehpDatos" header="Datos de Hospital">
                                 <p:panelGrid>
                                     <p:row>
@@ -210,7 +213,7 @@ Todos los derechos reservados
                     </div>
                 </p:panel>
             </h:form>
-            
+
         </ui:define>    
     </ui:composition>
 </html>

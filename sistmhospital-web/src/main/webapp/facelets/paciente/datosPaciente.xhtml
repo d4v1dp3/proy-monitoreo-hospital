@@ -105,59 +105,61 @@ Todos los derechos reservados
                                 <p:column style="border-color: white;">
 
                                     <p:panel header="Actualizar Información">
-<!--                                        <h:form id="frmEditPaciente">
-                                            <p:growl id="msgEditPac" showDetail="true" />-->
-                                            <p:panelGrid>
-                                                <p:row>
-                                                    <p:column>
-                                                        <center>
-                                                            <p>Formulario para la actualizacion de mis datos de contacto. </p>
-                                                        </center>
-                                                    </p:column>
-                                                </p:row>
-                                                <p:row>
-                                                    <p:column style="text-align: center" class="ui-widget-header">Datos de Contacto</p:column>
-                                                </p:row>
-                                                <p:row>
-                                                    <p:column>
-                                                        <p:panelGrid>
-                                                            <p:row>
-                                                                <p:column colspan="2" style="border-color: white;"></p:column>
-                                                            </p:row>
-                                                        </p:panelGrid>
+                                        <!--                                        <h:form id="frmEditPaciente">
+                                                                                    <p:growl id="msgEditPac" showDetail="true" />-->
+                                        <p:panelGrid>
+                                            <p:row>
+                                                <p:column>
+                                                    <center>
+                                                        <p>Formulario para la actualizacion de mis datos de contacto. </p>
+                                                    </center>
+                                                </p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column style="text-align: center" class="ui-widget-header">Datos de Contacto</p:column>
+                                            </p:row>
+                                            <p:row>
+                                                <p:column>
+                                                    <p:panelGrid>
+                                                        <p:row>
+                                                            <p:column colspan="2" style="border-color: white;"></p:column>
+                                                        </p:row>
+                                                    </p:panelGrid>
 
-                                                        <p:panelGrid columns="2"
-                                                                     columnClasses="ui-grid-col-6,ui-grid-col-6"
-                                                                     layout="grid"
-                                                                     styleClass="ui-panelgrid-blank ui-fluid"
-                                                                     style="border:0px none; background-color:transparent;">
+                                                    <p:panelGrid columns="2"
+                                                                 columnClasses="ui-grid-col-6,ui-grid-col-6"
+                                                                 layout="grid"
+                                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                                 style="border:0px none; background-color:transparent;">
 
-                                                            <p:column style="background-color: lightcoral">
-                                                                <p:outputLabel for="telcel" value="Teléfono Celular:" />
-                                                                <p:inputText id="telcel" value="#{inicioPacienteMB.paciente.telCel}" required="true" />
-                                                                <p:message for="telcel"/>
-                                                            </p:column>
+                                                        <p:column style="background-color: lightcoral">
+                                                            <p:outputLabel for="telcel" value="Teléfono Celular:" />
+                                                            <p:inputMask id="telcel" value="#{inicioPacienteMB.paciente.telCel}" required="true" 
+                                                                         mask="999 999 9999" validateMask="true"/>
+                                                            <p:message for="telcel"/>
+                                                        </p:column>
 
-                                                            <p:column style="background-color: lightcoral">
-                                                                <p:outputLabel for="tel" value="Teléfono Fijo::" />
-                                                                <p:inputText id="tel" value="#{inicioPacienteMB.paciente.telFijo}" required="true" />
-                                                                <p:message for="tel"/>
-                                                            </p:column>
+                                                        <p:column style="background-color: lightcoral">
+                                                            <p:outputLabel for="tel" value="Teléfono Fijo::" />
+                                                            <p:inputMask id="tel" value="#{inicioPacienteMB.paciente.telFijo}" required="true" 
+                                                                         mask="999 999 9999" validateMask="true"/>
+                                                            <p:message for="tel"/>
+                                                        </p:column>
 
-                                                        </p:panelGrid>
+                                                    </p:panelGrid>
 
 
-                                                    </p:column>
-                                                </p:row>
+                                                </p:column>
+                                            </p:row>
 
-                                                <p:row>
-                                                    <p:column style="text-align: right">
-                                                        <p:commandButton value="Guardar Cambios" action="#{inicioPacienteMB.guardarCambiosPaciente()}"
-                                                                         icon="fas fa-save" update="@all"/>
-                                                    </p:column>
-                                                </p:row>
-                                            </p:panelGrid>
-<!--                                        </h:form>-->
+                                            <p:row>
+                                                <p:column style="text-align: right">
+                                                    <p:commandButton value="Guardar Cambios" action="#{inicioPacienteMB.guardarCambiosPaciente()}"
+                                                                     icon="fas fa-save" update="@all"/>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
+                                        <!--                                        </h:form>-->
                                     </p:panel>
 
                                 </p:column>
