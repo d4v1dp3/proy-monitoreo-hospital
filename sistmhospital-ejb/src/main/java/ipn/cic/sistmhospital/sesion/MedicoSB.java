@@ -125,14 +125,12 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
     
     @Override
     public List<EntMedico> getMedicos() throws MedicoException {
-
         query = em.createQuery("SELECT med From EntMedico med LEFT JOIN FETCH  med.idPersona p "
                 + "ORDER BY p.primerApellido, p.segundoApellido, p.nombre");
 
         List<EntMedico> lista = query.getResultList();
         List<EntMedico> res = new ArrayList();
 
-//        logger.log(Level.INFO, "Tamaño de Lista : {0}", lista.size());
         for (EntMedico med:  lista) {
             EntMedico medico = med;
             medico.getIdMedico();
@@ -141,7 +139,6 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
             medico.getIdPersona().getNombre();
             medico.getIdPersona().getPrimerApellido();
             medico.getIdPersona().getSegundoApellido();
-//            logger.log(Level.INFO, "Medico: {0}", medico.getIdPersona().getNombre());
             res.add(medico);
         }
         return res;

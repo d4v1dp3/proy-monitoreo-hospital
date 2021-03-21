@@ -75,7 +75,6 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
             logger.log(Level.SEVERE, "Error al obtener la lista de pacientes : {0}", e.getMessage());
             throw new PacienteException("No esposible obtener la lista de pacientes", e);
         }
-
     }
 
     @Override

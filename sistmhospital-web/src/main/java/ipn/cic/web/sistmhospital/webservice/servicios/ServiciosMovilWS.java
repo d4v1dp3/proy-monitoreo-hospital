@@ -7,9 +7,6 @@
 package ipn.cic.web.sistmhospital.webservice.servicios;
 
 import ipn.cic.web.sistmhospital.bean.vo.MedidasVO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
@@ -44,7 +41,7 @@ public class ServiciosMovilWS {
     public JsonObject recibeMedidas(JsonObject datos) throws MedidasException, NoExistePacienteException{
         /*Estructura JSON Recibida
         {
-            "idPaciente": 20178,
+            "idPaciente": 2,
             "saturacionOxigeno": 98.0,
             "temperatura": 26.0,
             "frecCardiaca": 62, 
