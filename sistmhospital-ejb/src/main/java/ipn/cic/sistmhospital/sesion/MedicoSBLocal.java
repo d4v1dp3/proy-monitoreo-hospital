@@ -10,6 +10,7 @@ import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,5 +32,7 @@ public interface MedicoSBLocal {
     public EntMedico getMedicoDePaciente(EntPaciente entPaciente) throws MedicoException;
     
     public EntMedico getMedico(Integer idMedico) throws MedicoException;
+    
+    public EntMedico getMedico(String email);
     
 }

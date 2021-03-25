@@ -12,6 +12,7 @@ import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPacienteMedico;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import ipn.cic.sistmhospital.modelo.EntUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -145,5 +146,18 @@ public class MedicoSB extends BaseSB implements MedicoSBLocal {
             res.add(medico);
         }
         return res;
+    }
+
+    @Override
+    public EntMedico getMedico(String email) {
+        try{
+            query = em.createQuery("SELECT e From EntMedico e WHERE e.email = :email");
+            query.setParameter("email", email);
+            EntMedico medico = (EntMedico)query.getSingleResult();
+            return medico;
+        }catch(Exception e){
+            
+        }
+        return null;
     }
 }
