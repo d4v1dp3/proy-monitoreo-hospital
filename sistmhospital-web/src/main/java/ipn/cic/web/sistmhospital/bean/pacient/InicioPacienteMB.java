@@ -20,6 +20,7 @@ import ipn.cic.sistmhospital.modelo.EntUsuario;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
+import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
@@ -55,6 +56,8 @@ public class InicioPacienteMB implements Serializable {
     @EJB
     private MedicoSBLocal medicoSB;
     @EJB
+    private UsuarioSBLocal usuarioSB;
+    @EJB
     private UtilWebSBLocal utilWebSB;
     @EJB
     private HospitalSBLocal hospitalSB;
@@ -66,6 +69,7 @@ public class InicioPacienteMB implements Serializable {
     private EntHospital hospital;
     private EntAntecedentes antecedentes;
     private EntCareta careta;
+    private EntUsuario usuario;
     private Boolean masculino = true;
 
     @PostConstruct
@@ -206,7 +210,8 @@ public class InicioPacienteMB implements Serializable {
         valSegundoAp.add(medicoPac.getIdPersona().getSegundoApellido());
 
         List<String> valCorreo = new ArrayList<>();
-        valCorreo.add(medicoPac.getEmail());
+        usuario = usuarioSB.getUsuarioDeMedico(medicoPac);
+        valCorreo.add(usuario.getEmail());
 
         List<String> valTel = new ArrayList<>();
         valTel.add(medicoPac.getCelular());

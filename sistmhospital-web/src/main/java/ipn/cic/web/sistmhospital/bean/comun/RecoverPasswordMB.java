@@ -7,7 +7,6 @@ package ipn.cic.web.sistmhospital.bean.comun;
 
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
-import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.sistmhospital.util.correo.CorreoSBLocal;
 import java.io.Serializable;
@@ -21,7 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.mail.Session;
-import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -34,9 +32,6 @@ public class RecoverPasswordMB implements Serializable{
     private static final Logger logger = Logger.getLogger(RecoverPasswordMB.class.getName());
     
     private String email;
-    
-    @EJB
-    private MedicoSBLocal medicoSB;
     
     @EJB
     private CorreoSBLocal correoSB;
@@ -55,22 +50,22 @@ public class RecoverPasswordMB implements Serializable{
     }
     
     public void recoverPassword(){
-        medico =  medicoSB.getMedico(email);
-        if(medico!=null){
-            usuario = usuarioSB.getUsuario(medico);
-            if(usuario!=null){
-                logger.log(Level.INFO,"Correo encontrado");
-                correoSB.enviarCorreo(mailSesion,medico.getEmail(),"Recuperación contraseña",usuario.getContrasenia());
-                enviado();
-            }else{
-                logger.log(Level.SEVERE,"Correo no encontrado");
-                error();
-            } 
+        String asunto = "Recuperación de contraseña";
+        String mensaje = "Este correo fue generado de manera automática.\n"
+                + "Contraseña: ";
+        
+        logger.log(Level.INFO,"Recuperando usuario de email: {0}",email);
+        if((usuario = usuarioSB.getUsuariobyEmail(email))!=null){;
+            logger.log(Level.INFO,"Usuario encontrado");
+            String contrasenia = usuario.getContrasenia();
+            correoSB.enviarCorreo(mailSesion,usuario.getEmail(),asunto,mensaje+contrasenia);
+            enviado(); 
         }else{
-            logger.log(Level.SEVERE,"Correo no encontrado");
+            
+            logger.log(Level.SEVERE,"Usuario no encontrado");
             error();
         }
-                
+        email=null;
     }
 
     public void enviado() {

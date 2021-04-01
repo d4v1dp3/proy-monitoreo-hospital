@@ -24,6 +24,7 @@ import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.MedidasSBLocal;
 import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
 import ipn.cic.sistmhospital.sesion.PersonaSBLocal;
+import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.sistmhospital.sesion.ValoresReferenciaSBLocal;
 import ipn.cic.sistmhospital.util.correo.CorreoSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.MedidasVO;
@@ -63,8 +64,11 @@ public class MedidasBD implements MedidasBDLocal {
     private PersonaSBLocal personaSB;
     
     @EJB
-    private CorreoSBLocal correoSB;
+    private UsuarioSBLocal usuarioSB;
     
+    @EJB
+    private CorreoSBLocal correoSB;
+     
     @EJB
     private ValoresReferenciaSBLocal valoresSB;
         
@@ -84,6 +88,7 @@ public class MedidasBD implements MedidasBDLocal {
         EntMedidas medidas = new EntMedidas();
         EntMedico medico;
         EntPersona persona;
+        EntUsuario usuario;
         JsonObject respuesta;
         
         try {
@@ -107,8 +112,10 @@ public class MedidasBD implements MedidasBDLocal {
             medidas = medidasSB.guardaMedidas(medidas);
             logger.log(Level.INFO, "Medidas guardadas.");
 
-            medico = medicoSB.getMedicoDePaciente(paciente);                  
-            logger.log(Level.INFO, "Correo medico: {0}",medico.getEmail()); 
+            medico = medicoSB.getMedicoDePaciente(paciente); 
+            usuario = usuarioSB.getUsuarioDeMedico(medico);
+                             
+            logger.log(Level.INFO, "Correo medico: {0}",usuario.getEmail()); 
             
             persona = personaSB.getPersonaDePaciente(paciente.getIdPaciente());
             
@@ -129,7 +136,7 @@ public class MedidasBD implements MedidasBDLocal {
                 logger.log(Level.INFO, "pDias: {0}",medidas.getPreArtDiastolica());
             }else{ 
                 logger.log(Level.INFO, "Parametros fuera de los rangos");
-                correoSB.enviarCorreo(mailSesion,medico.getEmail(),asunto,cuerpo+reporteMedidas);
+                correoSB.enviarCorreo(mailSesion,usuario.getEmail(),asunto,cuerpo+reporteMedidas);
             }
             
             respuesta = Json.createObjectBuilder()

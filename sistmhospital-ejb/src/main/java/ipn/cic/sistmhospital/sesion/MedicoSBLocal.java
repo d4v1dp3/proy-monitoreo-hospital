@@ -32,7 +32,5 @@ public interface MedicoSBLocal {
     public EntMedico getMedicoDePaciente(EntPaciente entPaciente) throws MedicoException;
     
     public EntMedico getMedico(Integer idMedico) throws MedicoException;
-    
-    public EntMedico getMedico(String email);
-    
+        
 }

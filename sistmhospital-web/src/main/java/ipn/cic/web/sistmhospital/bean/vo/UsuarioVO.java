@@ -18,15 +18,17 @@ public class UsuarioVO implements Serializable {
     private String idUsuario;
     private String contrasenia;
     private Boolean activo;
+    private String email;
     private Integer idPersona;
 
     public UsuarioVO() {
     }
 
-    public UsuarioVO(String idUsuario, String contrasenia, Boolean activo, Integer idPersona) {
+    public UsuarioVO(String idUsuario, String contrasenia, Boolean activo, String email, Integer idPersona) {
         this.idUsuario = idUsuario;
         this.contrasenia = contrasenia;
         this.activo = activo;
+        this.email = email;
         this.idPersona = idPersona;
     }
 
@@ -52,6 +54,14 @@ public class UsuarioVO implements Serializable {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getIdPersona() {

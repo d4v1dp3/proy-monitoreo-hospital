@@ -125,7 +125,8 @@ public class GestionPacienteBD implements GestionPacienteBDLocal {
             // Creando la Entidad USUARIO
             EntUsuario entUsuario = new EntUsuario();
             entUsuario.setIdUsuario(usuario.getIdUsuario());
-            entUsuario.setContrasenia(usuario.getContrasenia());
+            entUsuario.setContrasenia(usuario.getContrasenia()); 
+            entUsuario.setEmail(usuario.getEmail());
             entUsuario.setIdPersona(entPersona);
             entUsuario.setActivo(usuario.getActivo());
             

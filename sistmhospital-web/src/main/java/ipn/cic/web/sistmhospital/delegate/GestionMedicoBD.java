@@ -93,6 +93,7 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             entUsuario.setContrasenia(usuario.getContrasenia());
             entUsuario.setIdPersona(entPersona);
             entUsuario.setActivo(usuario.getActivo());
+            entUsuario.setEmail(usuario.getEmail());
             Short medRol = new Integer(Constantes.getInstance().getInt("ROL_MEDICO")).shortValue();
 
             EntRol rolMedico = rolSB.getRolId(medRol);
@@ -102,7 +103,6 @@ public class GestionMedicoBD implements GestionMedicoBDLocal {
             EntMedico entMed = new EntMedico();
             entMed.setCedulaProf(medico.getCedulaProf());
             entMed.setCelular(medico.getCelular());
-            entMed.setEmail(medico.getEmail());
             entMed.setIdPersona(entPersona);
 
             entMed.getEntHospitalList().add(hospitalSB.getPrimerHospital());

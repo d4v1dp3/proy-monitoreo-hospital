@@ -74,5 +74,6 @@ public interface UsuarioSBLocal {
     
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException;
     public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException ;
-    public EntUsuario getUsuario(EntMedico medico);
+    public EntUsuario getUsuariobyEmail(String email);
+    public EntUsuario getUsuarioDeMedico(EntMedico medico);
 }

@@ -139,8 +139,21 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     }
 
     @Override
-    public EntUsuario getUsuario(EntMedico medico) {
-        try{
+    public EntUsuario getUsuariobyEmail(String email){
+        try {
+            query = em.createNamedQuery("EntUsuario.findByEmail");
+            query.setParameter("email", email);
+            EntUsuario entUsuario = (EntUsuario) query.getSingleResult();
+            return entUsuario;
+        }catch(Exception e){
+            
+        }
+        return null;
+    }
+
+    @Override
+    public EntUsuario getUsuarioDeMedico(EntMedico medico) {
+       try{
             query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
             query.setParameter("idPersona",medico.getIdPersona());
             EntUsuario usuario = (EntUsuario) query.getSingleResult();        
@@ -150,5 +163,5 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         }
         return null;
     }
-        
+         
 }
