@@ -70,6 +70,7 @@ public class InicioPacienteMB implements Serializable {
     private EntAntecedentes antecedentes;
     private EntCareta careta;
     private EntUsuario usuario;
+    private EntUsuario usuarioMedico;
     private Boolean masculino = true;
 
     @PostConstruct
@@ -96,6 +97,7 @@ public class InicioPacienteMB implements Serializable {
             //Recuperar medico del paciente
             medicoPac = medicoSB.getMedicoDePaciente(paciente);
             logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
+            usuarioMedico=usuarioSB.getUsuarioDeMedico(medicoPac);
 
             hospital = hospitalSB.getPrimerHospital();
 
@@ -294,4 +296,11 @@ public class InicioPacienteMB implements Serializable {
         this.masculino = masculino;
     }
 
+    public EntUsuario getUsuarioMedico() {
+        return usuarioMedico;
+    }
+
+    public void setUsuarioMedico(EntUsuario usuarioMedico) {
+        this.usuarioMedico = usuarioMedico;
+    }
 }
