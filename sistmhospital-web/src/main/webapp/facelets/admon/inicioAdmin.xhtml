@@ -38,27 +38,26 @@ Todos los derechos reservados
                                     <p:outputLabel value="#{inicioAdminMB.nomAdmin}" style="font-weight: bold; color: #39ace7;"/>.
                                 </p>
                             </div>
-                            
-                        </div>
 
+                        </div>
 
                         <p:panelGrid>
                             <p:row>
                                 <p:column style="border-color: white;">
                                     <p:panelGrid>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Resumen General</p:column>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Información General</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column>
                                                 <p:panelGrid>
                                                     <p:row>
-                                                        <p:column colspan="4" style="border-color: white;"></p:column>
+                                                        <p:column colspan="2" style="border-color: white;"></p:column>
                                                     </p:row>
                                                 </p:panelGrid>
 
-                                                <p:panelGrid columns="4"
-                                                             columnClasses="ui-grid-col-8,ui-grid-col-8, ui-grid-col-8,ui-grid-col-8"
+                                                <p:panelGrid columns="2"
+                                                             columnClasses="ui-grid-col-8,ui-grid-col-8"
                                                              layout="grid"
                                                              styleClass="ui-panelgrid-blank ui-fluid"
                                                              style="border:0px none; background-color:transparent; text-align: center;">
@@ -125,9 +124,63 @@ Todos los derechos reservados
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
+                                <p:column style="border-color: white; height: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">
+                                                <p:outputLabel value="Resumen #{inicioAdminMB.anio}: Pacientes"/>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column style="text-align: center;">
+
+                                                <p:panel header="Ingresos">
+                                                    <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#00e0e0" value="#{inicioAdminMB.ingresosPac.size()}" height="110px"/>
+                                                </p:panel>
+
+                                                <p:panel header="Altas">
+                                                    <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#47e308" value="#{inicioAdminMB.altasPac.size()}" height="110px" />
+                                                </p:panel>
+
+                                                <p:panel header="Decesos">
+                                                    <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#e31f08" value="#{inicioAdminMB.decesosPac.size()}" height="110px" />
+                                                </p:panel>
+
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            <p:row>   
+                                <p:column style="border-color: white;" colspan="2">
+
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Históricos</p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column style="text-align: center;">
+                                                <p:accordionPanel widgetVar="basic">
+                                                    <p:tab title="Ingresos">
+                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoIngresosPac}" style="width:100%;" />
+                                                    </p:tab>
+                                                    <p:tab title="Altas">
+                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoAltasPac}" style="width:100%;" />
+                                                    </p:tab>
+                                                    <p:tab title="Decesos">
+                                                        <p:chart type="bar" model="#{inicioAdminMB.graficoDecesosPac}" style="width:100%;" />
+                                                    </p:tab>
+                                                </p:accordionPanel>
+                                            </p:column>
+                                        </p:row>
+
+                                    </p:panelGrid>
+                                </p:column>
                             </p:row>
                         </p:panelGrid>
-                         <br/>
+                        <br/>
                         <div class="p-grid p-dir-col">
                             <div class="p-col">
                                 <p> 
