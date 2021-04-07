@@ -6,11 +6,8 @@
  */
 package ipn.cic.web.sistmhospital.bean.vo;
 
-import ipn.cic.sistmhospital.modelo.EntHospital;
-import ipn.cic.sistmhospital.modelo.EntPacienteMedico;
-import ipn.cic.sistmhospital.modelo.EntPersona;
 import java.io.Serializable;
-import java.util.List;
+
 
 /**
  *
@@ -20,11 +17,13 @@ public class MedicoVO implements Serializable{
     private String cedulaProf;
     private String email;
     private String celular;
+    private String idHospital;
 
     public MedicoVO() {
         cedulaProf = "";
         celular = "";
         email = "";
+        idHospital = "";
     }
     
     public MedicoVO(String cedulaProf, String celular, String email) {
@@ -56,5 +55,14 @@ public class MedicoVO implements Serializable{
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+    public String getIdHospital() {
+        return idHospital;
+    }
+
+    public void setIdHospital(String idHospital) {
+        this.idHospital = idHospital;
+    }
+    
     
 }

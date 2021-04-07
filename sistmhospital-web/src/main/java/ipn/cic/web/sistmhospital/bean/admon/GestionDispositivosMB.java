@@ -149,7 +149,7 @@ public class GestionDispositivosMB implements Serializable {
                             "Dispositivos cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+//            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
         }
         
         logger.log(Level.INFO, "\tDatos cargados correctamente.");
@@ -194,8 +194,8 @@ public class GestionDispositivosMB implements Serializable {
             caretaHospital = caretahospitalSB.guardaCaretaHospital(caretaHospital);
 
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Operación Exitosa ",
-                            "Dispositivo registrado correctamente.",
+                    .getMensajeAdaptado("Dispositivo Registrado ",
+                            "Dispositivo registrado correctamente. No Serie: "+caretaHospital.getEntCareta().getNoSerie(),
                             FacesMessage.SEVERITY_INFO);
 
             cerrarDialogo(msg);
@@ -203,7 +203,7 @@ public class GestionDispositivosMB implements Serializable {
         } catch (CaretaException ex) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Error al intentar guardar careta :" + ex.getMessage(),
+                            "Error al intentar guardar dispositivo :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
             cerrarDialogo(msg);
@@ -257,10 +257,10 @@ public class GestionDispositivosMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-        FacesMessage mensaje = Mensaje.getInstance()
-                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                        FacesMessage.SEVERITY_INFO);
-        cerrarDialogo(mensaje);
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                        FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(null);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {
@@ -283,17 +283,16 @@ public class GestionDispositivosMB implements Serializable {
         FacesMessage msg = null;
 
         if (event.getObject() != null) {
+            
             msg = (FacesMessage) event.getObject();
-
+            cargarDispositivos();
         } else {
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Diálogo ",
-                            "Dispositivo registrado correctamente.",
+                    .getMensajeAdaptado("Diálogo",
+                            "Dialogo cerrado sin aplicar cambios.",
                             FacesMessage.SEVERITY_INFO);
         }
-
         utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-        cargarDispositivos();
     }
 
     public void editarDispositivo() {
@@ -339,7 +338,7 @@ public class GestionDispositivosMB implements Serializable {
 
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
-
+            cargarDispositivos();
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
@@ -348,7 +347,6 @@ public class GestionDispositivosMB implements Serializable {
         }
 
         utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-        cargarDispositivos();
     }
 
     public void actualizarDispositivo() {
@@ -428,9 +426,9 @@ public class GestionDispositivosMB implements Serializable {
             caretahospitalSB.borrarCaretaHospital(caretaHospitalEliminar);
             boolean borrado = caretaSB.borrarCareta(caretaEliminar);
             if (borrado) {
-                logger.log(Level.INFO, "Dispositivo eliminado.");
+                logger.log(Level.INFO, "Dispositivo Eliminado.");
                 msg = Mensaje.getInstance()
-                        .getMensajeAdaptado("Diálogo ",
+                        .getMensajeAdaptado("Dispositivo Eliminado ",
                                 "Dispositivo eliminado correctamente.",
                                 FacesMessage.SEVERITY_INFO);
             }
@@ -447,16 +445,14 @@ public class GestionDispositivosMB implements Serializable {
 
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
-
+            cargarDispositivos();
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
-                            "Dispositivo eliminado.",
+                            "Dialogo cerrado sin aplicar cambios.",
                             FacesMessage.SEVERITY_INFO);
         }
-
         utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-        cargarDispositivos();
     }
 
     public CaretaSBLocal getCaretaSB() {

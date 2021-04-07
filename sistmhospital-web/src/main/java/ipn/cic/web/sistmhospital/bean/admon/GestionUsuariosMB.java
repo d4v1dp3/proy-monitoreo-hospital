@@ -104,7 +104,7 @@ public class GestionUsuariosMB implements Serializable {
                             "Usuarios cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
         }
-        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+//        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
         //PrimeFaces.current().ajax().update("frGestUsuarios:msgsGU");
     }
     
@@ -121,7 +121,19 @@ public class GestionUsuariosMB implements Serializable {
     }
     
     public void retornoAltaMedico(SelectEvent event){
-        retornoEditaUsuario(event);
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaUsuarios();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
     }
     
     
@@ -137,8 +149,20 @@ public class GestionUsuariosMB implements Serializable {
         PrimeFaces.current().dialog().openDynamic("usuarios/dialAltaPaciente", options, null);
     }
     
-    public void retornoAltaPaciente(){
-        
+    public void retornoAltaPaciente(SelectEvent event){
+        FacesMessage msg = null;
+
+        if (event.getObject() != null) {
+            msg = (FacesMessage) event.getObject();
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+            cargaUsuarios();
+        } else {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Diálogo",
+                            "Diálogo cerrado sin aplicar cambios",
+                            FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
+        }
     }
     
     public void editarUsuario() {
@@ -202,14 +226,15 @@ public class GestionUsuariosMB implements Serializable {
 
         if (event.getObject() != null) {
             msg = (FacesMessage) event.getObject();
+            cargaUsuarios();
         } else {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Diálogo ",
                             "Diálogo cerrado sin aplicar cambios",
                             FacesMessage.SEVERITY_INFO);
         }
-        cargaUsuarios();
-        utilWebSB.addMsg("frmEditaUsuario:msgEditUsr", msg);
+        
+        utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
     }
     
     public void guardarCambiosUsuario() {
@@ -271,11 +296,16 @@ public class GestionUsuariosMB implements Serializable {
     }
     
     public void cerrarDialogo(){
-        FacesMessage mensaje = Mensaje.getInstance()
-                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                                                   FacesMessage.SEVERITY_INFO);
-        PrimeFaces.current().dialog().closeDynamic(mensaje);
+        logger.log(Level.INFO,"Invocando cerrar dialogo.");
+        cerrarDialogo(null);
     }
+    
+//    public void cerrarDialogo(){
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                                      .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                                                   FacesMessage.SEVERITY_INFO);
+//        PrimeFaces.current().dialog().closeDynamic(mensaje);
+//    }
     
     public void cerrarDialogo(FacesMessage mensaje) {
         PrimeFaces.current().dialog().closeDynamic(mensaje);

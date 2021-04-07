@@ -120,14 +120,14 @@ public class GestionHospitalMB implements Serializable{
         } catch (UpdateEntityException ex) {
             logger.log(Level.SEVERE,"Error en MB al actualizar hospital : {0}",ex.getMessage());
             msg = Mensaje.getInstance()
-                                     .getMensajeAdaptado("Error al actualiar!",
+                                     .getMensajeAdaptado("Error de Actualización",
                                                 "Error al intentar actualizar datos de hospital intentelo más tarde.", 
                                                 FacesMessage.SEVERITY_ERROR);
         }
        
         if(msg==null){
             msg = Mensaje.getInstance()
-                                     .getMensajeAdaptado("Operacion Exitosa!",
+                                     .getMensajeAdaptado("Operacion Exitosa",
                                                 "Los datos de hospital se actualizaron correctamente.", 
                                                 FacesMessage.SEVERITY_INFO);
         }

@@ -47,13 +47,9 @@
 
 
         <h:form id="frmAltaPaciente">
-            <p:growl id="msgAltaPas" showDetail="true"> 
-                <p:autoUpdate />
-            </p:growl>
-
-            <p:messages id="msgAltaPassGral" showDetail="true" closable="true">
+            <p:growl id="msgAltaPassGral" showDetail="true">
                 <p:autoUpdate/>
-            </p:messages>
+            </p:growl>
 
             <p:panelGrid>
                 <p:row>
@@ -200,7 +196,7 @@
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="idCareta" value="Careta (No. Serie):" />
+                                <p:outputLabel for="idCareta" value="Dispositivo (No. Serie):" />
                                 <p:selectOneMenu id="idCareta" value="#{gestionPacienteMB.datPaciente.idCareta}" required="true">
                                     <f:selectItems value="#{gestionPacienteMB.listCaretaHospital}" var="caretahospital" 
                                                    itemLabel="#{caretahospital.entCareta.noSerie}" itemValue="#{caretahospital.entCareta.idCareta}"/>

@@ -393,8 +393,8 @@ public class ListadoPacientesMB implements Serializable {
             pacienteEditar = pacienteSB.updatePaciente(pacienteEditar);
 
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Exíto",
-                            "Datos actualizados correctamente. ",
+                    .getMensajeAdaptado("Estado Actualizado",
+                            "El estado del paciente se ha actualizado correctamente. ",
                             FacesMessage.SEVERITY_INFO);
 
         } catch (NoExistePacienteException ex) {

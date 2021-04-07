@@ -78,9 +78,9 @@ public class CaretaHospitalSB extends BaseSB implements CaretaHospitalSBLocal {
                 }
             }
         }
-        if (resp.isEmpty()) {
-            throw new CaretaHospitalException("Relacion sin registros.");
-        }
+//        if (resp.isEmpty()) {
+//            throw new CaretaHospitalException("Relacion sin registros.");
+//        }
         return resp;
     }
     

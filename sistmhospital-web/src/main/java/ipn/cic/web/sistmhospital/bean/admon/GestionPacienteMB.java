@@ -98,7 +98,15 @@ public class GestionPacienteMB implements Serializable {
         
         try {
             //Cargar Lista de Hospitales
-            setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
+            listaHospital = catalogoSB.getCatalogo("EntHospital");
+            
+            if(listaHospital.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Hospital",
+                            "Se requiere información del Hospital para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (CatalogoException ex) {
             logger.log(Level.SEVERE, "Imposible recuperar Datos de Hospital :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
@@ -108,11 +116,20 @@ public class GestionPacienteMB implements Serializable {
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         
-        listCaretaHospital = new ArrayList();
-        try {
-            setListCaretaHospital(caretahospitalSB.getCaretasNoAsignadas());
 
+        try {
+            //Cargar Lista de Dispositivos no asignados
+            listCaretaHospital = caretahospitalSB.getCaretasNoAsignadas();
+            
+            if(listCaretaHospital.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Dispositivo",
+                            "Se requiere de un dispositivo disponible para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (CaretaHospitalException ex) {
+            listCaretaHospital = new ArrayList();
             logger.log(Level.SEVERE, "Imposible recuperar Datos de Dispositivos :{0} ",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
@@ -132,20 +149,20 @@ public class GestionPacienteMB implements Serializable {
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
         
-        listaMedicos = new ArrayList();        
+               
         try {
             //Cargar Lista de Medicos
             setListaMedicos((List<EntMedico>) medicoSB.getMedicos());
-                           
-            
-//        } catch (CatalogoException ex) {
-//            logger.log(Level.SEVERE, "Imposible recuperar catalogo de medicos:{0} ",ex.getMessage());
-//            FacesMessage msg = Mensaje.getInstance()
-//                    .getMensajeAdaptado("Error",
-//                            "No es posible recuperar catálogo de médicos :" + ex.getMessage(),
-//                            FacesMessage.SEVERITY_ERROR);
-//            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+
+            if(listaMedicos.isEmpty()){
+                FacesMessage msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Médico",
+                            "Se requiere información de Médico para realizar el registro.",
+                            FacesMessage.SEVERITY_ERROR);
+                utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
+            }
         } catch (MedicoException ex) {
+            listaMedicos = new ArrayList(); 
             logger.log(Level.SEVERE, "Entidad de medico no encontrado:{0} ",ex.getMessage());
         }
 
@@ -158,7 +175,7 @@ public class GestionPacienteMB implements Serializable {
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
         }
-        logger.log(Level.INFO, "Categorias en Form AltaPaciente[Fin]");
+        logger.log(Level.INFO, "Formulario desplegado correctamente.");
     }
 
     public void guardarPaciente() {
@@ -176,14 +193,14 @@ public class GestionPacienteMB implements Serializable {
                     .getMensajeAdaptado("Error",
                             "Error al intentar guardar médico :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
             return;
         } catch (IDUsuarioException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
                             "El ID de Paciente Existe. CAMBIARLO",
                             FacesMessage.SEVERITY_ERROR);
-            utilWebSB.addMsg("frmAltaPaciente:msgAltaPas", msg);
+            utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
             return;
         }
         FacesMessage msg = null;
@@ -195,8 +212,8 @@ public class GestionPacienteMB implements Serializable {
             cerrarDialogo(msg);
         } else {
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Exíto",
-                            "El registro de paciente se realizó correctamente : id=" + this.pacGuardado.getIdPaciente(),
+                    .getMensajeAdaptado("Paciente Registrado",
+                            "El registro de paciente se realizó correctamente :id=" + this.pacGuardado.getIdPaciente(),
                             FacesMessage.SEVERITY_INFO);
         }
 
@@ -204,10 +221,10 @@ public class GestionPacienteMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-        FacesMessage mensaje = Mensaje.getInstance()
-                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-                        FacesMessage.SEVERITY_INFO);
-        cerrarDialogo(mensaje);
+//        FacesMessage mensaje = Mensaje.getInstance()
+//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
+//                        FacesMessage.SEVERITY_INFO);
+        cerrarDialogo(null);
     }
 
     public void cerrarDialogo(FacesMessage mensaje) {

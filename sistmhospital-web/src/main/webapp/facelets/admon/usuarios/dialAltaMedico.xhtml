@@ -45,7 +45,10 @@
     <h:body>
         <i class="far fa-save" id="customheader" style="display:none"></i>
         <h:form id="frmAltaMedico">
-            <p:growl id="msgAltaMed" showDetail="true" />
+            <p:growl id="msgAltaMed" showDetail="true">
+                <p:autoUpdate/>
+            </p:growl>
+
             <p:panelGrid>
                 <p:row>
                     <p:column>
@@ -149,6 +152,16 @@
                                 <p:inputMask id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" 
                                              mask="999 999 9999" validateMask="true"/>
                                 <p:message for="hCelular" />
+                            </p:column>
+                            
+                            <p:column style="background-color: lightcoral">
+                                <p:outputLabel for="idHosp" value="Hospital:" />
+                                <p:selectOneMenu id="idHosp" value="#{gestionMedicoMB.datMedico.idHospital}" required="true">
+                                    <f:selectItems value="#{gestionMedicoMB.listHospital}" var="hospital" 
+                                                   itemLabel="#{hospital.nombre}" itemValue="#{hospital.idHospital}"/>
+                                    <p:ajax />
+                                </p:selectOneMenu> 
+                                <p:message id="idHospMsg" for="idHosp" />
                             </p:column>
 
                         </p:panelGrid>
