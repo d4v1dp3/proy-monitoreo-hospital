@@ -14,7 +14,6 @@ import ipn.cic.sistmhospital.modelo.EntAntecedentes;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntMedico;
-import ipn.cic.sistmhospital.modelo.EntMedidas;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
@@ -64,7 +63,6 @@ public class InicioPacienteMB implements Serializable {
 
     private EntPaciente paciente;
 
-    private List<EntMedidas> medidas;
     private EntMedico medicoPac;
     private EntHospital hospital;
     private EntAntecedentes antecedentes;
@@ -77,36 +75,42 @@ public class InicioPacienteMB implements Serializable {
     public void cargaPaciente() {
         FacesMessage msg = null;
 
-        //Recuperar Entidad de Paciente        
+        logger.log(Level.INFO, "Entra a cargar inicio de paciente.");
+
         try {
-            logger.log(Level.INFO, "Entra a cargar usuario.");
             EntUsuario usrPaciente = utilWebSB.getUsrAutenticado();
-            logger.log(Level.INFO, "Usuario encontrado: {0}", usrPaciente.getIdPersona());
-
+            logger.log(Level.INFO, "\tUsuario logeado: {0}", usrPaciente.getIdPersona());
             paciente = pacienteSB.getPaciente(usrPaciente.getIdPersona());
-            logger.log(Level.INFO, "Paciente recuperado: {0}", paciente.getIdPaciente());
+        } catch (NoExistePacienteException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar datos del paciente.");
+        }
 
-//            if(usrPaciente.getIdPersona().getIdGenero().getIdGenero()==1)
-//                masculino=false;
-            antecedentes = paciente.getEntAntecedentes();
-            logger.log(Level.INFO, "Recuperando Antecedentes: {0}", paciente.getEntAntecedentes().getIdPaciente());
+        antecedentes = paciente.getEntAntecedentes();
+        logger.log(Level.INFO, "Recuperando Antecedentes: {0}", paciente.getEntAntecedentes().getIdPaciente());
 
+        try {
             careta = pacienteSB.getCaretaDePaciente(paciente);
-            logger.log(Level.INFO, "Recuperando careta: {0}", careta.getIdCareta());
+        } catch (NoExistePacienteException ex) {
+            careta = new EntCareta();
+            careta.setNoSerie(0);
+            logger.log(Level.SEVERE, "Error al recuperar datos de dispositivo asignado.");
+        }
 
+        try {
             //Recuperar medico del paciente
             medicoPac = medicoSB.getMedicoDePaciente(paciente);
-            logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
-            usuarioMedico=usuarioSB.getUsuarioDeMedico(medicoPac);
-
-            hospital = hospitalSB.getPrimerHospital();
-
-        } catch (NoExistePacienteException ex) {
-            logger.log(Level.SEVERE, "Error al cargar paciente.");
         } catch (MedicoException ex) {
-            logger.log(Level.SEVERE, "Error al cargar medico del paciente.");
+            medicoPac = new EntMedico();
+            logger.log(Level.SEVERE, "Error al cargar datos de medico del paciente.");
+        }
+        logger.log(Level.INFO, "Medico recuperado en Inicio: {0}", medicoPac.getCedulaProf());
+        usuarioMedico = usuarioSB.getUsuarioDeMedico(medicoPac);
+
+        try {
+            hospital = hospitalSB.getPrimerHospital();
         } catch (NoExisteHospitalException ex) {
-            logger.log(Level.SEVERE, "Error al cargar hospital.");
+            hospital = new EntHospital();
+            logger.log(Level.SEVERE, "Error al cargar datos de hospital.");
         }
 
         if (msg == null) {
@@ -170,10 +174,10 @@ public class InicioPacienteMB implements Serializable {
         FacesMessage msg = null;
 
         logger.log(Level.INFO, "Guardando cambios paciente...");
-        
+
         try {
             pacienteSB.updatePaciente(paciente);
-            
+
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Exito",
                             "Datos Actualizados",
@@ -183,7 +187,7 @@ public class InicioPacienteMB implements Serializable {
                     .getMensajeAdaptado("Error.",
                             "Intentelo mas tarde.",
                             FacesMessage.SEVERITY_INFO);
-        }         
+        }
 
         utilWebSB.addMsg("frIDatos:msgsID", msg);
     }

@@ -40,7 +40,7 @@ Todos los derechos reservados
                                     <p:outputLabel value="#{inicioPacienteMB.paciente.idPersona.nombre}" style="font-weight: bold; color: #39ace7;"/>.
                                 </p>
                             </div>
-                            
+
                         </div>
 
                         <!--<hr style="color: #cacaca; border-color: #cacaca; height: 1px;" width="80%"/>-->
@@ -111,99 +111,98 @@ Todos los derechos reservados
                                             </p:column>
                                         </p:row>
                                         <p:row>
-                                            <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Antecedentes</p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:panelGrid>
-                                                    <p:row>
-                                                        <p:column colspan="2" style="border-color: white;"></p:column>
-                                                    </p:row>
-                                                </p:panelGrid>
 
-                                                <p:panelGrid columns="2"
-                                                             columnClasses="ui-grid-col-6,ui-grid-col-12"
-                                                             layout="grid"
-                                                             styleClass="ui-panelgrid-blank ui-fluid"
-                                                             style="border:0px none; background-color:transparent;">
+                                            <p:column style="border-color: white;">
+
+                                                <p:panel header="Antecedentes" toggleable="true" closable="false" toggleSpeed="100"
+                                                         closeSpeed="100" widgetVar="panel2" collapsed="true" style="width: 100%">
+
+                                                    <p:panelGrid columns="2"
+                                                                 columnClasses="ui-grid-col-6,ui-grid-col-12"
+                                                                 layout="grid"
+                                                                 styleClass="ui-panelgrid-blank ui-fluid"
+                                                                 style="border:0px none; background-color:transparent;">
 
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.diabetes}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.diabetes}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.diabetes}">
-                                                        <p:outputLabel value="Diabetes" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.diabetes}">
+                                                            <p:outputLabel value="Diabetes" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.vih}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.vih}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.vih}">
-                                                        <p:outputLabel value="VIH" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.vih}">
+                                                            <p:outputLabel value="VIH" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.embarazo}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.embarazo}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.embarazo}">
-                                                        <p:outputLabel value="Embarazo" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.embarazo}">
+                                                            <p:outputLabel value="Embarazo" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.cancer}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.cancer}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.cancer}">
-                                                        <p:outputLabel value="Cancer" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.cancer}">
+                                                            <p:outputLabel value="Cancer" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.has}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.has}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.has}">
-                                                        <p:outputLabel value="HAS" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.has}">
+                                                            <p:outputLabel value="HAS" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.artritis}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.artritis}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.artritis}">
-                                                        <p:outputLabel value="Artritis" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.artritis}">
+                                                            <p:outputLabel value="Artritis" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.asma}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.asma}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.asma}">
-                                                        <p:outputLabel value="Asma" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.asma}">
+                                                            <p:outputLabel value="Asma" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.epoc}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.epoc}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.epoc}">
-                                                        <p:outputLabel value="EPOC" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.epoc}">
+                                                            <p:outputLabel value="EPOC" />
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.enfautoinmune}">
-                                                        <i class="fa fa-minus"></i>
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.enfautoinmune}">
+                                                            <i class="fa fa-minus"></i>
+                                                        </p:column>
 
-                                                    <p:column rendered="#{inicioPacienteMB.antecedentes.enfautoinmune}">
-                                                        <p:outputLabel value="Enf. Autoinmune" />
-                                                    </p:column>
+                                                        <p:column rendered="#{inicioPacienteMB.antecedentes.enfautoinmune}">
+                                                            <p:outputLabel value="Enf. Autoinmune" />
+                                                        </p:column>
 
-                                                </p:panelGrid>
+                                                    </p:panelGrid>
+
+                                                </p:panel>
 
                                             </p:column>
                                         </p:row>
+
                                     </p:panelGrid>
 
                                 </p:column>

@@ -83,29 +83,12 @@ Todos los derechos reservados
                                                             <br/>
                                                             <i class="fa fa-user-md" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
-                                                            <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
+                                                            
+                                                            <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 30px;font-weight: bold; color:  #3883ce" />
                                                             <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
                                                             <p:outputLabel value="Médicos Registrados." />
-                                                            <br/>
-                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
-                                                            <p:outputLabel value="Inactivos:  " /> 
-                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                           
-                                                        </p:panel>
-                                                    </p:column>
-
-                                                    <p:column style="text-align: center;">
-                                                        <p:panel id="pac" header="Pacientes">
-                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
-                                                            <br/>
-                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
-                                                            <br/>
-                                                            <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
-                                                            <p:outputLabel value="Pacientes Registrados." />
-                                                            <br/>
-                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
-                                                            <p:outputLabel value="Inactivos:  " />
-                                                            <p:outputLabel value="0" style="font-weight: bold"/>                                                            
+                                                                                                                    
                                                         </p:panel>
                                                     </p:column>
 
@@ -122,6 +105,21 @@ Todos los derechos reservados
                                                             <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
                                                             <p:outputLabel value="Sin asignar:  " />  
                                                             <p:outputLabel value="#{inicioAdminMB.caretasSA.size()}" style="font-weight: bold"/>                                                            
+                                                        </p:panel>
+                                                    </p:column>
+                                                    
+                                                    <p:column style="text-align: center;">
+                                                        <p:panel id="pac" header="Pacientes">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
+                                                            <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
+                                                            <br/>
+                                                            
+                                                            <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 30px;font-weight: bold; color:  #3883ce" />
+                                                            <br/>
+                                                            <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
+                                                            <p:outputLabel value="Pacientes Registrados." />
+                                                                                                                    
                                                         </p:panel>
                                                     </p:column>
 
