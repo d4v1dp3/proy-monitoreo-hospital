@@ -33,7 +33,6 @@ public class HospitalSB extends BaseSB implements HospitalSBLocal {
         logger.log(Level.INFO,"Entero resultado = {0}",res);
         
         return res!=0;     
-        
     }
 
     @Override
@@ -54,7 +53,7 @@ public class HospitalSB extends BaseSB implements HospitalSBLocal {
         if(res.size()==0){
             throw new NoExisteHospitalException("No existen hospitales!");
         }
-        return res.get(0);
+        return (EntHospital)res.get(0);
     }
 
     @Override

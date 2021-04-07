@@ -83,42 +83,76 @@ public class GestionDispositivosMB implements Serializable {
 
     @PostConstruct
     public void cargarDispositivos() {
+        FacesMessage msg = null;
+        
+        /*
+            A RESOLVER:
+            Cuando no hay ningun registro en base de datos de dispositivos
+            al intentar registrar dispositivos se almacenas en bd pero no 
+            se cargan en la pantalla ... 
+        */
+        
+        logger.log(Level.INFO, "Entra a gestion dispositivos.");
+        
         caretaGuard = new EntCareta();
         caretaEditar = new EntCareta();
         caretaEliminar = new EntCareta();
         listHospital = new ArrayList();
-
         caretaHospital = new EntCaretaHospital();
 
         try {
             //Cargar Lista de Hospitales
             setListHospital((List<EntHospital>) catalogoSB.getCatalogo("EntHospital"));
         } catch (CatalogoException ex) {
-            Logger.getLogger(GestionDispositivosMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Cargar lista de caretas Asignadas a pacientes
-        FacesMessage msg = null;
-        try {
-            logger.log(Level.INFO, "Entra a cargar dispositivos.");
-            caretashospital = caretahospitalSB.getCaretasAsignadas();
-            caretashospitalNA = caretahospitalSB.getCaretasNoAsignadas();
-        } catch (CaretaHospitalException ex) {
-            logger.log(Level.SEVERE, "Error en MB al cargar caretashopital : {0}", ex.getMessage());
+            logger.log(Level.SEVERE, "Error al recuperar datos de hopital.");
+            
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error dispositivos:",
                             "Error al intentar recuperar caretas intente más tarde.",
                             FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+        }
+        
+        try {
+            caretashospital = caretahospitalSB.getCaretasAsignadas();
+        } catch (CaretaHospitalException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar caretas asignadas.");
+            caretashospital = new ArrayList();
+            
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error Dispositivos:",
+                            "Error al intentar recuperar dispositivos, intentelo mas tarde.",
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+        }
+        
+        try {
+            caretashospitalNA = caretahospitalSB.getCaretasNoAsignadas();
+        } catch (CaretaHospitalException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar caretas sin asignar.: {0}", ex.getMessage());
+            caretashospitalNA = new ArrayList();
+            
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error Dispositivos:",
+                            "Error al intentar recuperar dispositivos no asignados, intentelo mas tarde.",
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+            
         }
 
         if (msg == null) {
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Éxito:",
+                    .getMensajeAdaptado("Mensaje:",
                             "Dispositivos cargados correctamente",
                             FacesMessage.SEVERITY_INFO);
+            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
         }
-        //utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
-//        PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+        
+        logger.log(Level.INFO, "\tDatos cargados correctamente.");
     }
 
     public void guardarDispositivo() {

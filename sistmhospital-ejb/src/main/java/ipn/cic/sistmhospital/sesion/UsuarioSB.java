@@ -11,7 +11,6 @@ import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
-import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
@@ -40,7 +39,7 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     @Override
     public EntUsuario getUsuario(String nomUsuario) throws UsuarioException {
         EntUsuario entUsuario = null;
-        logger.log(Level.INFO,"Nombre del usuario buscado :{0} ", nomUsuario);
+//        logger.log(Level.INFO,"Nombre del usuario buscado :{0} ", nomUsuario);
         try {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
             query.setParameter("idUsuario", nomUsuario);

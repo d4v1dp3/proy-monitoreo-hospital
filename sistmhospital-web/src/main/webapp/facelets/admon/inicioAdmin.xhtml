@@ -38,12 +38,11 @@ Todos los derechos reservados
                                     <p:outputLabel value="#{inicioAdminMB.nomAdmin}" style="font-weight: bold; color: #39ace7;"/>.
                                 </p>
                             </div>
-
                         </div>
 
                         <p:panelGrid>
                             <p:row>
-                                <p:column style="border-color: white;">
+                                <p:column style="border-color: white;" width="90%">
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column style="background-color: #f3f3f3;border-color: #cacaca;color: black; text-align: center;" class="ui-widget-header">Información General</p:column>
@@ -65,6 +64,8 @@ Todos los derechos reservados
 
                                                     <p:column style="text-align: center;">
                                                         <p:panel id="hosp" header="Hospital">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-building-o" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <br/>
@@ -77,12 +78,14 @@ Todos los derechos reservados
                                                     </p:column>
 
                                                     <p:column style="text-align: center;">
-                                                        <p:panel id="med" header="Medicos">
+                                                        <p:panel id="med" header="Médicos">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-user-md" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <p:outputLabel value="#{inicioAdminMB.medicos.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
                                                             <br/>
-                                                            <p:outputLabel value="Medicos Registrados." />
+                                                            <p:outputLabel value="Médicos Registrados." />
                                                             <br/>
                                                             <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
                                                             <p:outputLabel value="Inactivos:  " /> 
@@ -92,6 +95,8 @@ Todos los derechos reservados
 
                                                     <p:column style="text-align: center;">
                                                         <p:panel id="pac" header="Pacientes">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fas fa-user" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <p:outputLabel value="#{inicioAdminMB.pacientes.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
@@ -106,10 +111,12 @@ Todos los derechos reservados
 
                                                     <p:column style="text-align: center;">
                                                         <p:panel id="disp" header="Dispositivos">
+                                                            <p:outputLabel value="000000000000000000000000000000" style="color: white;" />
+                                                            <br/>
                                                             <i class="fa fa-github-alt" style="font-size: 7em; color: #94aebd;"></i>
                                                             <br/>
                                                             <p:outputLabel value="#{inicioAdminMB.caretas.size()}" style="font-size: 28px;font-weight: bold; color:  #3883ce" />
-                                                            <br/>
+                                                            <br/>                                                            
                                                             <p:outputLabel value="Dispositivos." />
                                                             <br/>
                                                             <hr style="color: #f3f3f3; border-color: #f3f3f3;"/>
@@ -138,11 +145,11 @@ Todos los derechos reservados
                                                 <p:panel header="Ingresos">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#00e0e0" value="#{inicioAdminMB.ingresosPac.size()}" height="110px"/>
                                                 </p:panel>
-
+                                                <br/>
                                                 <p:panel header="Altas">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#47e308" value="#{inicioAdminMB.altasPac.size()}" height="110px" />
                                                 </p:panel>
-
+                                                <br/>
                                                 <p:panel header="Decesos">
                                                     <p:knob max="#{inicioAdminMB.ingresosPac.size()}" disabled="true" foregroundColor="#e31f08" value="#{inicioAdminMB.decesosPac.size()}" height="110px" />
                                                 </p:panel>

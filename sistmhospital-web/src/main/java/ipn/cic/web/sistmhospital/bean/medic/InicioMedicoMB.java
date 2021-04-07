@@ -50,47 +50,67 @@ public class InicioMedicoMB implements Serializable {
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
+
+    private List<EntPaciente> pacientesEstables;
+    private List<EntPaciente> pacientesGraves;
+    private List<EntPaciente> pacientesAtendidos;
+
     private EntPaciente pacienteMostrar;
     private EntHospital hospital;
     private EntPersona persona;
-    
+
     private ArrayList<String> notificaciones;
 
     @PostConstruct
     public void cargaDatosMedico() {
-        
+
         notificaciones = new ArrayList();
+        pacientesEstables = new ArrayList();
+        pacientesGraves = new ArrayList();
+        pacientesAtendidos = new ArrayList();
 
-        //Recuperar Datos       
+        logger.log(Level.INFO, "Entra a cargar datos de inicio medico.");
+
+        EntUsuario usrMedico = utilWebSB.getUsrAutenticado();
+
         try {
-            logger.log(Level.INFO, "Entra a cargar medico.");
-            EntUsuario usrMedico = utilWebSB.getUsrAutenticado();
-            logger.log(Level.INFO, "Usuario encontrado: {0}", usrMedico.getIdPersona());
+            persona = personaSB.getEntPersona(usrMedico.getIdPersona());;
+        } catch (NoExistePersonaException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar datos del usuario.");
+        }
 
-            persona = personaSB.getEntPersona(usrMedico.getIdPersona());
-            logger.log(Level.INFO, "Persona encontrada: {0}", persona.getNombre());
-
+        try {
             medico = medicoSB.getMedico(usrMedico.getIdPersona());
-            //logger.log(Level.INFO, "Medico encontrado: {0}", medico.getEmail());
+        } catch (MedicoException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar datos del medico.");
+        }
+
+        try {
             pacientesComp = medicoSB.getListaPaciente(medico);
 
-            hospital = hospitalSB.getPrimerHospital();
-            logger.log(Level.INFO, "Hospital Recuperado: {0}", hospital.getIdHospital());
-
+            for (EntPaciente pac : pacientesComp) {
+                if (pac.getIdEstadopaciente().getIdEstadopaciente() == 1) 
+                    pacientesEstables.add(pac);
+                else if (pac.getIdEstadopaciente().getIdEstadopaciente() == 2) 
+                    pacientesGraves.add(pac);
+                else
+                    pacientesAtendidos.add(pac);
+            }
         } catch (MedicoException ex) {
-            logger.log(Level.SEVERE, "Error al cargar medico.");
+            logger.log(Level.SEVERE, "Error al recuperar listad de pacietes del medico.");
+            pacientesComp = new ArrayList();
+
+        }
+
+        try {
+            hospital = hospitalSB.getPrimerHospital();
         } catch (NoExisteHospitalException ex) {
-            logger.log(Level.SEVERE, "Error al cargar hospital.");
-        }catch (NoExistePersonaException ex) {
-            logger.log(Level.SEVERE, "Error al cargar esntidad persona.");
+            logger.log(Level.SEVERE, "Error al recuperar datos de hospital.");
         }
-        
-        for(int i=0;i<2;i++){
-            notificaciones.add("Alerta "+i);
-        }
+
+        logger.log(Level.INFO, "\tDatos de inicio medico cargados correctamente.");
 
     }
-
 
     /**
      * @return the pacientesComp
@@ -152,5 +172,30 @@ public class InicioMedicoMB implements Serializable {
         this.notificaciones = notificaciones;
     }
 
+    public List<EntPaciente> getPacientesEstables() {
+        return pacientesEstables;
+    }
+
+    public void setPacientesEstables(List<EntPaciente> pacientesEstables) {
+        this.pacientesEstables = pacientesEstables;
+    }
+
+    public List<EntPaciente> getPacientesGraves() {
+        return pacientesGraves;
+    }
+
+    public void setPacientesGraves(List<EntPaciente> pacientesGraves) {
+        this.pacientesGraves = pacientesGraves;
+    }
+
+    public List<EntPaciente> getPacientesAtendidos() {
+        return pacientesAtendidos;
+    }
+
+    public void setPacientesAtendidos(List<EntPaciente> pacientesAtendidos) {
+        this.pacientesAtendidos = pacientesAtendidos;
+    }
     
+    
+
 }
