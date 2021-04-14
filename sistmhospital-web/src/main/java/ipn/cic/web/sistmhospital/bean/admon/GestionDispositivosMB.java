@@ -107,8 +107,8 @@ public class GestionDispositivosMB implements Serializable {
             logger.log(Level.SEVERE, "Error al recuperar datos de hopital.");
             
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error dispositivos:",
-                            "Error al intentar recuperar caretas intente más tarde.",
+                    .getMensajeAdaptado("Error Dispositivos",
+                            "Error al intentar recuperar catálogo de dispositivos, intentelo más tarde.",
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
             PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
@@ -121,7 +121,7 @@ public class GestionDispositivosMB implements Serializable {
             caretashospital = new ArrayList();
             
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Error Dispositivos:",
+                    .getMensajeAdaptado("Error Dispositivos",
                             "Error al intentar recuperar dispositivos, intentelo mas tarde.",
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
@@ -203,7 +203,7 @@ public class GestionDispositivosMB implements Serializable {
         } catch (CaretaException ex) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Error al intentar guardar dispositivo :" + ex.getMessage(),
+                            "Error al intentar guardar dispositivo: " + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
             cerrarDialogo(msg);
@@ -217,7 +217,7 @@ public class GestionDispositivosMB implements Serializable {
         } catch (NoExisteHospitalException ex) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Error al intentar recuperar datos hospital :" + ex.getMessage(),
+                            "Error al intentar recuperar datos de hospital :" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             //utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
             utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);
@@ -234,7 +234,7 @@ public class GestionDispositivosMB implements Serializable {
         } catch (CaretaException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Error al intentar guardar careta :" + ex.getMessage(),
+                            "Error al intentar guardar dispositivo:" + ex.getMessage(),
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);
             return;
@@ -243,13 +243,13 @@ public class GestionDispositivosMB implements Serializable {
         if (caretaGuard == null) {
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
-                            "Imposible guardar datos de dispositivo, intente más tarde",
+                            "Imposible guardar datos de dispositivo, intentelo más tarde",
                             FacesMessage.SEVERITY_ERROR);
             cerrarDialogo(msg);
         } else {
             msg = Mensaje.getInstance()
-                    .getMensajeAdaptado("Exíto",
-                            "El registro de careta se realizó correctamente : id=" + this.caretaGuard.getIdCareta(),
+                    .getMensajeAdaptado("Dispositivo Registrado",
+                            "El registro de dispositivo se realizó correctamente: id=" + this.caretaGuard.getIdCareta(),
                             FacesMessage.SEVERITY_INFO);
         }
         utilWebSB.addMsg("frmRegDispositivo:msgRegDisp", msg);

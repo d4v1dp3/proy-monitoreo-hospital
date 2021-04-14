@@ -132,14 +132,14 @@
                                      style="border:0px none; background-color:transparent;">
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="hCedula" value="Cedula Profesional:" />
+                                <p:outputLabel for="hCedula" value="Cédula Profesional:" />
                                 <p:inputMask id="hCedula" value="#{gestionMedicoMB.datMedico.cedulaProf}" required="true" 
                                              mask="9999999999" validateMask="true"/>
                                 <p:message for="hCedula" />
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="hEmail" value="Correo Electronico:" />
+                                <p:outputLabel for="hEmail" value="Correo Electrónico:" />
                                 <p:inputText id="hEmail" value="#{gestionMedicoMB.datUsuario.email}" required="true"> 
                                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
                                 </p:inputText> 
@@ -148,7 +148,7 @@
                             </p:column>
 
                             <p:column style="background-color: lightcoral">
-                                <p:outputLabel for="hCelular" value="Telefono Celular:" />
+                                <p:outputLabel for="hCelular" value="Teléfono Celular:" />
                                 <p:inputMask id="hCelular" value="#{gestionMedicoMB.datMedico.celular}" required="true" 
                                              mask="999 999 9999" validateMask="true"/>
                                 <p:message for="hCelular" />

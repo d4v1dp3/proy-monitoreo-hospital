@@ -118,7 +118,7 @@ public class ValoresReferenciaMB implements Serializable{
        
         if(msg==null){
             msg = Mensaje.getInstance()
-                                     .getMensajeAdaptado("Operacion Exitosa!",
+                                     .getMensajeAdaptado("Datos Actualizados",
                                                 "Valores de referencia actualizados correctamente.", 
                                                 FacesMessage.SEVERITY_INFO);
         }

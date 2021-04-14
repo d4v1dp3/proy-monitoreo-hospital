@@ -114,7 +114,7 @@ public class GestionMedicoMB implements Serializable{
             logger.log(Level.INFO, "Error al guardar médico: {0}",ex.getMessage());
             FacesMessage msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
-                                                "El ID de USUARIO ya existe, CAMBIARLO", 
+                                                "El ID de usuario ya existe, CAMBIARLO", 
                                                 FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaMedico:msgAltaMed", msg);
             return;
@@ -124,13 +124,13 @@ public class GestionMedicoMB implements Serializable{
         if (medGuardado == null){
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Error",
-                                                "Imposible guardar datos de Médico, intentelo más tarde", 
+                                                "Imposible guardar datos de Médico, intentelo más tarde.", 
                                                 FacesMessage.SEVERITY_ERROR);
             cerrarDialogo(msg);
         }else{
             msg = Mensaje.getInstance()
                                      .getMensajeAdaptado("Médico Registrado",
-                                                "El registro de médico se realizó correctamente \nCédula: "+this.medGuardado.getCedulaProf(), 
+                                                "El registro del médico se realizó correctamente: Cédula="+this.medGuardado.getCedulaProf(), 
                                                 FacesMessage.SEVERITY_INFO);
         }
         
