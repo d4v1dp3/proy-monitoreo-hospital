@@ -6,11 +6,13 @@
  */
 package ipn.cic.web.sistmhospital.bean.admon;
 
+import ipn.cic.sistmhospital.exception.BitacoraException;
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.IDUsuarioException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.PacienteException;
+import ipn.cic.sistmhospital.modelo.EntBitacora;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
 import ipn.cic.sistmhospital.modelo.EntGenero;
@@ -18,6 +20,8 @@ import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.sesion.BitacoraSBLocal;
 import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
@@ -31,6 +35,7 @@ import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,6 +80,8 @@ public class GestionPacienteMB implements Serializable {
     MedicoSBLocal medicoSB;
     @EJB
     CaretaHospitalSBLocal caretahospitalSB;
+    @EJB
+    BitacoraSBLocal bitacoraSB;
 
     public void iniciaVO() {
         setDatUsuario(new UsuarioVO());
@@ -188,6 +195,12 @@ public class GestionPacienteMB implements Serializable {
 
         try {
             pacGuardado = gstPac.guardarPacienteNuevo(datPaciente, datPersona, datAntecedentes, getDatUsuario());
+            
+            //Registrar operacion en bitacora
+            Date fechaEntrada = new Date();//Fecha de hoy
+            EntUsuario usrAdmin = utilWebSB.getUsrAutenticado();
+            EntBitacora evento = bitacoraSB.eventoRegistroDePaciente(fechaEntrada, usrAdmin);
+            
         } catch (PacienteException ex) {
             FacesMessage msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error",
@@ -202,7 +215,10 @@ public class GestionPacienteMB implements Serializable {
                             FacesMessage.SEVERITY_ERROR);
             utilWebSB.addMsg("frmAltaPaciente:msgAltaPassGral", msg);
             return;
+        } catch (BitacoraException ex) {
+            logger.log(Level.INFO, "ERROR: No se registro evento en bitacora.");
         }
+        
         FacesMessage msg = null;
         if (pacGuardado == null) {
             msg = Mensaje.getInstance()

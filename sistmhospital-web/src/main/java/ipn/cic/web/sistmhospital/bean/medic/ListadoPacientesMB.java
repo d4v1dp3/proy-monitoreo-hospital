@@ -6,15 +6,18 @@
  */
 package ipn.cic.web.sistmhospital.bean.medic;
 
+import ipn.cic.sistmhospital.exception.BitacoraException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
 import ipn.cic.sistmhospital.exception.EstadoPacienteException;
 import ipn.cic.sistmhospital.exception.MedicoException;
 import ipn.cic.sistmhospital.exception.NoExistePacienteException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
+import ipn.cic.sistmhospital.modelo.EntBitacora;
 import ipn.cic.sistmhospital.modelo.EntEstadopaciente;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.sesion.BitacoraSBLocal;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.sistmhospital.sesion.EstadoPacienteSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
@@ -27,6 +30,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +66,8 @@ public class ListadoPacientesMB implements Serializable {
     private UtilWebSBLocal utilWebSB;
     @EJB
     private CatalogoSBLocal catalogoSB;
+    @EJB
+    private BitacoraSBLocal bitacoraSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
@@ -396,6 +402,17 @@ public class ListadoPacientesMB implements Serializable {
                     .getMensajeAdaptado("Estado Actualizado",
                             "El estado del paciente se ha actualizado correctamente. ",
                             FacesMessage.SEVERITY_INFO);
+            
+             //Registrar operacion en bitacora
+            Date fechaEntrada = new Date();//Fecha de hoy
+            EntUsuario usrMed = utilWebSB.getUsrAutenticado();
+            if(estadopac.getIdEstadopaciente()==4){
+                EntBitacora evento = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMed);
+            }
+            if(estadopac.getIdEstadopaciente()==3){
+                EntBitacora evento = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMed);
+            }
+            
 
         } catch (NoExistePacienteException ex) {
             msg = Mensaje.getInstance()
@@ -412,6 +429,8 @@ public class ListadoPacientesMB implements Serializable {
                     .getMensajeAdaptado("Error",
                             "Imposible recuperar estado de paciente. ",
                             FacesMessage.SEVERITY_ERROR);
+        } catch (BitacoraException ex) {
+            logger.log(Level.INFO, "ERROR: No se registro evento en bitacora.");
         }
 
         utilWebSB.addMsg("frGestUsuarios:msgsGU", msg);
