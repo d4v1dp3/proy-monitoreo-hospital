@@ -11,6 +11,7 @@ import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.exception.UsuarioException;
 import ipn.cic.sistmhospital.modelo.EntMedico;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
@@ -76,4 +77,5 @@ public interface UsuarioSBLocal {
     public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException ;
     public EntUsuario getUsuariobyEmail(String email);
     public EntUsuario getUsuarioDeMedico(EntMedico medico);
+    public EntUsuario getUsuarioDePaciente(EntPaciente paciente);
 }

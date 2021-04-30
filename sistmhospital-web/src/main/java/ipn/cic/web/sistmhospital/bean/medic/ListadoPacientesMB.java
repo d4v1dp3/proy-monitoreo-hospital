@@ -22,6 +22,7 @@ import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.sistmhospital.sesion.EstadoPacienteSBLocal;
 import ipn.cic.sistmhospital.sesion.MedicoSBLocal;
 import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
+import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import ipn.cic.web.sistmhospital.bean.vo.PacienteVO;
 import ipn.cic.web.sistmhospital.bean.vo.PersonaVO;
 import ipn.cic.web.sistmhospital.util.Mensaje;
@@ -68,6 +69,8 @@ public class ListadoPacientesMB implements Serializable {
     private CatalogoSBLocal catalogoSB;
     @EJB
     private BitacoraSBLocal bitacoraSB;
+    @EJB
+    private UsuarioSBLocal usuarioSB;
 
     private EntMedico medico;
     private List<EntPaciente> pacientesComp;
@@ -406,11 +409,12 @@ public class ListadoPacientesMB implements Serializable {
              //Registrar operacion en bitacora
             Date fechaEntrada = new Date();//Fecha de hoy
             EntUsuario usrMed = utilWebSB.getUsrAutenticado();
+            EntUsuario paciente = usuarioSB.getUsuarioDePaciente(pacienteEditar);
             if(estadopac.getIdEstadopaciente()==4){
-                EntBitacora evento = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMed);
+                EntBitacora evento = bitacoraSB.eventoAltaDePaciente(fechaEntrada, usrMed, paciente);
             }
             if(estadopac.getIdEstadopaciente()==3){
-                EntBitacora evento = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMed);
+                EntBitacora evento = bitacoraSB.eventoDecesoDePaciente(fechaEntrada, usrMed, paciente);
             }
             
 
