@@ -12,6 +12,7 @@ import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.SaveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
+import ipn.cic.sistmhospital.modelo.EntEstadocareta;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +52,17 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
     }
     
     @Override
+    public EntEstadocareta getEstadoCareta(EntCareta Careta) throws NoExisteCaretaException {        
+        Query qry = em.createQuery("SELECT e.idEstadocareta FROM EntCareta e WHERE e.idCareta = :idCareta");
+        qry.setParameter("idCareta", Careta.getIdCareta());
+        
+        EntEstadocareta res = (EntEstadocareta)qry.getSingleResult();
+        res.getIdEstadoCareta();
+        res.getDescripcion();
+        return res;
+    }
+    
+    @Override
     public List<EntCareta> getCaretas() throws NoExisteCaretaException {        
         Query qry = em.createQuery("SELECT e FROM EntCareta e");
         List<EntCareta> res = qry.getResultList();        
@@ -70,3 +82,4 @@ public class CaretaSB extends BaseSB implements CaretaSBLocal{
         return (EntCareta)this.updateEntity(careta);   
     }
 }
+

@@ -40,6 +40,10 @@ INSERT INTO MH_ESTADOPACIENTE (ID_ESTADOPACIENTE, DESCRIPCION) VALUES(2, 'GRAVE'
 INSERT INTO MH_ESTADOPACIENTE (ID_ESTADOPACIENTE, DESCRIPCION) VALUES(3, 'DECESO');
 INSERT INTO MH_ESTADOPACIENTE (ID_ESTADOPACIENTE, DESCRIPCION) VALUES(4, 'ALTA');
 
+/* -- Definición de estado de careta-- */
+INSERT INTO MH_ESTADOCARETA (ID_ESTADOCARETA, DESCRIPCION) VALUES(1, 'DISPONIBLE');
+INSERT INTO MH_ESTADOCARETA (ID_ESTADOCARETA, DESCRIPCION) VALUES(2, 'ASIGNADO');
+INSERT INTO MH_ESTADOCARETA (ID_ESTADOCARETA, DESCRIPCION) VALUES(3, 'AVERIADO');
 
 /*---- Definiciones de menus*/
 INSERT INTO MH_MENU (ID_MENU, DESCRIPCION, RUTA_ICONO, POSICION) VALUES (1,'General','fa fa-cog',999);
@@ -52,10 +56,11 @@ Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (1, 'S
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (2, 'Gestión Usuarios', 'fas fa-id-card', '/faces/facelets/admon/gestionUsuarios.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (3, 'Gestión Hospital', 'fas fa-hospital', '/faces/facelets/admon/gestionHospital.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (4, 'Pacientes', 'fas fa-procedures', '/faces/facelets/medico/listaPacientesMedico.xhtml');
-Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Lista Medicos', 'fas fa-user-md', '/faces/facelets/admon/listaMedicos.xhtml');
+Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (5, 'Gestión Medicos', 'fas fa-user-md', '/faces/facelets/admon/gestionMedicos.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (6, 'Mis Datos', 'pi pi-id-card', '/faces/facelets/paciente/datosPaciente.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (7, 'Valores de Referencia', 'pi pi-sliders-h', '/faces/facelets/admon/valoresReferencia.xhtml');
 Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (8, 'Gestion Dispositivos', 'fa fa-hdd-o', '/faces/facelets/admon/gestionDispositivos.xhtml');
+Insert into MH_OPCION (ID_OPCION, DESCRIPCION, RUTA_ICONO, ACCION) Values (9, 'Gestión Pacientes', 'fas fa-bed', '/faces/facelets/admon/gestionPacientes.xhtml');
 
 /*--Asociación de Rol con Menu*/
 INSERT INTO MH_ROL_MENU (ID_MENU, ID_ROL) VALUES (1,1); /*--Todos los roles tienen el menú general*/
@@ -75,8 +80,9 @@ INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICIO
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (4,3,4,null,1);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (5,2,5,null,3);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (6,4,6,null,3);
-INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (7,2,7,null,4);
+INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (7,2,7,null,6);
 INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (8,2,8,null,5);
+INSERT INTO MH_MENU_OPCION (ID_MENU_OPCION,ID_MENU,ID_OPCION,ID_SUB_MENU,POSICION) VALUES (9,2,9,null,4);
 
 /*--- Definición catálogo de géneros*/
 INSERT INTO MH_GENERO (ID_GENERO,DESCRIPCION) VALUES(1,'FEMENINO');

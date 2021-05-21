@@ -328,7 +328,7 @@ public class ListadoPacientesMB implements Serializable {
         utilWebSB.addMsg("frGestPacientes:msgsGP", msg);
     }
 
-    public void editarPaciente() {
+    public void editarEstadoPaciente() {
         logger.log(Level.INFO, "Abre dialogo edita paciente.");
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
@@ -358,6 +358,9 @@ public class ListadoPacientesMB implements Serializable {
 
         List<String> edad = new ArrayList<>();
         edad.add(pacienteEditar.getIdPersona().getEdad() + "");
+        
+        List<String> idestado = new ArrayList<>();
+        idestado.add(pacienteEditar.getIdEstadopaciente().getIdEstadopaciente() + "");
 
         parametros.put("idpac", idpac);
         parametros.put("nombre", valNombre);
@@ -365,8 +368,9 @@ public class ListadoPacientesMB implements Serializable {
         parametros.put("segundoapellido", valSegundoAp);
         parametros.put("curp", curp);
         parametros.put("edad", edad);
+        parametros.put("idestado", idestado);
 
-        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaPaciente", options, parametros);
+        PrimeFaces.current().dialog().openDynamic("pacientes/dialEditaEstadoPaciente", options, parametros);
     }
 
     public void retornoEditarPaciente(SelectEvent event) {

@@ -36,6 +36,11 @@ Todos los derechos reservados
                             <p> 
                                 Página para la gestión de los datos de médicos que administra el <b>#{gestionHospitalMB.nomSistema}</b>
                             </p>
+                            <p>
+                                <p:commandButton icon="fas fa-user-md" value="     Registrar Médico" title="Alta" actionListener="#{listadoMedicosMB.altaMedico()}">
+                                        <p:ajax event="dialogReturn" listener="#{listadoMedicosMB.retornoAltaMedico}" update="@all"/>
+                                    </p:commandButton>
+                            </p>
 
                         </div>
                         <div class="p-col" style="align-content: center;">

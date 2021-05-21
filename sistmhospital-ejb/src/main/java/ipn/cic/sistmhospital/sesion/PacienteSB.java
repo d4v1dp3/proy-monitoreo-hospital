@@ -14,6 +14,7 @@ import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntMedico;
 import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,6 +107,34 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
         res.getFechaManufactura();
         res.getNoSerie();
         return res;
+    }
+    
+    @Override
+    public List<EntPaciente> getPacientes() throws PacienteException {
+        try {
+            query = em.createQuery("SELECT e From EntPaciente e");
+            ArrayList<EntPaciente> res = (ArrayList<EntPaciente>) query.getResultList();
+
+            for (EntPaciente p : res) {
+                p.getEntAntecedentes();
+                p.getEntPacienteMedicoList();
+                p.getIdCareta().getNoSerie();
+                p.getIdEstadopaciente();
+                p.getIdHospital().getNombre();
+                p.getIdPaciente();
+                p.getIdPersona().getCurp();
+                p.getIdPersona().getNombre();
+                p.getIdPersona().getPrimerApellido();
+                p.getIdPersona().getSegundoApellido();
+            }
+
+            return res;
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al obtener la lista de pacientes : {0}", e.getMessage());
+            throw new PacienteException("No esposible obtener la lista de pacientes", e);
+        }
+
     }
     
  

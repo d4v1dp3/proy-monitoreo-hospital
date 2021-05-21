@@ -26,11 +26,20 @@ Todos los derechos reservados
         </ui:define>
 
         <ui:define name="contenido">
+            <style type="text/css">
+                .gray .ui-panel-titlebar{
+                    background-color: #f3f3f3 !important;
+                    color: black !important;
+                    border-color: #cacaca !important;
+                    font-weight: bold; 
+                }
+            </style>
+            
             <h:form id="frGestPacientes">
                 <p:growl id="msgsGP" showDetail="true"  > 
                     <p:autoUpdate />
                 </p:growl>
-                <p:panel id="pnPac" header="Pacientes" footer="" style="margin-bottom:20px">
+                <p:panel id="pnPac" header="Pacientes" style="margin-bottom:20px">
                     <div class="p-grid p-dir-col">
                         <div class="p-col">
                             <p> 
@@ -94,7 +103,7 @@ Todos los derechos reservados
                                 </p:column>
                                 
                                 <p:column headerText="Estado de salud">
-                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                    <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                         <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                         <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                     </p:commandButton>
@@ -107,7 +116,7 @@ Todos los derechos reservados
                             <br/>
 
                             <p:panel header="Pacientes Dados de Alta" toggleable="true" closable="false" toggleSpeed="100"
-                                     closeSpeed="100" widgetVar="panel1" collapsed="true">
+                                     closeSpeed="100" widgetVar="panel1" collapsed="true" styleClass="gray">
 
                                 <p>
                                     Lista de pacientes que han sido dados de alta.
@@ -146,7 +155,7 @@ Todos los derechos reservados
                                     </p:column>
 
                                     <p:column headerText="Estado de salud">
-                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                         </p:commandButton>
@@ -158,7 +167,7 @@ Todos los derechos reservados
                             </p:panel>
                             <br/>
                             <p:panel header="Decesos de Pacientes" toggleable="true" closable="false" toggleSpeed="100"
-                                     closeSpeed="100" widgetVar="panel2" collapsed="true">
+                                     closeSpeed="100" widgetVar="panel2" collapsed="true" styleClass="gray">
                                 <p>
                                     Listado de decesos de pacientes.
                                 </p>
@@ -196,11 +205,13 @@ Todos los derechos reservados
                                     </p:column>
 
                                     <p:column headerText="Estado de salud">
-                                        <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarPaciente()}">
+                                       
+                                        <h:outputText value="#{paciente.idEstadopaciente.descripcion}" style="font-weight: bold;"/>
+                                        <h:outputText value="      "/>
+                                         <p:commandButton icon="fas fa-user-edit" title="Editar" action="#{listadoPacientesMB.editarEstadoPaciente()}">
                                             <f:setPropertyActionListener value="#{paciente}" target="#{listadoPacientesMB.pacienteEditar}" />
                                             <p:ajax event="dialogReturn" listener="#{listadoPacientesMB.retornoEditarPaciente}" update="@all"/>
                                         </p:commandButton>
-                                        <h:outputText value="    #{paciente.idEstadopaciente.descripcion}" style="font-weight: bold;"/>
                                     </p:column>
 
                                 </p:dataTable>
@@ -214,7 +225,3 @@ Todos los derechos reservados
         </ui:define>    
     </ui:composition>
 </html>
-
-
-
-

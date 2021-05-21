@@ -9,12 +9,14 @@ package ipn.cic.web.sistmhospital.bean.admon;
 import ipn.cic.sistmhospital.exception.CaretaException;
 import ipn.cic.sistmhospital.exception.CaretaHospitalException;
 import ipn.cic.sistmhospital.exception.CatalogoException;
+import ipn.cic.sistmhospital.exception.NoExisteCaretaException;
 import ipn.cic.sistmhospital.exception.NoExisteHospitalException;
 import ipn.cic.sistmhospital.exception.RemoveEntityException;
 import ipn.cic.sistmhospital.exception.UpdateEntityException;
 import ipn.cic.sistmhospital.modelo.EntCareta;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospital;
 import ipn.cic.sistmhospital.modelo.EntCaretaHospitalPK;
+import ipn.cic.sistmhospital.modelo.EntEstadocareta;
 import ipn.cic.sistmhospital.modelo.EntHospital;
 import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CaretaSBLocal;
@@ -62,8 +64,9 @@ public class GestionDispositivosMB implements Serializable {
     @EJB
     CatalogoSBLocal catalogoSB;
 
-    private List<EntCaretaHospital> caretashospital;//Caretas Asginadas
-    private List<EntCaretaHospital> caretashospitalNA;//Caretas no Asignadas
+    private List<EntCaretaHospital> caretashospitalAsignadas;
+    private List<EntCaretaHospital> caretashospitalAveriadas;
+    private List<EntCaretaHospital> caretashospitalDisponibles;
 
     private EntCaretaHospital caretaHospitalEditar;
     private EntCaretaHospital caretaHospitalEliminar;
@@ -72,26 +75,23 @@ public class GestionDispositivosMB implements Serializable {
     private EntCareta caretaEliminar;
     private EntCareta caretaGuard;
     private List<EntHospital> listHospital;
+    private List<EntEstadocareta> listaEstadoscareta;
 
     private EntCaretaHospital caretaHospital;
     private EntHospital entHospital;
+    private EntEstadocareta estadocareta;
 
     private String fechaManufactura = "";
     private long idCareta = 0;
     private long noSerie = 0;
     private Integer idHosp = 0;
+    private Integer idestadocareta=0;
 
     @PostConstruct
     public void cargarDispositivos() {
         FacesMessage msg = null;
         
-        /*
-            A RESOLVER:
-            Cuando no hay ningun registro en base de datos de dispositivos
-            al intentar registrar dispositivos se almacenas en bd pero no 
-            se cargan en la pantalla ... 
-        */
-        
+
         logger.log(Level.INFO, "Entra a gestion dispositivos.");
         
         caretaGuard = new EntCareta();
@@ -115,10 +115,10 @@ public class GestionDispositivosMB implements Serializable {
         }
         
         try {
-            caretashospital = caretahospitalSB.getCaretasAsignadas();
+            caretashospitalAsignadas = caretahospitalSB.getCaretasAsignadas();
         } catch (CaretaHospitalException ex) {
             logger.log(Level.SEVERE, "Error al recuperar caretas asignadas.");
-            caretashospital = new ArrayList();
+            caretashospitalAsignadas = new ArrayList();
             
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error Dispositivos",
@@ -129,10 +129,10 @@ public class GestionDispositivosMB implements Serializable {
         }
         
         try {
-            caretashospitalNA = caretahospitalSB.getCaretasNoAsignadas();
+            caretashospitalDisponibles = caretahospitalSB.getCaretasDisponibles();
         } catch (CaretaHospitalException ex) {
             logger.log(Level.SEVERE, "Error al recuperar caretas sin asignar.: {0}", ex.getMessage());
-            caretashospitalNA = new ArrayList();
+            caretashospitalDisponibles = new ArrayList();
             
             msg = Mensaje.getInstance()
                     .getMensajeAdaptado("Error Dispositivos:",
@@ -141,6 +141,35 @@ public class GestionDispositivosMB implements Serializable {
             utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
             PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
             
+        }
+        
+        try {
+            caretashospitalAveriadas = caretahospitalSB.getCaretasAveriadas();
+        } catch (CaretaHospitalException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar caretas averiadas.: {0}", ex.getMessage());
+            caretashospitalAveriadas = new ArrayList();
+            
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error Dispositivos:",
+                            "Error al intentar recuperar dispositivos en desuso, intentelo mas tarde.",
+                            FacesMessage.SEVERITY_ERROR);
+            utilWebSB.addMsg("frGestDispositivos:msgsGD", msg);
+            PrimeFaces.current().ajax().update("frGestDispositivos:msgsGD");
+            
+        }
+        
+         try {
+            listaEstadoscareta = catalogoSB.getCatalogo("EntEstadocareta");
+            
+            //Remover el estado ASIGNADO de las opciones
+            listaEstadoscareta.remove(1);
+            
+        } catch (CatalogoException ex) {
+            msg = Mensaje.getInstance()
+                    .getMensajeAdaptado("Error",
+                            "Error al recuperar estados de dispositivos",
+                            FacesMessage.SEVERITY_INFO);
+            logger.log(Level.SEVERE, "Error al recuperar estados de dispositivo.");
         }
 
         if (msg == null) {
@@ -162,6 +191,11 @@ public class GestionDispositivosMB implements Serializable {
 
         caretaGuard.setFechaManufactura(fechaManufactura);
         caretaGuard.setNoSerie(noSerie);
+        
+        //Asignar estado DISPONIBLE
+        short idestado = 1;
+        EntEstadocareta estado = new EntEstadocareta(idestado, "DISPONIBLE");
+        caretaGuard.setIdEstadoCareta(estado);
 
         //Obtener fecha:
         Calendar fecha = new GregorianCalendar();
@@ -257,9 +291,6 @@ public class GestionDispositivosMB implements Serializable {
     }
 
     public void cerrarDialogo() {
-//        FacesMessage mensaje = Mensaje.getInstance()
-//                .getMensaje("CERRANDO_DIALOGO", "CERRANDO_CORRECTAMENTE",
-//                        FacesMessage.SEVERITY_INFO);
         cerrarDialogo(null);
     }
 
@@ -296,15 +327,22 @@ public class GestionDispositivosMB implements Serializable {
     }
 
     public void editarDispositivo() {
-
+       
+        
         idCareta = caretaHospitalEditar.getEntCareta().getIdCareta();
         noSerie = caretaHospitalEditar.getEntCareta().getNoSerie();
         fechaManufactura = caretaHospitalEditar.getEntCareta().getFechaManufactura().toString();
+        
+        try {
+            estadocareta = caretaSB.getEstadoCareta(caretaHospitalEditar.getEntCareta());
+        } catch (NoExisteCaretaException ex) {
+            logger.log(Level.SEVERE, "Error al recuperar estado del dispositivo.");
+        }
 
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("modal", true);
         options.put("width", 650);
-        options.put("height", 580);
+        options.put("height", 500);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
         options.put("headerElement", "customheader");
@@ -320,6 +358,9 @@ public class GestionDispositivosMB implements Serializable {
 
         List<String> fManufactura = new ArrayList<>();
         fManufactura.add(fechaManufactura);
+        
+        List<String> idestadocar = new ArrayList<>();
+        idestadocar.add(idestadocareta+"");
 
         List<String> idHospit = new ArrayList<>();
         idHospit.add(caretaHospitalEditar.getEntHospital().getIdHospital().toString());
@@ -327,9 +368,10 @@ public class GestionDispositivosMB implements Serializable {
         parametros.put("idCareta", idcareta);
         parametros.put("noSerie", nSerie);
         parametros.put("fecManufac", fManufactura);
+        parametros.put("idestadocareta", idestadocar);
         parametros.put("idHosp", idHospit);
 
-        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", caretaEditar.getIdCareta());
+        logger.log(Level.INFO, "ID Dispositivo Seleccionado: {0}", idCareta);
         PrimeFaces.current().dialog().openDynamic("dispositivos/dialEditarDispositivo", options, parametros);
     }
 
@@ -352,6 +394,12 @@ public class GestionDispositivosMB implements Serializable {
     public void actualizarDispositivo() {
         FacesMessage msg = null;
         try {
+            
+            if(idestadocareta==1){
+                caretaEditar.setIdEstadoCareta(listaEstadoscareta.get(0));
+            }else if(idestadocareta==3){
+                caretaEditar.setIdEstadoCareta(listaEstadoscareta.get(1));
+            } 
 
             //Actualizar datos de careta
             caretaEditar.setIdCareta(idCareta);
@@ -543,12 +591,12 @@ public class GestionDispositivosMB implements Serializable {
         this.caretaHospital = caretaHospital;
     }
 
-    public List<EntCaretaHospital> getCaretashospital() {
-        return caretashospital;
+    public List<EntCaretaHospital> getCaretashospitalAsignadas() {
+        return caretashospitalAsignadas;
     }
 
-    public void setCaretashospital(List<EntCaretaHospital> caretashospital) {
-        this.caretashospital = caretashospital;
+    public void setCaretashospitalAsignadas(List<EntCaretaHospital> caretashospitalAsignadas) {
+        this.caretashospitalAsignadas = caretashospitalAsignadas;
     }
 
     public EntCaretaHospital getCaretaHospitalEditar() {
@@ -559,12 +607,12 @@ public class GestionDispositivosMB implements Serializable {
         this.caretaHospitalEditar = caretaHospitalEditar;
     }
 
-    public List<EntCaretaHospital> getCaretashospitalNA() {
-        return caretashospitalNA;
+    public List<EntCaretaHospital> getCaretashospitalDisponibles() {
+        return caretashospitalDisponibles;
     }
 
-    public void setCaretashospitalNA(List<EntCaretaHospital> caretashospitalNA) {
-        this.caretashospitalNA = caretashospitalNA;
+    public void setCaretashospitalDisponibles(List<EntCaretaHospital> caretashospitalDisponibles) {
+        this.caretashospitalDisponibles = caretashospitalDisponibles;
     }
 
     public EntCaretaHospital getCaretaHospitalEliminar() {
@@ -574,5 +622,39 @@ public class GestionDispositivosMB implements Serializable {
     public void setCaretaHospitalEliminar(EntCaretaHospital caretaHospitalEliminar) {
         this.caretaHospitalEliminar = caretaHospitalEliminar;
     }
+
+    public List<EntCaretaHospital> getCaretashospitalAveriadas() {
+        return caretashospitalAveriadas;
+    }
+
+    public void setCaretashospitalAveriadas(List<EntCaretaHospital> caretashospitalAveriadas) {
+        this.caretashospitalAveriadas = caretashospitalAveriadas;
+    }
+
+    public Integer getIdestadocareta() {
+        return idestadocareta;
+    }
+
+    public void setIdestadocareta(Integer idestadocareta) {
+        this.idestadocareta = idestadocareta;
+    }
+
+    public List<EntEstadocareta> getListaEstadoscareta() {
+        return listaEstadoscareta;
+    }
+
+    public void setListaEstadoscareta(List<EntEstadocareta> listaEstadoscareta) {
+        this.listaEstadoscareta = listaEstadoscareta;
+    }
+
+    public EntEstadocareta getEstadocareta() {
+        return estadocareta;
+    }
+
+    public void setEstadocareta(EntEstadocareta estadocareta) {
+        this.estadocareta = estadocareta;
+    }
+    
+    
 
 }

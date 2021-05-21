@@ -1,4 +1,10 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Instituto Politécnico Nacional
+Centro de Investigación en Computación (CIC-IPN)
+Laboratorio de Robótica y Mecatrónica
+Todos los derechos reservados
+-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -9,7 +15,7 @@
             <f:viewParam name="idCareta" value="#{gestionDispositivosMB.idCareta}" />
             <f:viewParam name="noSerie" value="#{gestionDispositivosMB.noSerie}" />
             <f:viewParam name="fecManufac" value="#{gestionDispositivosMB.fechaManufactura}" />
-            <f:viewParam name="idHosp" value="#{gestionDispositivosMB.idHosp}" />
+            <f:viewParam name="idestadocareta" value="#{gestionDispositivosMB.idestadocareta}" />
         </f:metadata>
 
         <h:head>
@@ -70,19 +76,19 @@
                         <p:column>
                             <p:panelGrid>
                                 <p:row>
-                                    <p:column colspan="2" class="sinborde"></p:column>
+                                    <p:column colspan="3" class="sinborde"></p:column>
                                 </p:row>
                             </p:panelGrid>
 
-                            <p:panelGrid columns="2"
-                                         columnClasses="ui-grid-col-6,ui-grid-col-6"
+                            <p:panelGrid columns="3"
+                                         columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
                                          layout="grid"
                                          styleClass="ui-panelgrid-blank ui-fluid"
                                          style="border:0px none; background-color:transparent;">
 
                                 <p:column style="background-color: lightcoral">
                                     <p:outputLabel for="nSerie" value="No. Serie:" />
-                                    <p:inputNumber id="nSerie" value="#{gestionDispositivosMB.noSerie}" required="true" />
+                                    <p:inputNumber id="nSerie" value="#{gestionDispositivosMB.noSerie}" required="true" decimalPlaces="0"/>
                                     <p:message for="nSerie"/>
                                 </p:column>
 
@@ -91,13 +97,24 @@
                                     <p:inputText id="apDate" value="#{gestionDispositivosMB.fechaManufactura}" required="true" />
                                     <p:message for="apDate"/>
                                 </p:column>
+                                
+                                <p:column style="background-color: lightcoral">
+                                    <p:outputLabel for="idEstado" value="Estado:" />
+                                    <p:message for="idEstado"/>
+                                    
+                                    <p:selectOneMenu id="idEstado" value="#{gestionDispositivosMB.idestadocareta}" required="true">
+                                        <f:selectItems value="#{gestionDispositivosMB.listaEstadoscareta}" var="estado" 
+                                                       itemLabel="#{estado.descripcion}" itemValue="#{estado.idEstadoCareta}"/>
+                                        <p:ajax />
+                                    </p:selectOneMenu> 
+                                </p:column>
 
                             </p:panelGrid>
 
 
                         </p:column>
                     </p:row>
-                    <p:row>
+<!--                    <p:row>
                         <p:column style="text-align: center" class="ui-widget-header">Asignación de Hospital</p:column>
                     </p:row>
                     <p:row>
@@ -121,7 +138,7 @@
                             </p:panelGrid>
 
                         </p:column>
-                    </p:row>
+                    </p:row>-->
                     <p:row>
                         <p:column style="text-align: right">
                             <p:commandButton value="Guardar" actionListener="#{gestionDispositivosMB.actualizarDispositivo()}"
@@ -144,5 +161,4 @@
             </h:form>
         </h:body>
     </f:view>
-
 </html>
