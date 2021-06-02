@@ -52,6 +52,9 @@ public class EntUsuario implements Serializable {
     @Size(max = 50)
     @Column(name = "CONTRASENIA")
     private String contrasenia;
+    @Size(max = 256)
+    @Column(name = "CIFRA")
+    private String cifra;
     @Column(name = "ACTIVO")
     private Boolean activo;
     @JoinTable(name = "MH_USUARIO_ROL", joinColumns = {
@@ -90,6 +93,14 @@ public class EntUsuario implements Serializable {
 
     public String getContrasenia() {
         return contrasenia;
+    }
+
+    public String getCifra() {
+        return cifra;
+    }
+
+    public void setCifra(String cifra) {
+        this.cifra = cifra;
     }
 
     public void setContrasenia(String contrasenia) {

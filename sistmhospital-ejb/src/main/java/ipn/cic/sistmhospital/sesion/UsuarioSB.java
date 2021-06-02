@@ -15,6 +15,9 @@ import ipn.cic.sistmhospital.modelo.EntPaciente;
 import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntRol;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +30,7 @@ import javax.persistence.NoResultException;
  */
 @Stateless
 public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
+
     private static final Logger logger = Logger.getLogger(UsuarioSB.class.getName());
 
     /**
@@ -45,7 +49,7 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
             query.setParameter("idUsuario", nomUsuario);
             entUsuario = (EntUsuario) query.getSingleResult();
-            
+
             entUsuario.getIdPersona();
             entUsuario.getIdPersona().getNombre();
             entUsuario.getIdPersona().getPrimerApellido();
@@ -53,7 +57,7 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
             entUsuario.getIdPersona().getCurp();
             entUsuario.getIdPersona().getEdad();
             entUsuario.getIdPersona().getIdGenero();
-                    
+
             return entUsuario;
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
@@ -86,44 +90,52 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
 
     @Override
     public List<EntUsuario> getUsuarios() throws UsuarioException {
-        try{
+        try {
             query = em.createQuery("SELECT usr From EntUsuario usr LEFT JOIN FETCH  usr.idPersona p "
                     + "ORDER BY p.primerApellido, p.segundoApellido, p.nombre");
             return query.getResultList();
-        }catch(Exception e){
-            logger.log(Level.SEVERE,"Error al obtener la lista de usuarios : {0}",e.getMessage());
-            throw new UsuarioException("No esposible obtener la lista de usuarios",e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al obtener la lista de usuarios : {0}", e.getMessage());
+            throw new UsuarioException("No esposible obtener la lista de usuarios", e);
         }
-                    
+
     }
 
     @Override
-    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException, IDUsuarioException{
-        if(existeIdUsiario(eu.getIdUsuario())){
+    public EntUsuario saveUsuario(EntUsuario eu) throws SaveEntityException, IDUsuarioException {
+        if (existeIdUsiario(eu.getIdUsuario())) {
             throw new IDUsuarioException();
-        }        
+        }
+        
+        //Cifrado de contrasenia
+        eu.setCifra(getSHA256(eu.getContrasenia()));
+        
         eu = (EntUsuario) this.saveEntity(eu);
         return eu;
     }
 
     @Override
-    public boolean existeIdUsiario(String idUsuario){
-        try{
+    public boolean existeIdUsiario(String idUsuario) {
+        try {
             query = em.createNamedQuery("EntUsuario.findByIdUsuario");
-            query.setParameter("idUsuario",idUsuario.trim());
+            query.setParameter("idUsuario", idUsuario.trim());
             EntUsuario usuario = (EntUsuario) query.getSingleResult();
-            
-            return usuario!=null;            
-        }catch(NoResultException e){
+
+            return usuario != null;
+        } catch (NoResultException e) {
             return false;
         }
     }
-    
+
     @Override
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
-        return (EntUsuario)this.updateEntity(usuario);   
+        
+        //Cifrado de contrasenia
+        usuario.setCifra(getSHA256(usuario.getContrasenia()));
+        
+        return (EntUsuario) this.updateEntity(usuario);
     }
-    
+
     @Override
     public EntPersona getPersonaDeUsuario(EntUsuario usuario) throws UsuarioException {
         query = em.createQuery("SELECT usr.idPersona From EntUsuario usr WHERE usr.idUsuario=:idUsuario");
@@ -139,41 +151,55 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
     }
 
     @Override
-    public EntUsuario getUsuariobyEmail(String email){
+    public EntUsuario getUsuariobyEmail(String email) {
         try {
             query = em.createNamedQuery("EntUsuario.findByEmail");
             query.setParameter("email", email);
             EntUsuario entUsuario = (EntUsuario) query.getSingleResult();
             return entUsuario;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return null;
     }
 
     @Override
     public EntUsuario getUsuarioDeMedico(EntMedico medico) {
-       try{
+        try {
             query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
-            query.setParameter("idPersona",medico.getIdPersona());
-            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            query.setParameter("idPersona", medico.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();
             return usuario;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return null;
     }
-    
+
     @Override
     public EntUsuario getUsuarioDePaciente(EntPaciente paciente) {
-       try{
+        try {
             query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idPersona=:idPersona");
-            query.setParameter("idPersona",paciente.getIdPersona());
-            EntUsuario usuario = (EntUsuario) query.getSingleResult();        
+            query.setParameter("idPersona", paciente.getIdPersona());
+            EntUsuario usuario = (EntUsuario) query.getSingleResult();
             return usuario;
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
-        }   
+        }
     }
-         
+
+    private String getSHA256(String contrasenia) {
+        try {
+            String password = contrasenia;
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] passwordBytes = password.getBytes();
+            byte[] hash = md.digest(passwordBytes);
+            String passwordHash = Base64.getEncoder().encodeToString(hash);
+            return passwordHash;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioSB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }
