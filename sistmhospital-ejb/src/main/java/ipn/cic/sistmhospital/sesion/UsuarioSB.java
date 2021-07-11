@@ -106,10 +106,10 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         if (existeIdUsiario(eu.getIdUsuario())) {
             throw new IDUsuarioException();
         }
-        
+
         //Cifrado de contrasenia
         eu.setCifra(getSHA256(eu.getContrasenia()));
-        
+
         eu = (EntUsuario) this.saveEntity(eu);
         return eu;
     }
@@ -129,10 +129,10 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
 
     @Override
     public EntUsuario updateUsuario(EntUsuario usuario) throws UpdateEntityException {
-        
+
         //Cifrado de contrasenia
         usuario.setCifra(getSHA256(usuario.getContrasenia()));
-        
+
         return (EntUsuario) this.updateEntity(usuario);
     }
 
@@ -202,4 +202,37 @@ public class UsuarioSB extends BaseSB implements UsuarioSBLocal {
         return null;
     }
 
+    @Override
+    public EntUsuario getUsuarioCifrado(String idusuario, String cifra){
+        EntUsuario entUsuario;
+        try {
+            query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idUsuario=:idUsuario and e.cifra=:cifra");
+            query.setParameter("idUsuario", idusuario);
+            query.setParameter("cifra", cifra);
+            entUsuario = (EntUsuario) query.getSingleResult();
+            return entUsuario;
+
+        } catch (Exception e) {
+            return null;
+        }
+        
+
+    }
+
 }
+/*
+@Override
+    public EntUsuario getUsuarioCifrado(String idusuario, String cifra) {
+        
+        query = em.createQuery("SELECT e FROM EntUsuario e WHERE e.idUsuario=:idUsuario and e.cifra=:cifra");
+            
+            query.setParameter("idUsuario", idusuario);
+            query.setParameter("cifra", cifra);
+            EntUsuario entUsuario = (EntUsuario) query.getSingleResult();
+            return entUsuario;
+        
+        
+    }
+
+
+ */

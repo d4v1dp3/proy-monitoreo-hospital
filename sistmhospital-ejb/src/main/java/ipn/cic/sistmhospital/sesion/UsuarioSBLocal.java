@@ -78,4 +78,5 @@ public interface UsuarioSBLocal {
     public EntUsuario getUsuariobyEmail(String email);
     public EntUsuario getUsuarioDeMedico(EntMedico medico);
     public EntUsuario getUsuarioDePaciente(EntPaciente paciente);
+    public EntUsuario getUsuarioCifrado(String idusuario,String cifra);
 }
