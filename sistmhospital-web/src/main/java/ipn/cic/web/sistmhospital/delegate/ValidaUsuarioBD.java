@@ -7,7 +7,10 @@
 package ipn.cic.web.sistmhospital.delegate;
 
 import ipn.cic.sistmhospital.exception.UsuarioException;
+import ipn.cic.sistmhospital.modelo.EntPaciente;
+import ipn.cic.sistmhospital.modelo.EntPersona;
 import ipn.cic.sistmhospital.modelo.EntUsuario;
+import ipn.cic.sistmhospital.sesion.PacienteSBLocal;
 import ipn.cic.sistmhospital.sesion.UsuarioSBLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +33,8 @@ public class ValidaUsuarioBD implements ValidaUsuarioBDLocal {
     private static final Logger logger = Logger.getLogger(MedidasBDLocal.class.getName());
     @EJB
     private UsuarioSBLocal usuarioSB;
+    @EJB 
+    private PacienteSBLocal pacienteSB;
 
     @Override
     public JsonObject validaUsuario(JsonObject datos) {
@@ -43,26 +48,30 @@ public class ValidaUsuarioBD implements ValidaUsuarioBDLocal {
             if (usuario != null) {
 
                 if (usuario.getActivo()) {
+                    EntPersona persona = usuarioSB.getPersonaDeUsuario(usuario);            
+                    EntPaciente paciente = pacienteSB.getPaciente(persona);
+                    
                     respuesta = Json.createObjectBuilder()
-                            .add("Respuesta", "0")
+                            .add("Respuesta", 0)
                             .add("Mensaje", "Usuario Activo")
+                            .add("idPaciente",paciente.getIdPaciente())
                             .build();
                 } else {
                     respuesta = Json.createObjectBuilder()
-                            .add("Respuesta", "1")
+                            .add("Respuesta", 1)
                             .add("Mensaje", "Usuario No Activo")
                             .build();
                 }
 
             } else {
                 respuesta = Json.createObjectBuilder()
-                        .add("Respuesta", "2")
+                        .add("Respuesta", 2)
                         .add("Mensaje", "No existe usuario/ No acceso")
                         .build();
             }
         } catch (Exception e) {
             respuesta = Json.createObjectBuilder()
-                    .add("Respuesta", "3")
+                    .add("Respuesta", 3)
                     .add("Error", "Formato JSON incorrecto")
                     .build();
         }

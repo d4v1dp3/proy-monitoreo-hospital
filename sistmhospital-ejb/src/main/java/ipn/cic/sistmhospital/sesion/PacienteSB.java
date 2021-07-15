@@ -92,7 +92,7 @@ public class PacienteSB extends BaseSB implements PacienteSBLocal {
 
             return res;
         } catch (NoResultException ex) {
-            logger.log(Level.SEVERE, "La consulta no obtuvo resultados");
+            logger.log(Level.SEVERE, "No persona asociada a paciente");
             throw new NoExistePacienteException("No se encontro el paciente.");
         }
     }
