@@ -19,7 +19,6 @@ import javax.ejb.LocalBean;
  * @author J.PEREZ
  */
 @Stateless
-@LocalBean
 public class MedidasSB extends BaseSB implements MedidasSBLocal{
     private static final Logger logger = Logger.getLogger(HospitalSB.class.getName());
 
