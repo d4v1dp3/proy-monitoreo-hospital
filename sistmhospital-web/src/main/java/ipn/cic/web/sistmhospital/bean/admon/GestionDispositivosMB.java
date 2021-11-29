@@ -22,6 +22,7 @@ import ipn.cic.sistmhospital.sesion.CaretaHospitalSBLocal;
 import ipn.cic.sistmhospital.sesion.CaretaSBLocal;
 import ipn.cic.sistmhospital.sesion.CatalogoSBLocal;
 import ipn.cic.sistmhospital.sesion.HospitalSBLocal;
+import ipn.cic.sistmhospital.util.Constantes;
 import ipn.cic.web.sistmhospital.util.Mensaje;
 import ipn.cic.web.sistmhospital.util.UtilWebSBLocal;
 import java.io.Serializable;
@@ -193,7 +194,7 @@ public class GestionDispositivosMB implements Serializable {
         caretaGuard.setNoSerie(noSerie);
         
         //Asignar estado DISPONIBLE
-        short idestado = 1;
+        short idestado =(short)Constantes.getInstance().getInt("EDO_CARETA_DISPONIBLE");
         EntEstadocareta estado = new EntEstadocareta(idestado, "DISPONIBLE");
         caretaGuard.setIdEstadoCareta(estado);
 
