@@ -41,7 +41,7 @@ public class ServiciosMovilWS {
     public JsonObject recibeMedidas(JsonObject datos) throws MedidasException, NoExistePacienteException{
         /*Estructura JSON Recibida
         {
-            "idPaciente": 2,
+            "idPaciente": 1,
             "saturacionOxigeno": 98.0,
             "temperatura": 26.0,
             "frecCardiaca": 62, 
