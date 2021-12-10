@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -328,11 +329,11 @@ public class GestionDispositivosMB implements Serializable {
     }
 
     public void editarDispositivo() {
-       
+       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         
         idCareta = caretaHospitalEditar.getEntCareta().getIdCareta();
         noSerie = caretaHospitalEditar.getEntCareta().getNoSerie();
-        fechaManufactura = caretaHospitalEditar.getEntCareta().getFechaManufactura().toString();
+        fechaManufactura = sdf.format(caretaHospitalEditar.getEntCareta().getFechaManufactura());
         
         try {
             estadocareta = caretaSB.getEstadoCareta(caretaHospitalEditar.getEntCareta());
@@ -405,6 +406,7 @@ public class GestionDispositivosMB implements Serializable {
             //Actualizar datos de careta
             caretaEditar.setIdCareta(idCareta);
             caretaEditar.setNoSerie(noSerie);
+            logger.log(Level.INFO,"Fecha a modificar : {0}",fechaManufactura);
             caretaEditar.setFechaManufactura(fechaManufactura);
 
             caretaSB.updateCareta(caretaEditar);
