@@ -66,6 +66,10 @@ Todos los derechos reservados
         <role-name>PACIENTE</role-name>
     </security-role>
     <security-role>
+        <description>Usuario Colaborador</description>
+        <role-name>COLABORADOR</role-name>
+    </security-role>
+    <security-role>
         <description>Usuario Administrador Hospital</description>
         <role-name>ADMON_HOSPITAL</role-name>
     </security-role>
@@ -84,6 +88,7 @@ Todos los derechos reservados
             <role-name>ADMON_HOSPITAL</role-name>
             <role-name>MEDICO</role-name>
             <role-name>PACIENTE</role-name>
+            <role-name>COLABORADOR</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description>Sin encriptacion</description>
@@ -118,6 +123,23 @@ Todos los derechos reservados
         <auth-constraint>
             <description>Roles con acceso a Páginas Médico</description>
             <role-name>MEDICO</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>Sin encriptacion</description>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>URL Colaborador</display-name>
+        <web-resource-collection>
+            <web-resource-name>PaginasColaborador</web-resource-name>
+            <description>Protege las paginas para rol Colaborador</description>
+            <url-pattern>/faces/facelets/colab/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Roles con acceso a Páginas Colaborador</description>
+            <role-name>COLABORADOR</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description>Sin encriptacion</description>

@@ -10,41 +10,49 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-       <h:head>
-            <ui:include src="/WEB-INF/facelets/composicion/head.xhtml"/> 
-        </h:head>
+  <h:head>
+    <ui:include src="/WEB-INF/facelets/composicion/head.xhtml"/> 
+  </h:head>
 
-        <h:body >
-            <f:facet name="last">
-                <h:outputStylesheet library="css" name="sismrstyle.css" />
-                <h:outputStylesheet library="css" name="primeflex.css" />
+  <h:body >
+    <f:facet name="last">
+      <h:outputStylesheet library="css" name="primeflex.css" />
+      <h:outputStylesheet library="css" name="sismrstyle.css" />
+    </f:facet>
 
-            </f:facet>
+    <f:subview id="scriptZone">
+      <ui:insert name="scriptZone"></ui:insert>
+    </f:subview> 
 
-            <f:subview id="scriptZone">
-                <ui:insert name="scriptZone"></ui:insert>
-            </f:subview> 
-            
-            <div id="principal" class="p-grid p-dir-col">
-                <div id="encabezado" class="p-col">
-                    <ui:include src="/WEB-INF/facelets/composicion/encabezado.xhtml"/> 
-                </div>
-                
-                <div id="contenido" class="p-col vertical-container">
-                    <ui:insert name="menu">
-                        <ui:include src="/WEB-INF/facelets/composicion/menu.xhtml"/>
-                    </ui:insert>
-                    <h1><ui:insert name="titulo"></ui:insert></h1>
-                    <div>
-                        <ui:insert name="mensajes"></ui:insert>
-                    </div>
-                    <f:subview id="contenido" > <!-- contentType="text/html"> -->
-                        <ui:insert name="contenido">EDITAR CONTENIDO</ui:insert>
-                    </f:subview>
-                </div>
-                <div id="footer" class="p-col p-col-align-end">
-                    <ui:include src="/WEB-INF/facelets/composicion/foot.xhtml"/>
-                </div>
+    <div id="principal" class="p-grid p-flex-column">
+      <div id="encabezado" class="p-col">
+        <ui:include src="/WEB-INF/facelets/composicion/encabezado.xhtml"/> 
+      </div>
+      <div id="contenido" class="p-col">
+        <div  class="p-grid  nested-grid">
+          <div class="p-col-2">
+            <ui:insert name="menu">
+              <ui:include src="/WEB-INF/facelets/composicion/menu.xhtml"/>
+            </ui:insert>
+          </div>
+          <div class="p-col-8">
+            <div class="p-grid p-flex-column">
+              <div class="p-col">
+                <h1><ui:insert name="titulo"></ui:insert></h1>
+                <ui:insert name="mensajes"></ui:insert>
+              </div>
+              <div class="p-col"> 
+                <f:subview id="contenido" > <!-- contentType="text/html"> -->
+                  <ui:insert name="contenido">EDITAR CONTENIDO</ui:insert>
+                </f:subview>
+              </div>
             </div>
-        </h:body>
-    </html>
+          </div>
+        </div>
+      </div>
+      <div id="footer" class="p-col">
+        <ui:include src="/WEB-INF/facelets/composicion/foot.xhtml"/>
+      </div>
+    </div>
+  </h:body>
+</html>
