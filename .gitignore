@@ -4,3 +4,5 @@
 /${env.JBOSS_HOME}/
 /nbactions.xml
 /nb-configuration.xml
+
+.idea
