@@ -6,3 +6,7 @@
 /nb-configuration.xml
 
 .idea
+.project
+.settings
+.classpath
+
